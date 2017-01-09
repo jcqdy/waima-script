@@ -1,0 +1,48 @@
+<phpunit bootstrap="bootstrap.php"
+		colors="false"
+		convertErrorsToExceptions="true"
+		convertNoticesToExceptions="true"
+		convertWarningsToExceptions="true"
+		stopOnFailure="false">
+
+	<filter>
+		<blacklist>
+			<directory suffix=".php">../modules/tests</directory>
+		</blacklist>
+		 
+		<whitelist addUncoveredFilesFromWhitelist="true">
+			<directory suffix=".php">../modules/*/models</directory>
+		</whitelist>
+	</filter>
+
+	<testsuites>
+		<testsuite name="manage">
+		    <directory suffix="Test.php" phpVersion="5.3.0" phpVersionOperator=">=">../modules/manage/tests/</directory>
+		</testsuite>
+		<testsuite name="msg">
+		    <directory suffix="Test.php" phpVersion="5.3.0" phpVersionOperator=">=">../modules/msg/tests/</directory>
+		</testsuite>
+		<testsuite name="pic">
+		    <directory suffix="Test.php" phpVersion="5.3.0" phpVersionOperator=">=">../modules/pic/tests/</directory>
+		</testsuite>
+		<testsuite name="report">
+		    <directory suffix="Test.php" phpVersion="5.3.0" phpVersionOperator=">=">../modules/report/tests/</directory>
+		</testsuite>
+		<testsuite name="task">
+		    <directory suffix="Test.php" phpVersion="5.3.0" phpVersionOperator=">=">../modules/task/tests/</directory>
+		</testsuite>
+		<testsuite name="user">
+		    <directory suffix="Test.php" phpVersion="5.3.0" phpVersionOperator=">=">../modules/user/tests/</directory>
+		</testsuite>
+		<testsuite name="music">
+		    <directory suffix="Test.php" phpVersion="5.3.0" phpVersionOperator=">=">../modules/music/tests/</directory>
+		</testsuite>
+		<testsuite name="share">
+		    <directory suffix="Test.php" phpVersion="5.3.0" phpVersionOperator=">=">../modules/share/tests/</directory>
+		</testsuite>
+		<testsuite name="feed">
+		    <directory suffix="Test.php" phpVersion="5.3.0" phpVersionOperator=">=">../modules/feed/tests/</directory>
+		</testsuite>
+	</testsuites>
+
+</phpunit>
