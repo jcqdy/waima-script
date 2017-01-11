@@ -1,6 +1,6 @@
 <?php
 
-class DiscoverModule extends CWebModule
+class RewardModule extends CWebModule
 {
     public function init()
     {

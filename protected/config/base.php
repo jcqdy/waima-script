@@ -1,5 +1,5 @@
 <?php
-! defined('SYSTEM_NAME') && define('SYSTEM_NAME', 'photoTask');
+! defined('SYSTEM_NAME') && define('SYSTEM_NAME', 'waima-op');
 // uncomment the following to define a path alias
 // Yii::setPathOfAlias('local','path/to/local-folder');
 // This is the main Web application configuration. Any writable

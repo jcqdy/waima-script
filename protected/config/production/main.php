@@ -1,32 +1,22 @@
 <?php
+//require_once(dirname(__FILE__) . '/../../../../config/configparser.php');
+//pg redis hosts
 
 return CMap::mergeArray(
     require(dirname(__FILE__) . '/../base.php'),
     array(
-        'params' => array(),
+        'params'=>array(),
         'components' => array(
-            // 读从库
+            //读从库
             'dbPhotoTask' => array(
                 'class' => 'MongoConnection',
-                'server' => 'mongodb://en-ap-phototask-mongodb0:28110,en-ap-phototask-mongodb1:28111,en-ap-phototask-mongodb2:28112,en-ap-phototask-mongodb3:28113,en-ap-phototask-mongodb4:28114,en-ap-phototask-mongodb5:28115,en-ap-phototask-mongodb6:28116',
+                'server' => 'mongodb://10.100.17.248:28110,10.100.17.249:28111,10.100.17.37:28112',
                 'options' => array(
                     'connect' => false,
-                    'readPreference' => MongoClient::RP_SECONDARY_PREFERRED,//,RP_NEAREST,MongoClient::RP_PRIMARY,//
+                    'readPreference' => MongoClient::RP_NEAREST,//,RP_NEAREST,MongoClient::RP_PRIMARY,//
                     //'connectTimeoutMS' => 1000,
-                    'connectTimeoutMS' => 50, // 跨机房写时时间要设长.
-                    'replicaSet' => 'phototask_rs1',
-                ),
-            ),
-            //msg
-            'dbPhotoTaskMsg' => array(
-                'class' => 'MongoConnection',
-                'server' => 'mongodb://en-ap-phototask-mongodb7:28117,en-ap-phototask-mongodb8:28118,en-ap-phototask-mongodb9:28119',
-                'options' => array(
-                    'connect' => false,
-                    'readPreference' => MongoClient::RP_SECONDARY_PREFERRED,//,RP_NEAREST,MongoClient::RP_PRIMARY,//
-                    //'connectTimeoutMS' => 1000,
-                    'connectTimeoutMS' => 50, // 跨机房写时时间要设长.
-                    'replicaSet'  => 'phototask_msg_rs1',
+                    'connectTimeoutMS' => 3000, // 切主后，跨机房写时时间要设长.
+                    'replicaSet'  => 'phototask_rs1',
                 ),
             ),
             'log' => array(
@@ -40,7 +30,7 @@ return CMap::mergeArray(
                     ),
                     'notice' => array(
                         'class' => 'CFileLogRoute',
-                        'levels' => 'notice',
+                        'levels' => 'notice,trace',
                         'logFile' => 'notice.log',
                         'maxFileSize' => 2 * 1024 * 1024,
                         'maxLogFiles' => 100,
