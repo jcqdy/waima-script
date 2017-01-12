@@ -15,7 +15,7 @@ class ModelDaoReward extends ModelDataMongoCollection
 
     public function __construct()
     {
-        parent::__construct('dbOp', 'op', 'discoverRec');
+        parent::__construct('dbOp', 'op', 'reward');
     }
 
     /**
