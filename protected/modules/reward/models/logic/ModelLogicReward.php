@@ -59,7 +59,7 @@ class ModelLogicReward
             $workName = $arr[0];
 
             foreach ($data as $val) {
-                if (in_array($val['money'], $items[])) {
+                if (in_array($val['money'], $items)) {
                     $items[$val['money']]['num']++;
                 } else {
                     $items[$val['money']] = ['money' => $val['money'], 'num' => 1];
