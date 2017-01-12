@@ -13,7 +13,7 @@ class ModelDaoStat extends ModelDataMongoCollection
 
     public function __construct()
     {
-        parent::__construct('dbPhotoTask', 'photoTask', 'discoverRec');
+        parent::__construct('dbOp', 'op', 'discoverRec');
     }
 
     /**

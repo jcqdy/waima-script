@@ -8,15 +8,15 @@ return CMap::mergeArray(
         'params'=>array(),
         'components' => array(
             //读从库
-            'dbPhotoTask' => array(
+            'dbOp' => array(
                 'class' => 'MongoConnection',
-                'server' => 'mongodb://10.100.17.248:28110,10.100.17.249:28111,10.100.17.37:28112',
+                'server' => 'mongodb://127.0.0.1:28110',
                 'options' => array(
                     'connect' => false,
-                    'readPreference' => MongoClient::RP_NEAREST,//,RP_NEAREST,MongoClient::RP_PRIMARY,//
+                    'readPreference' => MongoClient::RP_PRIMARY,//,RP_NEAREST,MongoClient::RP_PRIMARY,//
                     //'connectTimeoutMS' => 1000,
                     'connectTimeoutMS' => 3000, // 切主后，跨机房写时时间要设长.
-                    'replicaSet'  => 'phototask_rs1',
+//                    'replicaSet'  => 'phototask_rs1',
                 ),
             ),
             'log' => array(
