@@ -3,7 +3,7 @@ class ModelDaoStat extends ModelDataMongoCollection
 {
     const _ID = '_id';
 
-    const STAT_TYPE = 'statType';
+    const STAT_TYPE = 'statType';   // 统计类型:share, pv, uv
     
     const PAGE_TYPE = 'pageType';
     

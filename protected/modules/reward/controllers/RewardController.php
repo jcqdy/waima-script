@@ -4,7 +4,7 @@ class RewardController extends H5Controller
     public function actionGuide()
     {
         $modelLogicReward = new ModelLogicReward();
-        $ret = $modelLogicReward->guid();
+        $ret = $modelLogicReward->guide();
 
         ResponseHelper::outputJsonV2($ret, 'ok', 200);
     }

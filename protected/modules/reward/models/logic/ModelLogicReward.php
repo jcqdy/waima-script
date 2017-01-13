@@ -15,11 +15,11 @@ class ModelLogicReward
         $this->modelDaoStat = new ModelDaoStat();
     }
 
-    public function guid()
+    public function guide()
     {
         $shareNum = $this->modelDaoStat->findShareSum();
 
-        $count = empty($shareNum) ? 0 : $shareNum['shareSum'];
+        $count = empty($shareNum) ? 0 : $shareNum['shareNum'];
         $count = $count * self::SHARE_RATION + rand(0, 9);
 
 //        $data = $this->modelDaoReward->findByUserTag($userTag);
