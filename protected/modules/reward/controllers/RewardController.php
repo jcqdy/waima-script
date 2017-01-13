@@ -61,8 +61,8 @@ class RewardController extends H5Controller
                 $rep = rand(1, 3);
 
                 for ($i = 0; $i < $rep; $i++) {
-                    // 1/3的概率设置假数据
-                    if (rand(0, 100) < 30) {
+                    // 1/5的概率设置假数据
+                    if (rand(0, 100) < 20) {
                         // 随机出假稿酬
                         $max = rand(7, 20);
                         $money = rand(3, $max) * 10000;
@@ -89,9 +89,9 @@ class RewardController extends H5Controller
 
                 for ($i = 0; $i < $rep; $i++) {
                     // 1/3的概率设置假数据
-                    if (rand(0, 100) < 30) {
+                    if (rand(0, 100) < 20) {
                         // 随机出假稿酬
-                        $max = rand(5, 20);
+                        $max = rand(5, 13);
                         $money = rand(1, $max) * 10000;
                     } else {
                         continue;
