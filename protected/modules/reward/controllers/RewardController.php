@@ -33,7 +33,7 @@ class RewardController extends H5Controller
 
     public function actionStat()
     {
-        $page = ParameterValidatorHelper::validateInteger($_REQUEST, 'page');
+        $page = ParameterValidatorHelper::validateString($_REQUEST, 'page');
         $type = ParameterValidatorHelper::validateString($_REQUEST, 'type');
 
         $modelLogicReward = new ModelLogicReward();
