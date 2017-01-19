@@ -34,6 +34,7 @@ return array(
     'runtimePath' => constant('RUNTIME_DIR'),
     'modules' => array(
         'reward' => array(), // module setting
+        'wechat' => array(),
     ),
     // application components
     'components' => array(

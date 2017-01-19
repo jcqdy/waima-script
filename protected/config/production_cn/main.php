@@ -5,7 +5,13 @@
 return CMap::mergeArray(
     require(dirname(__FILE__) . '/../base.php'),
     array(
-        'params'=>array(),
+        'params'=>array(
+            'wechat' => array(
+                'getAccTokenUrl' => 'https://api.weixin.qq.com/cgi-bin/token',
+                'appId' => 'wx8721cee23d00aae3',
+                'appSecret' => 'd4e5c8cb9fb74ca68ce951d3435da6f2',
+            ),
+        ),
         'components' => array(
             //读从库
             'dbOp' => array(
