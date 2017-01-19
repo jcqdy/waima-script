@@ -1,5 +1,5 @@
 <?php
-class AccTokenController extends Controller
+class AccTokenController extends H5Controller
 {
     /**
      * 获取微信AccessToken
