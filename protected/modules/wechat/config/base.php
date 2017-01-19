@@ -2,13 +2,13 @@
 
 return array(
     'import' => array(
-        'application.modules.reward.models.dao.*',
-        'application.modules.reward.models.data.*',
-        'application.modules.reward.models.dto.*',
-        'application.modules.reward.models.data.api.*',
-        'application.modules.reward.models.logic.*',
-        'application.modules.reward.helpers.*',
-        'application.modules.reward.components.*',
+        'application.modules.wechat.models.dao.*',
+        'application.modules.wechat.models.data.*',
+        'application.modules.wechat.models.dto.*',
+        'application.modules.wechat.models.data.api.*',
+        'application.modules.wechat.models.logic.*',
+        'application.modules.wechat.helpers.*',
+        'application.modules.wechat.components.*',
     ),
     'params' => array(),
 );
