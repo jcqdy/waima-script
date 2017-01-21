@@ -112,8 +112,8 @@ class ModelLogicAccToken
         $time = time();
 
         $arr = [
-            'noncestr' => $noncestr,
             'jsapi_ticket' => $ticket,
+            'noncestr' => $noncestr,
             'timestamp' => $time,
             'url' => $url,
         ];
