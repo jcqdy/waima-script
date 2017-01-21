@@ -19,7 +19,7 @@ class AccTokenController extends H5Controller
         $url = ParameterValidatorHelper::validateString($_REQUEST, 'url');
 
         $modelLogicAccToken = new ModelLogicAccToken();
-        $ret = $modelLogicAccToken->sig($url);
+        $ret = $modelLogicAccToken->ticketData($url);
 
         ResponseHelper::outputJsonV2($ret, 'ok', 200);
     }
