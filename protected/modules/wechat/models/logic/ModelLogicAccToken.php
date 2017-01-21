@@ -50,7 +50,7 @@ class ModelLogicAccToken
         if (! empty($data)) {
             if ($data['expireTime'] > $time && $data['expireTime'] - $time > 60) {
                 $ticketData = [
-                    'noncestr' => $data['noncestr'],
+                    'nonceStr' => $data['noncestr'],
                     'jsapi_ticket' => $data['ticket'],
                     'timestamp' => $data['timestamp'],
                     'url' => $data['url'],
@@ -68,7 +68,7 @@ class ModelLogicAccToken
                 $modelDaoTicket->updateTicket($data['_id'], $ticket, $expiresLimit, $expireTime, $sigData['noncestr'], $sigData['timestamp'], $url, $sigData['signature']);
 
                 $ticketData = [
-                    'noncestr' => $sigData['noncestr'],
+                    'nonceStr' => $sigData['noncestr'],
                     'jsapi_ticket' => $ticket,
                     'timestamp' => $sigData['timestamp'],
                     'url' => $url,
@@ -87,7 +87,7 @@ class ModelLogicAccToken
             $modelDaoTicket->addTicket($ticket, $expiresLimit, $expireTime, $sigData['noncestr'], $sigData['timestamp'], $url, $sigData['signature']);
 
             $ticketData = [
-                'noncestr' => $sigData['noncestr'],
+                'nonceStr' => $sigData['noncestr'],
                 'jsapi_ticket' => $ticket,
                 'timestamp' => $sigData['timestamp'],
                 'url' => $url,
