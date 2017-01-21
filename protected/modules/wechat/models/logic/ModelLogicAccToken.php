@@ -29,9 +29,72 @@ class ModelLogicAccToken
         return $accToken;
     }
 
-    public function sig($url)
+    /**
+     * 获取微信ticket
+     *
+     * @return bool|mixed|string
+     * @throws Exception
+     */
+    public function ticketData($url)
     {
-        $ticket = $this->ticket();
+        $modelDaoTicket = new ModelDaoTicket();
+        $data = $modelDaoTicket->getOne();
+        $time = time();
+        if (! empty($data)) {
+            if ($data['expireTime'] > $time && $data['expireTime'] - $time > 60) {
+                $ticketData = [
+                    'noncestr' => $data['noncestr'],
+                    'jsapi_ticket' => $data['ticket'],
+                    'timestamp' => $data['timestamp'],
+                    'url' => $data['url'],
+                ];
+            } else {
+                $accToken = $this->accToken();
+                $ret = $this->getTicket($accToken);
+                $ticket = $ret['ticket'];
+                $expiresLimit = $ret['expires_in'];
+                $expireTime = $time + $expiresLimit;
+
+                $sigData = $this->countSig($ticket, $url);
+                $modelDaoTicket->updateTicket($data['_id'], $ticket, $expiresLimit, $expireTime, $sigData['noncestr'], $sigData['timestamp'], $url);
+
+                $ticketData = [
+                    'noncestr' => $sigData['noncestr'],
+                    'jsapi_ticket' => $ticket,
+                    'timestamp' => $sigData['timestamp'],
+                    'url' => $url,
+                ];
+            }
+        } else {
+            $accToken = $this->accToken();
+            $ret = $this->getTicket($accToken);
+            $ticket = $ret['ticket'];
+            $expiresLimit = $ret['expires_in'];
+            $expireTime = $time + $expiresLimit;
+
+            $sigData = $this->countSig($ticket, $url);
+            $modelDaoTicket->addTicket($ticket, $expiresLimit, $expireTime, $sigData['noncestr'], $sigData['timestamp'], $url);
+
+            $ticketData = [
+                'noncestr' => $sigData['noncestr'],
+                'jsapi_ticket' => $ticket,
+                'timestamp' => $sigData['timestamp'],
+                'url' => $url,
+            ];
+        }
+
+        return $ticketData;
+    }
+
+    /**
+     * 计算sig
+     *
+     * @param $ticket
+     * @param $url
+     * @return array
+     */
+    protected function countSig($ticket, $url)
+    {
         $noncestr = $this->getRandChar(16);
         $time = time();
 
@@ -50,42 +113,7 @@ class ModelLogicAccToken
         return $arr;
     }
 
-    /**
-     * 获取微信ticket
-     *
-     * @return bool|mixed|string
-     * @throws Exception
-     */
-    public function ticket()
-    {
-        $modelDaoTicket = new ModelDaoTicket();
-        $data = $modelDaoTicket->getOne();
-        $time = time();
-        if (! empty($data)) {
-            if ($data['expireTime'] > $time && $data['expireTime'] - $time > 60) {
-                $ticket = $data['ticket'];
-            } else {
-                $accToken = $this->accToken();
-                $ret = $this->getTicket($accToken);
-                $ticket = $ret['ticket'];
-                $expiresLimit = $ret['expires_in'];
-                $expireTime = $time + $expiresLimit;
 
-                $modelDaoTicket->addTicket($ticket, $expiresLimit, $expireTime);
-            }
-        } else {
-            $accToken = $this->accToken();
-            $ret = $this->getTicket($accToken);
-
-            $ticket = $ret['ticket'];
-            $expiresLimit = $ret['expires_in'];
-            $expireTime = $time + $expiresLimit;
-
-            $modelDaoTicket->addTicket($ticket, $expiresLimit, $expireTime);
-        }
-
-        return $ticket;
-    }
 
     /**
      * 从微信刷新token
