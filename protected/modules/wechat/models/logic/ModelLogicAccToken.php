@@ -117,7 +117,7 @@ class ModelLogicAccToken
             'timestamp' => $time,
             'url' => $url,
         ];
-        $str = http_build_query($arr);
+        $str = 'jsapi_ticket='.$ticket.'&noncestr='.$noncestr.'&timestamp='.$time.'&url='.urldecode($url);
         $sig = sha1($str);
 
         $arr['signature'] = $sig;
