@@ -14,7 +14,7 @@ class AccTokenController extends H5Controller
         ResponseHelper::outputJsonV2(['accessToken' => $accToken], 'ok', 200);
     }
 
-    public function actionSign()
+    public function actionSig()
     {
         $url = ParameterValidatorHelper::validateString($_REQUEST, 'url');
 
