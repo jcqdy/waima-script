@@ -13,6 +13,8 @@ class ModelDaoTicket extends ModelDataMongoCollection
 
     const TIMESTAMP = 'timestamp';
 
+    const SIGNATURE = 'signature';
+
     const URL = 'url';
 
     public function __construct()
@@ -20,14 +22,18 @@ class ModelDaoTicket extends ModelDataMongoCollection
         parent::__construct('dbOp', 'op', 'ticket');
     }
 
-    public function getOne()
+    public function findByUrl($url)
     {
-        $ret = $this->findOne();
+        $query = [
+            self::URL => $url,
+        ];
+
+        $ret = $this->findOne($query);
 
         return DbWrapper::transform($ret);
     }
 
-    public function addTicket($ticket, $expireLimit, $expireTime, $noncestr, $timestamp, $url)
+    public function addTicket($ticket, $expireLimit, $expireTime, $noncestr, $timestamp, $url, $signature)
     {
         $doc = [
             self::_ID => new MongoId(),
@@ -37,12 +43,13 @@ class ModelDaoTicket extends ModelDataMongoCollection
             self::NONCESTR => $noncestr,
             self::TIMESTAMP => $timestamp,
             self::URL => $url,
+            self::SIGNATURE => $signature,
         ];
 
         $this->add($doc);
     }
 
-    public function updateTicket($id, $ticket, $expireLimit, $expireTime, $noncestr, $timestamp, $url)
+    public function updateTicket($id, $ticket, $expireLimit, $expireTime, $noncestr, $timestamp, $url, $signature)
     {
         $query = [
             self::_ID => $id instanceof MongoId ? $id : new MongoId($id),

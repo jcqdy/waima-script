@@ -1,6 +1,13 @@
 <?php
 class ModelLogicAccToken
 {
+    protected $wechatConf;
+
+    public function __construct()
+    {
+        $this->wechatConf = Yii::app()->params['wechat'];
+    }
+
     /**
      * 获取AccessToken
      *
@@ -38,7 +45,7 @@ class ModelLogicAccToken
     public function ticketData($url)
     {
         $modelDaoTicket = new ModelDaoTicket();
-        $data = $modelDaoTicket->getOne();
+        $data = $modelDaoTicket->findByUrl($url);
         $time = time();
         if (! empty($data)) {
             if ($data['expireTime'] > $time && $data['expireTime'] - $time > 60) {
@@ -47,6 +54,8 @@ class ModelLogicAccToken
                     'jsapi_ticket' => $data['ticket'],
                     'timestamp' => $data['timestamp'],
                     'url' => $data['url'],
+                    'appId' => $this->wechatConf['appId'],
+                    'signature' => $data['signature'],
                 ];
             } else {
                 $accToken = $this->accToken();
@@ -56,13 +65,15 @@ class ModelLogicAccToken
                 $expireTime = $time + $expiresLimit;
 
                 $sigData = $this->countSig($ticket, $url);
-                $modelDaoTicket->updateTicket($data['_id'], $ticket, $expiresLimit, $expireTime, $sigData['noncestr'], $sigData['timestamp'], $url);
+                $modelDaoTicket->updateTicket($data['_id'], $ticket, $expiresLimit, $expireTime, $sigData['noncestr'], $sigData['timestamp'], $url, $sigData['signature']);
 
                 $ticketData = [
                     'noncestr' => $sigData['noncestr'],
                     'jsapi_ticket' => $ticket,
                     'timestamp' => $sigData['timestamp'],
                     'url' => $url,
+                    'appId' => $this->wechatConf['appId'],
+                    'signature' => $sigData['signature'],
                 ];
             }
         } else {
@@ -73,13 +84,15 @@ class ModelLogicAccToken
             $expireTime = $time + $expiresLimit;
 
             $sigData = $this->countSig($ticket, $url);
-            $modelDaoTicket->addTicket($ticket, $expiresLimit, $expireTime, $sigData['noncestr'], $sigData['timestamp'], $url);
+            $modelDaoTicket->addTicket($ticket, $expiresLimit, $expireTime, $sigData['noncestr'], $sigData['timestamp'], $url, $sigData['signature']);
 
             $ticketData = [
                 'noncestr' => $sigData['noncestr'],
                 'jsapi_ticket' => $ticket,
                 'timestamp' => $sigData['timestamp'],
                 'url' => $url,
+                'appId' => $this->wechatConf['appId'],
+                'signature' => $sigData['signature'],
             ];
         }
 
@@ -107,7 +120,6 @@ class ModelLogicAccToken
         $str = http_build_query($arr);
         $sig = sha1($str);
 
-        $arr['appId'] = Yii::app()->params['wechat']['appId'];
         $arr['signature'] = $sig;
 
         return $arr;
@@ -123,13 +135,12 @@ class ModelLogicAccToken
      */
     protected function getToken()
     {
-        $weChatConf = Yii::app()->params['wechat'];
         $param = [
             'grant_type' => 'client_credential',
-            'appid' => $weChatConf['appId'],
-            'secret' => $weChatConf['appSecret'],
+            'appid' => $this->wechatConf['appId'],
+            'secret' => $this->wechatConf['appSecret'],
         ];
-        $wechatUrl = $weChatConf['getAccTokenUrl'] . '?' . http_build_query($param);
+        $wechatUrl = $this->wechatConf['getAccTokenUrl'] . '?' . http_build_query($param);
 
         $ret = HttpHelper::get($wechatUrl);
 
@@ -150,12 +161,11 @@ class ModelLogicAccToken
      */
     protected function getTicket($accToken)
     {
-        $weChatConf = Yii::app()->params['wechat'];
         $param = [
             'access_token' => $accToken,
             'type' => 'jsapi',
         ];
-        $wechatUrl = $weChatConf['getTicketUrl'] . '?' . http_build_query($param);
+        $wechatUrl = $this->wechatConf['getTicketUrl'] . '?' . http_build_query($param);
 
         $ret = HttpHelper::get($wechatUrl);
 
