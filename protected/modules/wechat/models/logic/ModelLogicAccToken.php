@@ -66,11 +66,22 @@ class ModelLogicAccToken
                 $ticket = $data['ticket'];
             } else {
                 $accToken = $this->accToken();
-                $ticket = $this->getTicket($accToken);
+                $ret = $this->getTicket($accToken);
+                $ticket = $ret['ticket'];
+                $expiresLimit = $ret['expires_in'];
+                $expireTime = $time + $expiresLimit;
+
+                $modelDaoTicket->addTicket($ticket, $expiresLimit, $expireTime);
             }
         } else {
             $accToken = $this->accToken();
-            $ticket = $this->getTicket($accToken);
+            $ret = $this->getTicket($accToken);
+
+            $ticket = $ret['ticket'];
+            $expiresLimit = $ret['expires_in'];
+            $expireTime = $time + $expiresLimit;
+
+            $modelDaoTicket->addTicket($ticket, $expiresLimit, $expireTime);
         }
 
         return $ticket;
