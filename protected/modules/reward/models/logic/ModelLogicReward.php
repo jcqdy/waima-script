@@ -109,7 +109,7 @@ class ModelLogicReward
             ];
 
             $lag = $mock == false ? round(($time - $v['createTime']) / 60) : rand(1, 90);
-            $con = $lag >= 60 ? round($lag / 60) . '小时前' : ($lag == 0 ? '刚刚' : $lag . '分钟前');
+            $con = $lag >= 60 ? round($lag / 60) . '小时前分享' : ($lag == 0 ? '刚刚分享' : $lag . '分钟前'分享);
 
             $item['time'] = $con;
 
