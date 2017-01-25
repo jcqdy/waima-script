@@ -132,9 +132,13 @@ class ModelDaoReward extends ModelDataMongoCollection
             return [];
         }
 
-        $data = array_rand($data, 2);
+        $ret = [];
+        $randKeys = array_rand($data, 2);
+        foreach ($randKeys as $k) {
+            $ret[] = $data[$k];
+        }
 
-        return DbWrapper::transform($data);
+        return DbWrapper::transform($ret);
     }
 
 }
