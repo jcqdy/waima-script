@@ -112,10 +112,11 @@ class ModelLogicReward
             $con = $lag >= 60 ? round($lag / 60) . '小时前分享' : ($lag == 0 ? '刚刚分享' : $lag . '分钟前分享');
 
             $item['time'] = $con;
-
-            $ret[] = $item;
+            $timeKey = $lag >= 60 ? round($lag / 60) : $lag;
+            $ret[$timeKey] = $item;
         }
+        ksort($ret);
 
-        return $ret;
+        return array_values($ret);
     }
 }
