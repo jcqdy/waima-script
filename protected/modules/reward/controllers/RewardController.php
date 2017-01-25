@@ -42,6 +42,14 @@ class RewardController extends H5Controller
         ResponseHelper::outputJsonV2([], 'ok', 200);
     }
 
+    public function actionNewShare()
+    {
+        $modelLogicReward = new ModelLogicReward();
+        $ret = $modelLogicReward->newShare();
+
+        ResponseHelper::outputJsonV2($ret, 'ok', 200);
+    }
+
     public function actionStata()
     {
         $movieDir = '/home/worker/data/www/waima-op/public/movie.txt';

@@ -86,4 +86,36 @@ class ModelLogicReward
             $this->modelDaoStat->incPageStat($page, $type);
         }
     }
+
+    public function newShare()
+    {
+        $data = $this->modelDaoReward->queryByCreateTime(1, -1, 2);
+        $time = time();
+        $data = array_values($data);
+
+        $mock = false;
+        // 如果最近一次用户分享距离现在大于2小时
+        if ($time - $data[0]['createTime'] > 7200) {
+            $data = $this->modelDaoReward->randByUserTag(2);
+            $mock = true;
+        }
+
+        $ret = [];
+        foreach ($data as $k => $v) {
+            $item = [
+                'workName' => $v['workName'],
+                'money' => $v['money'],
+                'type' => $v['type'],
+            ];
+
+            $lag = $mock == false ? round(($time - $v['createTime']) / 60) : rand(1, 90);
+            $con = $lag >= 60 ? round($lag / 60) . '小时前' : $lag . '分钟前';
+
+            $item['time'] = $con;
+
+            $ret[] = $item;
+        }
+
+        return $ret;
+    }
 }
