@@ -15,7 +15,7 @@ class ModelDaoReward extends ModelDataMongoCollection
 
     public function __construct()
     {
-        parent::__construct('dbPhotoTask', 'photoTask', 'discoverRec');
+        parent::__construct('dbOp', 'op', 'reward');
     }
 
     /**
@@ -93,6 +93,52 @@ class ModelDaoReward extends ModelDataMongoCollection
         }
 
         return $ret;
+    }
+
+    /**
+     * 通过创建时间查询
+     *
+     * @param $order
+     * @param $limit
+     * @return mixed
+     */
+    public function queryByCreateTime($userTag, $order, $limit)
+    {
+        $query = [
+            self::USER_TAG => $userTag,
+        ];
+
+        $sort = [
+            self::CREATE_TIME => $order,
+        ];
+
+        $ret = $this->query($query, [], $sort, $limit);
+
+        if ($ret !== false) {
+            DbWrapper::transform($ret);
+        }
+
+        return $ret;
+    }
+
+    public function randByUserTag($userTag)
+    {
+        $query = [
+            self::USER_TAG => $userTag,
+        ];
+
+        $data = $this->query($query);
+        if (empty($data)) {
+            return [];
+        }
+
+        $ret = [];
+        $randKeys = array_rand($data, 2);
+        foreach ($randKeys as $k) {
+            $ret[] = $data[$k];
+        }
+
+        return DbWrapper::transform($ret);
     }
 
 }

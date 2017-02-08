@@ -15,11 +15,11 @@ class ModelLogicReward
         $this->modelDaoStat = new ModelDaoStat();
     }
 
-    public function guid()
+    public function guide()
     {
         $shareNum = $this->modelDaoStat->findShareSum();
 
-        $count = empty($shareNum) ? 0 : $shareNum['shareSum'];
+        $count = empty($shareNum) ? 0 : $shareNum['shareNum'];
         $count = $count * self::SHARE_RATION + rand(0, 9);
 
 //        $data = $this->modelDaoReward->findByUserTag($userTag);
@@ -59,7 +59,7 @@ class ModelLogicReward
             $workName = $arr[0];
 
             foreach ($data as $val) {
-                if (in_array($val['money'], $items[])) {
+                if (in_array($val['money'], $items)) {
                     $items[$val['money']]['num']++;
                 } else {
                     $items[$val['money']] = ['money' => $val['money'], 'num' => 1];
@@ -85,5 +85,38 @@ class ModelLogicReward
         } else {
             $this->modelDaoStat->incPageStat($page, $type);
         }
+    }
+
+    public function newShare()
+    {
+        $data = $this->modelDaoReward->queryByCreateTime(1, -1, 2);
+        $time = time();
+        $data = array_values($data);
+
+        $mock = false;
+        // 如果最近一次用户分享距离现在大于2小时
+        if (isset($data[1]) && $time - $data[1]['createTime'] > 7200) {
+            $data = $this->modelDaoReward->randByUserTag(2);
+            $mock = true;
+        }
+
+        $ret = [];
+        foreach ($data as $k => $v) {
+            $item = [
+                'workName' => $v['workName'],
+                'money' => $v['money'],
+                'type' => $v['type'],
+            ];
+
+            $lag = $mock == false ? round(($time - $v['createTime']) / 60) : rand(1, 90);
+            $con = $lag >= 60 ? round($lag / 60) . '小时前分享' : ($lag == 0 ? '刚刚分享' : $lag . '分钟前分享');
+
+            $item['time'] = $con;
+            $timeKey = $lag >= 60 ? round($lag / 60) : $lag;
+            $ret[$timeKey] = $item;
+        }
+        ksort($ret);
+
+        return array_values($ret);
     }
 }

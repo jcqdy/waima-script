@@ -50,7 +50,7 @@ class SetDataCommand extends ConsoleCommand
                     // 1/3的概率设置假数据
                     if (rand(0, 100) < 30) {
                         // 随机出假稿酬
-                        $max = rand(5, 20);
+                        $max = rand(5, 13);
                         $money = rand(1, $max) * 10000;
                     } else {
                         continue;

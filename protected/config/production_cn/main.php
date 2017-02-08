@@ -5,18 +5,25 @@
 return CMap::mergeArray(
     require(dirname(__FILE__) . '/../base.php'),
     array(
-        'params'=>array(),
+        'params'=>array(
+            'wechat' => array(
+                'getAccTokenUrl' => 'https://api.weixin.qq.com/cgi-bin/token',
+                'appId' => 'wx8721cee23d00aae3',
+                'appSecret' => 'd4e5c8cb9fb74ca68ce951d3435da6f2',
+                'getTicketUrl' => 'https://api.weixin.qq.com/cgi-bin/ticket/getticket',
+            ),
+        ),
         'components' => array(
             //读从库
-            'dbPhotoTask' => array(
+            'dbOp' => array(
                 'class' => 'MongoConnection',
-                'server' => 'mongodb://10.100.17.248:28110,10.100.17.249:28111,10.100.17.37:28112',
+                'server' => 'mongodb://127.0.0.1:28110',
                 'options' => array(
                     'connect' => false,
-                    'readPreference' => MongoClient::RP_NEAREST,//,RP_NEAREST,MongoClient::RP_PRIMARY,//
+                    'readPreference' => MongoClient::RP_PRIMARY,//,RP_NEAREST,MongoClient::RP_PRIMARY,//
                     //'connectTimeoutMS' => 1000,
                     'connectTimeoutMS' => 3000, // 切主后，跨机房写时时间要设长.
-                    'replicaSet'  => 'phototask_rs1',
+//                    'replicaSet'  => 'phototask_rs1',
                 ),
             ),
             'log' => array(
