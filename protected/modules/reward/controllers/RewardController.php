@@ -55,8 +55,8 @@ class RewardController extends H5Controller
         $num = ParameterValidatorHelper::validateInteger($_REQUEST, 'num');
         $aNum = ParameterValidatorHelper::validateInteger($_REQUEST, 'aNum');
 
-        $movieDir = "../../../../public/movie.txt";
-        $tvDir = "../../../../public/tv.txt";
+        $movieDir = '/home/worker/data/www/waima-op/public/movie.txt';
+        $tvDir = '/home/worker/data/www/waima-op/public/tv.txt';
 
         $modelDaoReward = new ModelDaoReward();
 
