@@ -89,7 +89,7 @@ class ModelLogicReward
 
     public function newShare()
     {
-        $data = $this->modelDaoReward->queryByCreateTime(1, -1, 2);
+        $data = $this->modelDaoReward->queryByCreateTime(1, -1, 10);
         $time = time();
         $data = array_values($data);
 
