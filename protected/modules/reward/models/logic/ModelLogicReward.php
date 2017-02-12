@@ -95,7 +95,7 @@ class ModelLogicReward
 
         $mock = false;
         // 如果最近一次用户分享距离现在大于2小时
-        if (isset($data[1]) && $time - $data[1]['createTime'] > 7200) {
+        if ((isset($data[1]) && $time - $data[1]['createTime'] > 7200) || empty($data)) {
             $data = $this->modelDaoReward->randByUserTag(2);
             $mock = true;
         }
