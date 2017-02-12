@@ -89,16 +89,16 @@ class ModelLogicReward
 
     public function newShare()
     {
-        $data = $this->modelDaoReward->queryByCreateTime(1, -1, 10);
+//        $data = $this->modelDaoReward->queryByCreateTime(2, -1, 10);
         $time = time();
-        $data = array_values($data);
-
-        $mock = false;
+//        $data = array_values($data);
+//
+//        $mock = false;
         // 如果最近一次用户分享距离现在大于2小时
-        if ((isset($data[1]) && $time - $data[1]['createTime'] > 7200) || empty($data)) {
+//        if ((isset($data[1]) && $time - $data[1]['createTime'] > 7200) || empty($data)) {
             $data = $this->modelDaoReward->randByUserTag(2);
             $mock = true;
-        }
+//        }
 
         $ret = [];
         foreach ($data as $k => $v) {
