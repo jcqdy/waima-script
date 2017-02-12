@@ -19,7 +19,7 @@ class ModelLogicReward
     {
         $shareNum = $this->modelDaoStat->findShareSum();
 
-        $count = empty($shareNum) ? 0 : $shareNum['shareNum'];
+        $count = empty($shareNum) ? 9 : $shareNum['shareNum'] + 10;
         $count = $count * self::SHARE_RATION + rand(0, 9);
 
 //        $data = $this->modelDaoReward->findByUserTag($userTag);
