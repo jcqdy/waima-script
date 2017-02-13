@@ -62,6 +62,7 @@ class ModelDaoTicket extends ModelDataMongoCollection
             self::NONCESTR => $noncestr,
             self::TIMESTAMP => $timestamp,
             self::URL => $url,
+            self::SIGNATURE => $signature,
         ];
 
         $this->modify($query, $doc);
