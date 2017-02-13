@@ -7,7 +7,7 @@ class ModelLogicReward
 
     const TIME_SEED = 1483977600;
 
-    const SHARE_RATION = 7;
+    const SHARE_RATION = 8;
 
     public function __construct()
     {
