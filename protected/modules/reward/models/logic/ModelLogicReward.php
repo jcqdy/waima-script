@@ -115,9 +115,9 @@ class ModelLogicReward
 
             $item['time'] = $con;
 //            $timeKey = $lag >= 60 ? round($lag / 60) : $lag;
-//            $ret[$timeKey] = $item;
+            $ret[] = $item;
         }
-        ksort($ret);
+//        ksort($ret);
 
         return array_values($ret);
     }
