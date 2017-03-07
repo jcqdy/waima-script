@@ -110,10 +110,12 @@ class ModelLogicReward
 
             $lag = $mock == false ? round(($time - $v['createTime']) / 60) : rand(1, 90);
             $con = $lag >= 60 ? round($lag / 60) . '小时前分享' : ($lag == 0 ? '刚刚分享' : $lag . '分钟前分享');
+            $seed = rand(1, 10);
+            $con = $seed < 5 ? rand(1, 24) . '小时前分享' : rand(1, 4) . '天前分享';
 
             $item['time'] = $con;
-            $timeKey = $lag >= 60 ? round($lag / 60) : $lag;
-            $ret[$timeKey] = $item;
+//            $timeKey = $lag >= 60 ? round($lag / 60) : $lag;
+//            $ret[$timeKey] = $item;
         }
         ksort($ret);
 
