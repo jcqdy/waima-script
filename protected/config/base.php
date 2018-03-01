@@ -1,5 +1,5 @@
 <?php
-! defined('SYSTEM_NAME') && define('SYSTEM_NAME', 'waima-op');
+! defined('SYSTEM_NAME') && define('SYSTEM_NAME', 'waima-script');
 // uncomment the following to define a path alias
 // Yii::setPathOfAlias('local','path/to/local-folder');
 // This is the main Web application configuration. Any writable
@@ -33,8 +33,9 @@ return array(
     ),
     'runtimePath' => constant('RUNTIME_DIR'),
     'modules' => array(
-        'reward' => array(), // module setting
-        'wechat' => array(),
+        'read' => array(), // module setting
+        'script' => array(),
+        'user' => array(),
     ),
     // application components
     'components' => array(

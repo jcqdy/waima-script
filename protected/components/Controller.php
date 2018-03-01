@@ -6,20 +6,10 @@
  */
 class Controller extends CController
 {
-    protected $appName = null;
+    protected $userId = null;
+    protected $sig = null;
     protected $appVersion = null;
-    protected $systemVersion = null;
     protected $platform = null;
-    protected $device = null;
-    protected $deviceId = null;
-    protected $channel = null;
-    protected $locale = null;
-    protected $timeZone = null; // eg: 'Asia/Shanghai'
-    protected $cid = null;
-    protected $longitude = null;
-    protected $latitude = null;
-    protected $mnc = null;
-    protected $mcc = null;
 
     protected $uripath = '';
 
