@@ -1,1 +1,1 @@
-# waima-op
+# waima-script
