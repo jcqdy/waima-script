@@ -49,4 +49,10 @@ class UserController extends Controller
 
         ResponseHelper::outputJsonV2([], 'ok', 200);
     }
+
+    public function actionA()
+    {
+        $modelDaoUser = new ModelDaoUser();
+        $modelDaoUser->add(['a' => 1]);
+    }
 }
