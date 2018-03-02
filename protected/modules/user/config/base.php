@@ -2,13 +2,13 @@
 
 return array(
     'import' => array(
-        'application.modules.wechat.models.dao.*',
-        'application.modules.wechat.models.data.*',
-        'application.modules.wechat.models.dto.*',
-        'application.modules.wechat.models.data.api.*',
-        'application.modules.wechat.models.logic.*',
-        'application.modules.wechat.helpers.*',
-        'application.modules.wechat.components.*',
+        'application.modules.user.models.dao.*',
+        'application.modules.user.models.data.*',
+        'application.modules.user.models.dto.*',
+        'application.modules.user.models.data.api.*',
+        'application.modules.user.models.logic.*',
+        'application.modules.user.helpers.*',
+        'application.modules.user.components.*',
     ),
     'params' => array(),
 );
