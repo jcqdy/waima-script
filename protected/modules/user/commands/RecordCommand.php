@@ -52,4 +52,10 @@ class RecordCommand extends CConsoleCommand
             $modelDaoUser->updateRatio($uid, $readNumRatio, $readDayRatio);
         }
     }
+
+    public function actionA()
+    {
+        $modelDaoUser = new ModelDaoUser();
+        $modelDaoUser->add(['a' => 1]);
+    }
 }
