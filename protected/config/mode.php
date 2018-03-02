@@ -2,7 +2,7 @@
 mb_internal_encoding("UTF-8");
 $hostname = gethostname();
 
-if ($hostname === 'waima-script') {
+if ($hostname === 'waima-develop') {
     define('IDC_NUM', 1); // 机房数
     define('IDC_ID', 1); // idc数字编号，编号从0开始
     define('APPLICATION_ENV', 'development');
