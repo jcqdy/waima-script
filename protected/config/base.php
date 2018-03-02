@@ -11,6 +11,7 @@
 ! is_dir(RUNTIME_DIR) && @mkdir(RUNTIME_DIR, 0755, true);
 set_include_path(get_include_path() . ':' . LIB_DIR);
 YiiBase::setPathOfAlias('yii-ext', LIB_DIR . '/yii-ext');
+YiiBase::setPathOfAlias('ext-stub', LIB_DIR . '/ext-stub');
 return array(
     'basePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..',
     'name' => SYSTEM_NAME,
@@ -30,6 +31,7 @@ return array(
         'yii-ext.models.*',
         'yii-ext.models.data.*',
         'yii-ext.models.logic.*',
+        'ext-stub.mongo.*'
     ),
     'runtimePath' => constant('RUNTIME_DIR'),
     'modules' => array(
