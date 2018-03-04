@@ -21,7 +21,7 @@ class ModelDataRead
 
     public function getNoteMark($userId, $scriptIds)
     {
-        return $this->modelDaoNoteMark->queryByUidSid($userId, $scriptIds);
+        return $this->modelDaoNoteMark->queryByUidSids($userId, $scriptIds);
     }
 
     public function getReadStatus($userId, $scriptId)

@@ -30,7 +30,7 @@ class ModelDaoNoteMark extends ModelDataMongoCollection
         parent::__construct('dbwaima-script', 'waima-script', 'noteMark');
     }
 
-    public function queryByUidSid($userId, $scriptIds, $status = 1)
+    public function queryByUidSids($userId, $scriptIds, $status = 1)
     {
         $query[self::USER_ID] = $userId instanceof MongoId ? $userId : new MongoId($userId);
         foreach ($scriptIds as $k => $id) {
@@ -41,6 +41,17 @@ class ModelDaoNoteMark extends ModelDataMongoCollection
 
         $ret = $this->query($query);
         
+        return DbWrapper::transform($ret);
+    }
+
+    public function getByUidSid($userId, $scriptId, $status = 1)
+    {
+        $query[self::USER_ID] = $userId instanceof MongoId ? $userId : new MongoId($userId);
+        $query[self::SCRIPT_ID] = $scriptId instanceof MongoId ? $scriptId : new MongoId($scriptId);
+        $query[self::STATUS] = $status;
+        
+        $ret = $this->query($query);
+
         return DbWrapper::transform($ret);
     }
 
