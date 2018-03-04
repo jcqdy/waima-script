@@ -235,13 +235,6 @@ class Controller extends CController
             LogHelper::error($e->getMessage() . ' with code ' . $e->getCode());
             ResponseHelper::outputJsonV2(array(), '网络不给力', Errno::FATAL);
         } catch (Exception $e) {
-            if ($e->getCode() == Errno::PIC_NOT_EXIST) {
-                //作品不存在只记录warning
-                LogHelper::warning($e->getMessage() . ' with code ' . $e->getCode());
-            } elseif ($e->getCode() != Errno::SIG_ERROR && $e->getCode() != Errno::ANTI_SPAM_UNPASS) {
-                // 签名错误，鉴黄不通过，情况下不写错误日志
-                LogHelper::error($e->getMessage() . ' with code ' . $e->getCode());
-            }
             ResponseHelper::outputJsonV2(array(), $e->getMessage(), $e->getCode());
         }
     }
