@@ -13,7 +13,7 @@ class ModelLogicEditPkg
     {
         $pkg = $this->modelDataCollect->getPkgByPid($pkgId);
         if (empty($pkg))
-            throw new Exception('part is not exist', Errno::PARAMETER_VALIDATION_FAILED);
+            throw new Exception('package is not exist', Errno::PARAMETER_VALIDATION_FAILED);
 
         if ($pkg['userId'] !== $userId)
             throw new Exception('userId is wrong', Errno::PARAMETER_VALIDATION_FAILED);

@@ -16,6 +16,10 @@ class ModelLogicAddCollect
 //        if ($ret === false)
 //            throw new Exception('add collect failed', Errno::FATAL);
 
+        $package = $this->modelDataCollect->getPkgByPid($pkgId);
+        if (empty($package))
+            throw new Exception('package is not exist', Errno::INVALID_PARAMETER);
+
         $note = $this->modelDataCollect->getNoteMark($noteId);
         if (empty($note))
             throw new Exception('note is not exist', Errno::INVALID_PARAMETER);
