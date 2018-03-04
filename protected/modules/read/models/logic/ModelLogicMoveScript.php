@@ -41,7 +41,13 @@ class ModelLogicMoveScript
                 }
             }
         } else {
+            if (! empty($newFolderId)) {
+
+            }
             foreach ($bookCase as $key => $val) {
+                if (is_string($val) && $val == $scriptId && empty($newFolderId))
+                    break;
+
                 if (is_string($val) && $val == $scriptId) {
                     unset($bookCase[$key]);
                     continue;
@@ -49,6 +55,12 @@ class ModelLogicMoveScript
                 if (is_array($val) && $val['folderId'] !== $newFolderId && in_array($scriptId, $val['scriptIds'])) {
                     $k = array_search($scriptId, $val['scriptIds']);
                     unset($bookCase[$key]['scriptIds'][$k]);
+
+                    // 如果没有指定移动到其他文件夹,就移动到文件夹外面
+                    if (empty($newFolderId)) {
+                        $bookCase[] = $scriptId;
+                        break;
+                    }
                     continue;
                 }
                 if (is_array($val) && $val['folderId'] == $newFolderId && ! in_array($scriptId, $val['scriptIds'])) {
