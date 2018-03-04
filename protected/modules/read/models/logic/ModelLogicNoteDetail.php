@@ -1,6 +1,6 @@
 <?php
 
-class ModelLogicNote
+class ModelLogicNoteDetail
 {
     protected $modelDataNoteMark;
 

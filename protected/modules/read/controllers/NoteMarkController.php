@@ -26,25 +26,25 @@ class NoteMarkController extends Controller
         ResponseHelper::outputJsonV2([], 'ok', 200);
     }
 
-    public function actionNote()
+    public function actionDetail()
     {
         $noteId = ParameterValidatorHelper::validateMongoIdAsString($_POST, 'noteId');
 
-        $modelLogicNote = new ModelLogicNote();
-        $ret = $modelLogicNote->execute($noteId);
+        $modelLogicNoteDetail = new ModelLogicNoteDetail();
+        $ret = $modelLogicNoteDetail->execute($noteId);
 
         ResponseHelper::outputJsonV2($ret, 'ok', 200);
     }
 
-    public function actionMark()
-    {
-        $markId = ParameterValidatorHelper::validateMongoIdAsString($_POST, 'markId');
-
-        $modelLogicNote = new ModelLogicNote();
-        $ret = $modelLogicNote->execute($markId);
-
-        ResponseHelper::outputJsonV2($ret, 'ok', 200);
-    }
+//    public function actionMark()
+//    {
+//        $markId = ParameterValidatorHelper::validateMongoIdAsString($_POST, 'markId');
+//
+//        $modelLogicNote = new ModelLogicNote();
+//        $ret = $modelLogicNote->execute($markId);
+//
+//        ResponseHelper::outputJsonV2($ret, 'ok', 200);
+//    }
 
     public function actionEditNote()
     {
