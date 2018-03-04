@@ -14,14 +14,20 @@ class ModelLogicPutStatus
         $readStatus = $this->modelDataRead->getReadStatus($userId, $scriptId);
         $updateTime = time();
         if (empty($readStatus)) {
-            $ret = $this->modelDataRead->addReadStatus($userId, $scriptId, $readPos, $fontSize, $backColor, $updateTime);
+            $ret = $this->modelDataRead->addReadStatus($userId, $scriptId, $readPos, $updateTime);
             if ($ret === false)
                 throw new Exception('add read status failed', Errno::FATAL);
         } else {
-            $ret = $this->modelDataRead->modifyReadStatus($userId, $scriptId, $readPos, $fontSize, $backColor, $updateTime);
+            $ret = $this->modelDataRead->modifyReadStatus($userId, $scriptId, $readPos, $updateTime);
             if ($ret === false)
                 throw new Exception('edit read status failed', Errno::FATAL);
         }
+        if (empty($fontSize) && empty($backColor))
+            return;
+
+        $ret = $this->modelDataRead->updateUserReadStatus($userId, $fontSize, $backColor, $updateTime);
+        if ($ret === false)
+            throw new Exception('edit read status failed', Errno::FATAL);
     }
 
 }

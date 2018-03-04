@@ -32,6 +32,10 @@ class ModelDaoUser extends ModelDataMongoCollection
 
     const READ_DAY_RATIO = 'readDayRatio';
 
+    const FONT_SIZE = 'fontSize';
+
+    const BACK_COLOR = 'backColor';
+
     const CREATE_TIME = 'createTime';
 
     const UPDATE_TIME = 'updateTime';
@@ -51,6 +55,8 @@ class ModelDaoUser extends ModelDataMongoCollection
         $doc[self::PROVINCE] = $province;
         $doc[self::COUNTRY] = $country;
         $doc[self::LANGUAGE] = $language;
+        $doc[self::FONT_SIZE] = CommonConst::DEFAULT_FONT_SIZE;
+        $doc[self::BACK_COLOR] = CommonConst::DEFAULT_BACK_COLOR;
         $doc[self::CREATE_TIME] = $createTime;
 
         $ret = $this->add($doc);
@@ -93,6 +99,16 @@ class ModelDaoUser extends ModelDataMongoCollection
     {
         $query[self::_ID] = $userId instanceof MongoId ? $userId : new MongoId($userId);
         $doc[self::PHONE_NUM] = $phoneNum;
+
+        return $this->modify($query, $doc);
+    }
+
+    public function updateReadStatus($userId, $fontSize, $backColor, $updateTime)
+    {
+        $query[self::_ID] = $userId instanceof MongoId ? $userId : new MongoId($userId);
+        $doc[self::FONT_SIZE] = $fontSize;
+        $doc[self::BACK_COLOR] = $backColor;
+        $doc[self::UPDATE_TIME] = $updateTime;
 
         return $this->modify($query, $doc);
     }
