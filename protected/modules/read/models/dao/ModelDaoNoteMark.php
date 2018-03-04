@@ -140,7 +140,8 @@ class ModelDaoNoteMark extends ModelDataMongoCollection
     {
         $query[self::PKG_ID] = $pkgId instanceof MongoId ? $pkgId : new MongoId($pkgId);
         $query[self::STATUS] = $status;
-        $query[self::UPDATE_TIME] = ['$lt' => $sp];
+        if ($sp !== 0)
+            $query[self::UPDATE_TIME] = ['$lt' => $sp];
 
         $sort[self::UPDATE_TIME] = -1;
 
