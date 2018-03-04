@@ -17,7 +17,7 @@ class CommonConst
 
     const DEFAULT_BACK_COLOR = 1;
 
-    const DEFAULT_READ_POS = 0.0;
+    const DEFAULT_READ_POS = 0;
 
     const GENDER_MAN = 1;
 
