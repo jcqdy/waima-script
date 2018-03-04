@@ -44,16 +44,16 @@ class ModelLogicMoveScript
             foreach ($bookCase as $key => $val) {
                 if (is_string($val) && $val == $scriptId) {
                     unset($bookCase[$key]);
-                    break;
+                    continue;
                 }
                 if (is_array($val) && $val['folderId'] !== $newFolderId && in_array($scriptId, $val['scriptIds'])) {
                     $k = array_search($scriptId, $val['scriptIds']);
                     unset($bookCase[$key]['scriptIds'][$k]);
-                    break;
+                    continue;
                 }
                 if (is_array($val) && $val['folderId'] == $newFolderId && ! in_array($scriptId, $val['scriptIds'])) {
                     $bookCase[$key]['scriptIds'][] = $scriptId;
-                    break;
+                    continue;
                 }
             }
         }
