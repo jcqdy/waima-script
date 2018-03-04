@@ -23,4 +23,10 @@ class AccTokenController extends H5Controller
 
         ResponseHelper::outputJsonV2($ret, 'ok', 200);
     }
+
+    public function actionFake()
+    {
+        $obj = new FakeData();
+        $obj->execute();
+    }
 }
