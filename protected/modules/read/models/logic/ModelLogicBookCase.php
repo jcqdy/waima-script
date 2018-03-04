@@ -44,7 +44,7 @@ class ModelLogicBookCase
         foreach ($bookCase as $key => $val) {
             // 单个剧本的情况
             if (is_string($val)) {
-                if (! array_key_exists($val, $scriptIds))
+                if (! in_array($val, $scriptIds))
                     continue;
 
                 $ret[] = new BookCaseScriptEntity(0, [$scripts[$val]]);
