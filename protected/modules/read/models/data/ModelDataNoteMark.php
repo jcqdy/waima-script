@@ -9,7 +9,7 @@ class ModelDataNoteMark
     public function __construct()
     {
         $this->modelDaoNoteMark = new ModelDaoNoteMark();
-        $this->modelDaoScript = new modelDaoScript();
+        $this->modelDaoScript = new ModelDaoScript();
     }
 
     public function getNoteMark($userId, $scriptIds, $status = 1)

@@ -7,8 +7,8 @@ class CollectController extends Controller
         $pkgId = ParameterValidatorHelper::validateMongoIdAsString($_POST, 'pkgId');
         $noteId = ParameterValidatorHelper::validateMongoIdAsString($_POST, 'noteId');
 
-        $modelLogicCollectAdd = new ModelLogicAddCollect();
-        $modelLogicCollectAdd->execute($pkgId, $noteId);
+        $modelLogicAddCollect = new ModelLogicAddCollect();
+        $modelLogicAddCollect->execute($pkgId, $noteId);
 
         ResponseHelper::outputJsonV2([], 'ok', 200);
     }
