@@ -26,20 +26,20 @@ class AccessCheckFilter extends CAccessControlFilter
      */
     protected function preFilter($filterChain)
     {
-        if ($this->_innerApiCall == false) {
-            $aryInfo = $this->publicLogin();
-        } else {
-            $aryInfo = $this->innerLogin();
-        }
-        if (is_array($aryInfo) == true) {
-            $aryUser = array(
-                'id' => $aryInfo['userId'],
-                'name' => $aryInfo['nickname']
-            );
-            foreach ($aryUser as $key => $value) {
-                Yii::app()->user->$key = $value; // 没有设置user组件情况下，如果在各自的controller中设置了eg：array('allow', 'actions' => array('index'))，则不会报420错误。
-            }
-        }
+//        if ($this->_innerApiCall == false) {
+//            $aryInfo = $this->publicLogin();
+//        } else {
+//            $aryInfo = $this->innerLogin();
+//        }
+//        if (is_array($aryInfo) == true) {
+//            $aryUser = array(
+//                'id' => $aryInfo['userId'],
+//                'name' => $aryInfo['nickname']
+//            );
+//            foreach ($aryUser as $key => $value) {
+//                Yii::app()->user->$key = $value; // 没有设置user组件情况下，如果在各自的controller中设置了eg：array('allow', 'actions' => array('index'))，则不会报420错误。
+//            }
+//        }
 
         return parent::preFilter($filterChain);
     }

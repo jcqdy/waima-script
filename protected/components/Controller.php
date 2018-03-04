@@ -45,9 +45,28 @@ class Controller extends CController
     public function filters()
     {
         return array(
+            'checkCommonParameters',
             'verifySign',
             'accessControl',
         );
+    }
+
+    /**
+     * 检验公共参数.
+     *
+     * @param mixed $filterChain
+     * @access public
+     * @return void
+     */
+    public function filterCheckCommonParameters($filterChain)
+    {
+        $aryCommParams = ControllerParameterValidator::validateCommonParamters($_REQUEST);
+
+        $this->userId = $aryCommParams['userId'];
+        $this->appVersion = $aryCommParams['appVersion'];
+        $this->platform = $aryCommParams['platform'];
+
+        $filterChain->run();
     }
 
     public function filterAccessControl($filterChain)
@@ -86,10 +105,10 @@ class Controller extends CController
             }
         }
 
-        $appConfig = Yii::app()->params['photoTask'][$this->platform];
+
         // 验证sig
         $sig = ParameterValidatorHelper::validateString($_POST, 'sig');
-        $secretKey = $appConfig['appSecret'];
+        $secretKey = Yii::app()->params['appSecret'];
 
         $allParams = array_merge($_POST, $_GET);
         unset($allParams['sig']);
@@ -229,55 +248,8 @@ class Controller extends CController
     protected function beforeAction($action)
     {
         LogHelper::pushLog('nickname', Yii::app()->user->getName());
-        // 公共参数验证完同步cid信息
-        $this->syncDevice();
 
         return true;
-    }
-
-    /**
-     * 指定的接口进行更新用户cid信息
-     */
-    protected function syncDevice()
-    {
-        $uri = strtolower(Yii::app()->request->hostInfo . Yii::app()->request->getRequestUri());
-        // 需要触发更新的接口.
-        $urlList = array(
-            '/task/tasklist',
-            '/pic/workfeed',
-            '/pic/uploadpic'
-        );
-        $falg = false;
-        foreach ($urlList as $url) {
-            if (strpos($uri, $url) !== false) {
-                $falg = true;
-                break;
-            }
-        }
-        if (!$falg) {
-            return true;
-        }
-
-        $userId = ParameterValidatorHelper::validateMongoIdAsString($_REQUEST, "userId", '');
-        if (!$userId) {
-            return true;
-        }
-
-        $params = array(
-            'userId' => $userId,
-            'cid' => $this->cid, // cid可能为空 -> ''
-            'deviceId' => $this->deviceId,
-            'platform' => $this->platform,
-            'locale' => $this->locale,
-            'channel' => $this->channel,
-            'timeZone' => $this->timeZone,
-            'appversion' => $this->appVersion,
-            'systemVersion' => $this->systemVersion,
-            'updateTime' => UtilHelper::time(),
-        );
-
-        $deviceModel = Factory::create('ModelLogicUserDeviceUpdate');
-        $deviceModel->deviceUpdate($params);
     }
 
     /**
