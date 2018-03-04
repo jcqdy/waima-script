@@ -103,15 +103,11 @@ class AccessCheckFilter extends CAccessControlFilter
 
     public function accessDenied($user, $message)
     {
-        $data = new stdClass();
         if ($user->isGuest == true) {
-            if ($this->needUserIdAndToken) {
-                ResponseHelper::outputJsonV2($data, 'UserId and Token is required', Errno::PARAMETER_VALIDATION_FAILED);
-            }
-            ResponseHelper::outputJsonV2($data, Yii::t('errorno', Errno::USER_LOGIN_REQUIRED, null, null, LanguageHelper::getLanguage($_REQUEST['locale'])), Errno::USER_LOGIN_REQUIRED);
-        } else {
+            ResponseHelper::outputJsonV2(array(), '', Errno::USER_LOGIN_REQUIRED);
+        }else {
             // @todo: 还未想清楚, 由于不用于更高的权限检查,暂时用不到
-            ResponseHelper::outputJsonV2($data, Yii::t('errorno', Errno::USER_LOGIN_REQUIRED, null, null, LanguageHelper::getLanguage($_REQUEST['locale'])), Errno::USER_LOGIN_REQUIRED);
+            ResponseHelper::outputJsonV2(array(), $message, Errno::USER_LOGIN_REQUIRED);
         }
     }
 }
