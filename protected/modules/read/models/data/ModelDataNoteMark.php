@@ -6,10 +6,13 @@ class ModelDataNoteMark
 
     protected $modelDaoScript;
 
+    protected $modelDaoPartPkg;
+
     public function __construct()
     {
         $this->modelDaoNoteMark = new ModelDaoNoteMark();
         $this->modelDaoScript = new ModelDaoScript();
+        $this->modelDaoPartPkg = new ModelDaoPartPkg();
     }
 
     public function getNoteMark($userId, $scriptId, $sp, $num, $status = 1)
@@ -45,5 +48,20 @@ class ModelDataNoteMark
     public function addMark($scriptId, $userId, $markPos, $mark, $createTime)
     {
         return $this->modelDaoNoteMark->addMark($scriptId, $userId, $markPos, $mark, $createTime);
+    }
+
+    public function incPartNum($pkgId, $incNum, $updateTime, $status = 1)
+    {
+        return $this->modelDaoPartPkg->incPartNum($pkgId, $incNum, $updateTime, $status);
+    }
+
+    public function getPkgByPid($pkgId, $status = 1)
+    {
+        return $this->modelDaoPartPkg->findByPkgId($pkgId, $status);
+    }
+
+    public function delPkg($pkgId)
+    {
+        return $this->modelDaoPartPkg->delPkg($pkgId);
     }
 }

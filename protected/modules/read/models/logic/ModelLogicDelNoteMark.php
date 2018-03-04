@@ -8,14 +8,29 @@ class ModelLogicDelNoteMark
         $this->modelDataNoteMark = new ModelDataNoteMark();
     }
 
-    public function execute($noteId, $markId)
+    public function execute($noteId)
     {
-        if (empty($noteId) && empty($markId))
-            throw new Exception('noteId or markId error', Errno::PARAMETER_VALIDATION_FAILED);
-        
-        $delId = empty($noteId) ? $markId : $noteId;
-        $ret = $this->modelDataNoteMark->deleteNoteMark($delId);
+        $note = $this->modelDataNoteMark->findNoteMark($noteId);
+        if (empty($note))
+            return;
+
+        $ret = $this->modelDataNoteMark->deleteNoteMark($noteId);
         if ($ret == false)
             throw new Exception('del noteMark failed', Errno::FATAL);
+
+        $updateTime = time();
+        $ret = $this->modelDataNoteMark->incPartNum($note['pkgId'], -1, $updateTime);
+        if ($ret === false)
+            LogHelper::error('inc partNum failed, pkgId : ' . $note['pkgId'], 'read');
+
+
+        $pkg = $this->modelDataNoteMark->getPkgByPid($note['pkgId']);
+        if ($pkg['partNum'] <= 0) {
+            $ret = $this->modelDataNoteMark->delPkg($note['pkgId']);
+            if ($ret === false)
+                LogHelper::error('delete part package failed, pkgId : ' . $note['pkgId'], Errno::FATAL);
+
+            return;
+        }
     }
 }
