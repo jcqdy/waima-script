@@ -9,6 +9,8 @@ return array(
         'application.modules.user.models.logic.*',
         'application.modules.user.helpers.*',
         'application.modules.user.components.*',
+        'application.modules.read.models.dao.*',
+        'application.modules.script.models.dao.*',
     ),
     'params' => array(),
 );
