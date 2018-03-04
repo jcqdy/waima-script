@@ -11,7 +11,7 @@ class CollectListEntity
         $this->package = new PartPkgEntity($package);
         foreach ($collects as $collect) {
             $item = new NoteMarkEntity($collect);
-            $item->scriptName = isset($scripts[$collect['scriptId']]) ? $scripts[$collect['scriptId']]['scriptName'] : '';
+            $item->scriptName = isset($scripts[$collect['scriptId']]) ? $scripts[$collect['scriptId']]['name'] : '';
             $this->note[] = $item;
         }
     }
