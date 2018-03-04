@@ -17,13 +17,13 @@ class FakeData
         $this->operation();
         $this->readStatus($userId, $scriptId);
         $this->readRecord($userId, $scriptId);
-        $this->bookCase($scriptId);
+        $this->bookCase($userId, $scriptId);
     }
 
     public function script($scriptId, $typeId1, $typeId2)
     {
         $doc = [
-            '_id' => $scriptId,
+            '_id' => new MongoId($scriptId),
             'name' => '低俗小说',
             'fileUrl' => 'http://scriptfile.ekaogo.com/低俗小说.txt',
             'coverUrl' => 'http://scriptfile.ekaogo.com/WechatIMG1222.jpeg',
@@ -206,8 +206,8 @@ class FakeData
     public function readRecord($userId, $scriptId)
     {
         $doc = [
-            'userId' => $userId,
-            'scriptId' => $scriptId,
+            'userId' => new MongoId($userId),
+            'scriptId' => new MongoId($scriptId),
             'num' => 12,
             'updateTime' => time(),
         ];
@@ -215,9 +215,10 @@ class FakeData
         $obj->add($doc);
     }
 
-    public function bookCase($scriptId)
+    public function bookCase($userId, $scriptId)
     {
         $doc = [
+            '_id' => new MongoId($userId),
             'scriptIds' => [$scriptId],
         ];
         $obj = new ModelDaoBookCase();
