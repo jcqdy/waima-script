@@ -351,6 +351,7 @@ class ControllerParameterValidator
         }
 
         return array(
+            'userId' => $userId,
             'appName' => $appName,
             'appVersion' => $appVersion,
             'platform' => $platform,
