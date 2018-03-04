@@ -30,7 +30,7 @@ class ModelLogicCollectFetch
         if (empty($collects))
             return $this->defaultRet;
 
-        $newSp = $collects[count($collects) - 1]['updateTime'];
+        $newSp = end($collects)['updateTime'];
 
         $scriptIds = [];
         foreach ($collects as $collect) {
