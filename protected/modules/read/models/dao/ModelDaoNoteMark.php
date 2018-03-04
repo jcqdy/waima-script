@@ -44,7 +44,7 @@ class ModelDaoNoteMark extends ModelDataMongoCollection
         return DbWrapper::transform($ret);
     }
 
-    public function getByUidSid($userId, $scriptId, $status = 1)
+    public function queryByUidSid($userId, $scriptId, $status = 1)
     {
         $query[self::USER_ID] = $userId instanceof MongoId ? $userId : new MongoId($userId);
         $query[self::SCRIPT_ID] = $scriptId instanceof MongoId ? $scriptId : new MongoId($scriptId);
@@ -139,6 +139,21 @@ class ModelDaoNoteMark extends ModelDataMongoCollection
     public function queryByPkgId($pkgId, $sp, $num, $status = 1)
     {
         $query[self::PKG_ID] = $pkgId instanceof MongoId ? $pkgId : new MongoId($pkgId);
+        $query[self::STATUS] = $status;
+        if ($sp !== 0)
+            $query[self::UPDATE_TIME] = ['$lt' => $sp];
+
+        $sort[self::UPDATE_TIME] = -1;
+
+        $ret = $this->query($query, [], $sort, $num);
+
+        return DbWrapper::transform($ret);
+    }
+
+    public function queryByUidSidSortUpTime($userId, $scriptId, $sp, $num, $status = 1)
+    {
+        $query[self::USER_ID] = $userId instanceof MongoId ? $userId : new MongoId($userId);
+        $query[self::SCRIPT_ID] = $scriptId instanceof MongoId ? $scriptId : new MongoId($scriptId);
         $query[self::STATUS] = $status;
         if ($sp !== 0)
             $query[self::UPDATE_TIME] = ['$lt' => $sp];

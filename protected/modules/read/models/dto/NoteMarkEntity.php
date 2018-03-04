@@ -21,6 +21,8 @@ class NoteMarkEntity
 
     public $createTime;
 
+    public $updateTime;
+
     public $year;
 
     public $mon;
@@ -37,6 +39,7 @@ class NoteMarkEntity
         $this->note = isset($noteMark['note']) ? (string)$noteMark['note'] : '';
         $this->pkgId = isset($noteMark['pkgId']) ? (string)$noteMark['pkgId'] : '';
         $this->createTime = isset($noteMark['createTime']) ? $noteMark['createTime'] : 0;
+        $this->updateTime = isset($noteMark['updateTime']) ? $noteMark['updateTime'] : 0;
         $date = isset($noteMark['createTime']) ? explode(':', date('Y:m:d', $noteMark['createTime'])) : explode(':', date('Y:m:d', time()));
         $this->year = $date[0];
         $this->mon = $date[1];

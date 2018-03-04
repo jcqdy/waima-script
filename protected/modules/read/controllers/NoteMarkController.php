@@ -4,11 +4,13 @@ class NoteMarkController extends Controller
 {
     public function actionList()
     {
+        $sp = ParameterValidatorHelper::validateInteger($_REQUEST, 'sp', 0);
+        $num = ParameterValidatorHelper::validateInteger($_REQUEST, 'num', 1, 20, 20);
         $userId = ParameterValidatorHelper::validateMongoIdAsString($_POST, 'userId');
         $scriptId = ParameterValidatorHelper::validateMongoIdAsString($_POST, 'scriptId');
 
         $modelLogicNoteMarkList = new ModelLogicNoteMarkList();
-        $ret = $modelLogicNoteMarkList->execute($userId, $scriptId);
+        $ret = $modelLogicNoteMarkList->execute($userId, $scriptId, $sp, $num);
 
         ResponseHelper::outputJsonV2($ret, 'ok', 200);
     }

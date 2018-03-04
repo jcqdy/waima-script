@@ -12,9 +12,9 @@ class ModelDataNoteMark
         $this->modelDaoScript = new ModelDaoScript();
     }
 
-    public function getNoteMark($userId, $scriptId, $status = 1)
+    public function getNoteMark($userId, $scriptId, $sp, $num, $status = 1)
     {
-        return $this->modelDaoNoteMark->getByUidSid($userId, $scriptId, $status);
+        return $this->modelDaoNoteMark->queryByUidSidSortUpTime($userId, $scriptId, $sp, $num, $status);
     }
 
     public function getScript($scriptId)

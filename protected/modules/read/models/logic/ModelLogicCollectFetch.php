@@ -9,7 +9,7 @@ class ModelLogicCollectFetch
             'package' => [],
             'note' => []
         ],
-        'sp' => 0
+        'sp' => -1,
     ];
 
     public function __construct()
