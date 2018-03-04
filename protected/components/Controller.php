@@ -214,7 +214,8 @@ class Controller extends CController
         return array(
             array(
                 'allow',
-                'users' => array('@')
+//                'users' => array('@')
+                'users' => array('*')
             ),
             array('deny')
         );
