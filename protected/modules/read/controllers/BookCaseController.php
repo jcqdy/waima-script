@@ -55,8 +55,8 @@ class BookCaseController extends Controller
         $userId = ParameterValidatorHelper::validateMongoIdAsString($_POST, 'userId');
         $scriptId = ParameterValidatorHelper::validateMongoIdAsString($_POST, 'scriptId');
 
-        $modelLogicDeleteScript = new ModelLogicDeleteScript();
-        $modelLogicDeleteScript->execute($userId, $scriptId);
+        $modelLogicAddScript = new ModelLogicAddScript();
+        $modelLogicAddScript->execute($userId, $scriptId);
 
         ResponseHelper::outputJsonV2([], 'ok', 200);
     }
