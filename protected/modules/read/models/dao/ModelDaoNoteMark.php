@@ -117,7 +117,10 @@ class ModelDaoNoteMark extends ModelDataMongoCollection
         $query[self::_ID] = $noteId instanceof MongoId ? $noteId : new MongoId($noteId);
         $query[self::STATUS] = $status;
 
-        $doc[self::PKG_ID] = $pkgId instanceof MongoId ? $pkgId : new MongoId($pkgId);
+        if (empty($pkgId))
+            $doc[self::PKG_ID] = $pkgId;
+        else
+            $doc[self::PKG_ID] = $pkgId instanceof MongoId ? $pkgId : new MongoId($pkgId);
 
         return $this->modify($query, $doc);
     }
