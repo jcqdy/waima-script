@@ -29,7 +29,7 @@ class BookCaseController extends Controller
         $userId = ParameterValidatorHelper::validateMongoIdAsString($_POST, 'userId');
         $scriptId = ParameterValidatorHelper::validateMongoIdAsString($_POST, 'scriptId');
         $newFolderId = ParameterValidatorHelper::validateMongoIdAsString($_POST, 'newFolderId', '');
-        $name = ParameterValidatorHelper::validateString($_POST, 'name', '');
+        $name = ParameterValidatorHelper::validateString($_POST, 'name', 1, 50, '');
         $makeFolder = ParameterValidatorHelper::validateEnumInteger($_POST, 'makeFolder', [0,1]);
 
         $modelLogicMoveScript = new ModelLogicMoveScript();
@@ -41,7 +41,7 @@ class BookCaseController extends Controller
     public function actionEdit()
     {
         $userId = ParameterValidatorHelper::validateMongoIdAsString($_POST, 'userId');
-        $name = ParameterValidatorHelper::validateString($_POST, 'name', '');
+        $name = ParameterValidatorHelper::validateString($_POST, 'name', 1, 50, '');
         $folderId = ParameterValidatorHelper::validateMongoIdAsString($_POST, 'folderId', '');
 
         $modelLogicEditFolder = new ModelLogicEditFolder();
