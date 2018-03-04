@@ -4,22 +4,33 @@ class ModelLogicCollectFetch
 {
     protected $modelDataCollect;
 
+    protected $defaultRet = [
+        'items' => [
+            'package' => [],
+            'note' => []
+        ],
+        'sp' => 0
+    ];
+
     public function __construct()
     {
         $this->modelDataCollect = new ModelDataCollect();
     }
 
-    public function execute($userId, $pkgId)
+    public function execute($userId, $pkgId, $sp, $num)
     {
         $pkg = $this->modelDataCollect->getPkgByPid($pkgId, $status = 1);
         if (empty($pkg))
-            return ['package' => [], 'note' => []];
+            return $this->defaultRet;
 
         if ($pkg['userId'] !== $userId)
+            throw new Exception('userId is wrong', Errno::INVALID_PARAMETER);
 
-        $collects = $this->modelDataCollect->queryCollectList($pkgId, 1);
+        $collects = $this->modelDataCollect->queryCollectList($pkgId, 1, $sp, $num);
         if (empty($collects))
-            return ['package' => [], 'note' => []];
+            return $this->defaultRet;
+
+        $newSp = $collects[count($collects) - 1]['updateTime'];
 
         $scriptIds = [];
         foreach ($collects as $collect) {
@@ -33,6 +44,8 @@ class ModelLogicCollectFetch
             $scripts = [];
         }
 
-        return new CollectListEntity($pkg, $scripts, $collects);
+        $items = new CollectListEntity($pkg, $scripts, $collects);
+        
+        return ['items' => $items, 'sp' => $newSp];
     }
 }

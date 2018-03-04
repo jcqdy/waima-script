@@ -84,9 +84,9 @@ class ModelDataCollect
         return $this->modelDaoNoteMark->updatePkgId($noteId, $pkgId, $status);
     }
 
-    public function queryCollectList($pkgId, $status = 1)
+    public function queryCollectList($pkgId, $sp, $num, $status = 1)
     {
-        return $this->modelDaoNoteMark->queryByPkgId($pkgId, $status);
+        return $this->modelDaoNoteMark->queryByPkgId($pkgId, $sp, $num, $status);
     }
 
     public function getNoteMark($noteId, $status = 1)

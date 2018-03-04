@@ -49,7 +49,7 @@ class ModelDaoNoteMark extends ModelDataMongoCollection
         $query[self::USER_ID] = $userId instanceof MongoId ? $userId : new MongoId($userId);
         $query[self::SCRIPT_ID] = $scriptId instanceof MongoId ? $scriptId : new MongoId($scriptId);
         $query[self::STATUS] = $status;
-        
+
         $ret = $this->query($query);
 
         return DbWrapper::transform($ret);
@@ -92,7 +92,7 @@ class ModelDaoNoteMark extends ModelDataMongoCollection
         $doc[self::MARK_POS] = $markPos;
         $doc[self::MARK] = $mark;
         $doc[self::NOTE] = $note;
-        $doc[self::CREATE_TIME] = $doc[self::CREATE_TIME] = $createTime;
+        $doc[self::CREATE_TIME] = $doc[self::UPDATE_TIME] = $createTime;
         $doc[self::PKG_ID] = '';
         $doc[self::STATUS] = 1;
 
@@ -136,12 +136,15 @@ class ModelDaoNoteMark extends ModelDataMongoCollection
         return $this->modify($query, $doc);
     }
 
-    public function queryByPkgId($pkgId, $status = 1)
+    public function queryByPkgId($pkgId, $sp, $num, $status = 1)
     {
         $query[self::PKG_ID] = $pkgId instanceof MongoId ? $pkgId : new MongoId($pkgId);
         $query[self::STATUS] = $status;
+        $query[self::UPDATE_TIME] = ['$lt' => $sp];
 
-        $ret = $this->query($query);
+        $sort[self::UPDATE_TIME] = -1;
+
+        $ret = $this->query($query, [], $sort, $num);
 
         return DbWrapper::transform($ret);
     }

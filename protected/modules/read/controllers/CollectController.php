@@ -60,11 +60,13 @@ class CollectController extends Controller
 
     public function actionFetch()
     {
+        $sp = ParameterValidatorHelper::validateInteger($_REQUEST, 'sp', 0);
+        $num = ParameterValidatorHelper::validateInteger($_REQUEST, 'num', 1, 20, 20);
         $userId = ParameterValidatorHelper::validateMongoIdAsString($_POST, 'userId');
         $pkgId = ParameterValidatorHelper::validateMongoIdAsString($_POST, 'pkgId');
 
-        $modelLogicCollectFetch = new ModelLogicCollectFetch($userId, $pkgId);
-        $ret = $modelLogicCollectFetch->execute($userId, $pkgId);
+        $modelLogicCollectFetch = new ModelLogicCollectFetch();
+        $ret = $modelLogicCollectFetch->execute($userId, $pkgId, $sp, $num);
 
         ResponseHelper::outputJsonV2($ret, 'ok', 200);
     }
