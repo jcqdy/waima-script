@@ -64,22 +64,23 @@ class NoteMarkController extends Controller
         $note = ParameterValidatorHelper::validateString($_POST, 'note');
         $scriptId = ParameterValidatorHelper::validateMongoIdAsString($_POST, 'scriptId');
         $mark = ParameterValidatorHelper::validateString($_POST, 'mark');
-        
+        $markPos = ParameterValidatorHelper::validateArray($_POST, 'markPos');
+
         $modelLogicAddNote = new ModelLogicAddNote();
-        $ret = $modelLogicAddNote->execute($userId, $note, $scriptId, $mark);
+        $ret = $modelLogicAddNote->execute($userId, $note, $scriptId, $mark, $markPos);
 
         ResponseHelper::outputJsonV2($ret, 'ok', 200);
     }
 
-    public function actionAddMark()
-    {
-        $userId = ParameterValidatorHelper::validateMongoIdAsString($_POST, 'userId');
-        $scriptId = ParameterValidatorHelper::validateMongoIdAsString($_POST, 'scriptId');
-        $mark = ParameterValidatorHelper::validateString($_POST, 'mark');
-
-        $modelLogicAddNote = new ModelLogicAddMark();
-        $ret = $modelLogicAddNote->execute($userId, $scriptId, $mark);
-
-        ResponseHelper::outputJsonV2($ret, 'ok', 200);
-    }
+//    public function actionAddMark()
+//    {
+//        $userId = ParameterValidatorHelper::validateMongoIdAsString($_POST, 'userId');
+//        $scriptId = ParameterValidatorHelper::validateMongoIdAsString($_POST, 'scriptId');
+//        $mark = ParameterValidatorHelper::validateString($_POST, 'mark');
+//
+//        $modelLogicAddNote = new ModelLogicAddMark();
+//        $ret = $modelLogicAddNote->execute($userId, $scriptId, $mark);
+//
+//        ResponseHelper::outputJsonV2($ret, 'ok', 200);
+//    }
 }

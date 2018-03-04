@@ -11,6 +11,8 @@ return array(
         'application.modules.read.components.*',
         'application.modules.script.models.dao.*',
         'application.modules.script.models.dto.*',
+        'application.modules.user.models.dao.*',
+        'application.modules.user.models.dto.*',
     ),
     'params' => array(),
 );
