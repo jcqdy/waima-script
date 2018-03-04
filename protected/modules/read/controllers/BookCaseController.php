@@ -42,7 +42,7 @@ class BookCaseController extends Controller
     {
         $userId = ParameterValidatorHelper::validateMongoIdAsString($_POST, 'userId');
         $name = ParameterValidatorHelper::validateString($_POST, 'name', 1, 50, '');
-        $folderId = ParameterValidatorHelper::validateMongoIdAsString($_POST, 'folderId', '');
+        $folderId = ParameterValidatorHelper::validateMongoIdAsString($_POST, 'folderId');
 
         $modelLogicEditFolder = new ModelLogicEditFolder();
         $modelLogicEditFolder->execute($userId, $name, $folderId);

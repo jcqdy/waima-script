@@ -41,9 +41,6 @@ class ModelLogicMoveScript
                 }
             }
         } else {
-            if (! empty($newFolderId)) {
-
-            }
             foreach ($bookCase as $key => $val) {
                 if (is_string($val) && $val == $scriptId && empty($newFolderId))
                     break;

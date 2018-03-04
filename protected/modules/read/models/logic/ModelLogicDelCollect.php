@@ -16,7 +16,7 @@ class ModelLogicDelCollect
 //            throw new Exception('delete collect failed, partId : ' . $partId, Errno::FATAL);
 
 
-        $ret = $this->modelDataCollect->updateNotePkgId($noteId, '');
+        $ret = $this->modelDataCollect->updateNotePkgId($noteId, $pkgId);
         if ($ret === false)
             throw new Exception('update note pkgId failed', Errno::FATAL);
 

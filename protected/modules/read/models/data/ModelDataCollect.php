@@ -88,4 +88,9 @@ class ModelDataCollect
     {
         return $this->modelDaoNoteMark->queryByPkgId($pkgId, $status);
     }
+
+    public function getNoteMark($noteId, $status = 1)
+    {
+        return $this->modelDaoNoteMark->getNoteMark($noteId, $status);
+    }
 }
