@@ -26,7 +26,7 @@ class ModelLogicCollectFetch
         if ($pkg['userId'] !== $userId)
             throw new Exception('userId is wrong', Errno::INVALID_PARAMETER);
 
-        $collects = $this->modelDataCollect->queryCollectList($pkgId, 1, $sp, $num);
+        $collects = $this->modelDataCollect->queryCollectList($pkgId, $sp, $num);
         if (empty($collects))
             return $this->defaultRet;
 
@@ -45,7 +45,7 @@ class ModelLogicCollectFetch
         }
 
         $items = new CollectListEntity($pkg, $scripts, $collects);
-        
+
         return ['items' => $items, 'sp' => $newSp];
     }
 }
