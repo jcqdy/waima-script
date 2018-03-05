@@ -13,12 +13,12 @@ class UserProfileEntity
             'readNum' => [
                 'readNum' => isset($user['readNum']) ? (int)$user['readNum'] : 1,
                 'achText' => Yii::t('userModule.text', 'readNumAchText',
-                    ['{readNumAchText}' => $user['readNumRatio'] * 100], null, 'zh_cn'),
+                    ['{readNumRatio}' => $user['readNumRatio'] * 100], null, 'zh_cn'),
             ],
             'readDays' => [
                 'readNum' => isset($user['readDays']) ? (int)$user['readDays'] : 1,
                 'achText' => Yii::t('userModule.text', 'readDayAchText',
-                    ['{readDayAchText}' => $user['readDayRatio'] * 100], null, 'zh_cn'),
+                    ['{readDayRatio}' => $user['readDayRatio'] * 100], null, 'zh_cn'),
             ],
             'keepReadDays' => [
                 'readNum' => isset($user['readDays']) ? (int)$user['readDays'] : 1,
