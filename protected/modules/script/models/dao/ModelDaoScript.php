@@ -74,7 +74,7 @@ class ModelDaoScript extends ModelDataMongoCollection
     {
         $typeId = $typeId instanceof MongoId ? $typeId : new MongoId($typeId);
 
-        $query = [self::TYPE_IDS => ['$in' => $typeId],];
+        $query = [self::TYPE_IDS => ['$in' => [$typeId]],];
         $sort = [self::READER_NUM => -1];
 
         $ret = $this->query($query, [], $sort, $limit, $skip);
