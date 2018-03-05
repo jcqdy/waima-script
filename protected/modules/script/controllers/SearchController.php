@@ -4,7 +4,7 @@ class SearchController extends Controller
 {
     public function actionIndex()
     {
-        $keyword = ParameterValidatorHelper::validateString($_POST, 'keyword');
+        $keyword = ParameterValidatorHelper::validateArray($_POST, 'keyword', ' ');
 
         $modelLogicSearch = new ModelLogicSearch();
         $ret = $modelLogicSearch->execute($keyword);
