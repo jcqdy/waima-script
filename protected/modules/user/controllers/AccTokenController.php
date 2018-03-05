@@ -27,6 +27,6 @@ class AccTokenController extends H5Controller
     public function actionFake()
     {
         $obj = new FakeData();
-        $obj->execute();
+        $obj->moreScript();
     }
 }

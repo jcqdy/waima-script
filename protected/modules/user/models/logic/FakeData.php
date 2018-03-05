@@ -1,6 +1,44 @@
 <?php
 class FakeData
 {
+    public function moreScript()
+    {
+        $typeIdList = [
+            '剧情' => '5a9bb12f50cc87d908cde1a8',
+            '爱情' => '5a9bb12f50cc87d908cde1a9',
+            '喜剧' => '5a9bb12f50cc87d908cde1ad',
+            '科幻' => '5a9bb12f50cc87d908cde1ae',
+            '动作' => '5a9bb12f50cc87d908cde1af',
+            '悬疑' => '5a9bb12f50cc87d908cde1b0',
+            '犯罪' => '5a9bb12f50cc87d908cde1b1',
+            '战争' => '5a9bb12f50cc87d908cde1b2',
+            '文艺' => '5a9bb12f50cc87d908cde1b3',
+        ];
+        $doc = [
+            'name' => '低俗小说',
+            'fileUrl' => 'http://scriptfile.ekaogo.com/低俗小说.txt',
+            'coverUrl' => 'http://scriptfile.ekaogo.com/WechatIMG1222.jpeg',
+            'typeIds' => ['5a9bb12f50cc87d908cde1a8', '5a9bb12f50cc87d908cde1ae'],
+            'scriptType' => ['剧情', '喜剧'],
+            'readerNum' => 120,
+            'writer' => ['昆汀·塔伦蒂诺', '罗杰·阿夫瑞'],
+            'createTime' => time(),
+        ];
+        $n = 0;
+        $obj = new ModelDaoScript();
+        while ($n < 20) {
+            $typeIdArr = array_rand($typeIdList, 2);
+            $doc['scriptType'] = $typeIdArr;
+            $typeIds = [];
+            foreach ($typeIdArr as $key) {
+                $typeIds[] = $typeIdList[$key];
+            }
+            $doc['typeIds'] = $typeIds;
+            $n++;
+            $obj->add($doc);
+        }
+    }
+
     public function execute()
     {
         $typeId1 = (string)new MongoId();
