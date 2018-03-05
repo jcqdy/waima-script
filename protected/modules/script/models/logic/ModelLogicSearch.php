@@ -19,7 +19,7 @@ class ModelLogicSearch
             return [];
 
         $ret = [];
-        foreach ($ret as $value) {
+        foreach ($res as $value) {
             $ret[] = new ScriptEntity($value);
         }
 
