@@ -72,9 +72,9 @@ class ModelDaoScript extends ModelDataMongoCollection
 
     public function queryByTypeId($typeId, $skip, $limit)
     {
-        $typeId = $typeId instanceof MongoId ? $typeId : new MongoId($typeId);
+//        $typeId = $typeId instanceof MongoId ? $typeId : new MongoId($typeId);
 
-        $query = [self::TYPE_IDS => ['$in' => [$typeId]],];
+        $query = [self::TYPE_IDS => ['$in' => [(string)$typeId]],];
         $sort = [self::READER_NUM => -1];
 
         $ret = $this->query($query, [], $sort, $limit, $skip);
