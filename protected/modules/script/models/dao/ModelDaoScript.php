@@ -103,7 +103,11 @@ class ModelDaoScript extends ModelDataMongoCollection
     {
         $query['$or'] = [];
         foreach ($keywords as $word) {
-            $query['$or'][] = [self::NAME => new MongoRegex("/$word/")];
+            $query['$or'][] = [
+                self::NAME => [
+                    '$regex' => new MongoRegex("/$word/i")
+                ]
+            ];
         }
 
         $ret = $this->query($query);
