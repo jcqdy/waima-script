@@ -34,8 +34,9 @@ class FakeData
                 $typeIds[] = $typeIdList[$key];
             }
             $doc['typeIds'] = $typeIds;
-            $n++;
+            $doc['_id'] = new MongoId();
             $obj->add($doc);
+            $n++;
         }
     }
 
