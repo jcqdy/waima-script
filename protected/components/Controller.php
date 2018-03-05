@@ -61,8 +61,7 @@ class Controller extends CController
     public function filterCheckCommonParameters($filterChain)
     {
         $aryCommParams = ControllerParameterValidator::validateCommonParamters($_REQUEST);
-
-        $this->userId = $aryCommParams['userId'];
+        
         $this->appVersion = $aryCommParams['appVersion'];
         $this->platform = $aryCommParams['platform'];
 

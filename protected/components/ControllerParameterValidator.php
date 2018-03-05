@@ -334,7 +334,6 @@ class ControllerParameterValidator
      */
     public static function validateCommonParamters($aryData)
     {
-        $userId = ControllerParameterValidator::validateMongoIdAsString($aryData, 'userId');
         $appName = ControllerParameterValidator::validateString($aryData, 'appName', 1, 50, null);
         if (! $appName) {
             $appName = ControllerParameterValidator::validateString($aryData, 'appname', 1, 50);
@@ -351,7 +350,6 @@ class ControllerParameterValidator
         }
 
         return array(
-            'userId' => $userId,
             'appName' => $appName,
             'appVersion' => $appVersion,
             'platform' => $platform,
