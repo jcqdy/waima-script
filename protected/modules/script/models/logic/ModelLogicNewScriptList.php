@@ -4,6 +4,11 @@ class ModelLogicNewScriptList
 {
     protected $modelDataScriptList;
 
+    protected $defaultRet = [
+        'items' => [],
+        'sp' => -1,
+    ];
+
     public function __construct()
     {
         $this->modelDataScriptList = new ModelDataScriptList();
@@ -13,10 +18,10 @@ class ModelLogicNewScriptList
     {
         $scripts = $this->modelDataScriptList->getHotScripts($sp, $num);
         if (empty($scripts))
-            return ['items' => [], 'sp' => $sp];
+            return $this->defaultRet;
         
-        $end = count($scripts) - 1;
-        $newSp = $scripts[$end]['createTime'];
+        $endId = end($scripts);
+        $newSp = $scripts[$endId]['createTime'];
 
         $ret = ['items' => [], 'sp' => $newSp];
         foreach ($scripts as $script) {
