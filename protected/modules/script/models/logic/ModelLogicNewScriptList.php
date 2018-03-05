@@ -16,12 +16,11 @@ class ModelLogicNewScriptList
 
     public function execute($sp, $num)
     {
-        $scripts = $this->modelDataScriptList->getHotScripts($sp, $num);
+        $scripts = $this->modelDataScriptList->getNewScript($sp, $num);
         if (empty($scripts))
             return $this->defaultRet;
-        
-        $endId = end($scripts);
-        $newSp = $scripts[$endId]['createTime'];
+
+        $newSp = end($scripts)['createTime'];
 
         $ret = ['items' => [], 'sp' => $newSp];
         foreach ($scripts as $script) {
