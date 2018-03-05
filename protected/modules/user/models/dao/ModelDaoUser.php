@@ -26,7 +26,7 @@ class ModelDaoUser extends ModelDataMongoCollection
 
     const KEEP_READ_DAYS = 'keepReadDays';
 
-    const LATS_READ_TIME = 'lastReadTime';
+    const LAST_READ_TIME = 'lastReadTime';
 
     const READ_NUM_RATIO = 'readNumRatio';
 
@@ -55,9 +55,16 @@ class ModelDaoUser extends ModelDataMongoCollection
         $doc[self::PROVINCE] = $province;
         $doc[self::COUNTRY] = $country;
         $doc[self::LANGUAGE] = $language;
+        $doc[self::PHONE_NUM] = '';
+        $doc[self::READ_NUM] = 0;
+        $doc[self::READ_DAYS] = 0;
+        $doc[self::KEEP_READ_DAYS] = 0;
+        $doc[self::LAST_READ_TIME] = 0;
+        $doc[self::READ_NUM_RATIO] = 0;
+        $doc[self::READ_DAY_RATIO] = 0;
         $doc[self::FONT_SIZE] = CommonConst::DEFAULT_FONT_SIZE;
         $doc[self::BACK_COLOR] = CommonConst::DEFAULT_BACK_COLOR;
-        $doc[self::CREATE_TIME] = $createTime;
+        $doc[self::CREATE_TIME] = $doc[self::UPDATE_TIME] = $createTime;
 
         $ret = $this->add($doc);
         if ($ret === false)
@@ -80,7 +87,7 @@ class ModelDaoUser extends ModelDataMongoCollection
         $doc[self::READ_NUM] = $readNum;
         $doc[self::READ_DAYS] = $readDays;
         $doc[self::KEEP_READ_DAYS] = $keepReadDays;
-        $doc[self::LATS_READ_TIME] = $lastReadTime;
+        $doc[self::LAST_READ_TIME] = $lastReadTime;
         $doc[self::UPDATE_TIME] = $updateTime;
 
         return $this->modify($query, $doc);
