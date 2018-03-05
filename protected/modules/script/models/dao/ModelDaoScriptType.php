@@ -50,4 +50,12 @@ class ModelDaoScriptType extends ModelDataMongoCollection
 
         return DbWrapper::transform($ret);
     }
+
+    public function getType($typeId)
+    {
+        $query[self::_ID] = $typeId instanceof MongoId ? $typeId : new MongoId($typeId);
+
+        $ret = $this->findOne($query);
+        return DbWrapper::transform($ret);
+    }
 }

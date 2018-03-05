@@ -23,7 +23,7 @@ class ModelDataType
 
     public function getType($typeId)
     {
-        return $this->modelDaoScriptType->queryByIds([$typeId]);
+        return $this->modelDaoScriptType->getType([$typeId]);
     }
 
     public function getHotScripts($sp, $num)
