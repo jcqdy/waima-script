@@ -3,7 +3,7 @@ class HotScriptController extends Controller
 {
     public function actionList()
     {
-        $sp = ParameterValidatorHelper::validateInteger($_REQUEST, 'sp', 0);
+        $sp = ParameterValidatorHelper::validateInteger($_REQUEST, 'sp', null, PHP_INT_MAX, 0);
         $num = ParameterValidatorHelper::validateInteger($_REQUEST, 'num', 1, 20, 20);
 
         $modelLogicHotScriptList = new ModelLogicHotScriptList();

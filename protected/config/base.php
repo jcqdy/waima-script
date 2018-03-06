@@ -96,5 +96,6 @@ return array(
     'params' => array(
         'appSecret' => '4afdb06fcdc550e97fdc254ce3fe3c20',
         'appId' => 'wx7e537298ff00ddda',
+        'wechat_sessionKeyApi' => 'https://api.weixin.qq.com/sns/jscode2session?',
     ),
 );
