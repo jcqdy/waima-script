@@ -22,7 +22,7 @@ class ModelDataStore
 
     public function queryType()
     {
-        return $this->modelDaoScriptType->queryLimit(CommonConst::STORE_BANNER_NUM);
+        return $this->modelDaoScriptType->queryLimit();
     }
 
     public function getHotScripts($limit)
@@ -33,6 +33,11 @@ class ModelDataStore
     public function getNewScripts($limit)
     {
         return $this->modelDaoScript->querySortByCreatTime(0, $limit);
+    }
+
+    public function queryAll()
+    {
+        return $this->modelDaoScriptType->queryAll();
     }
 
 }

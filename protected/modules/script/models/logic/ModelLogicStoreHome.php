@@ -11,7 +11,7 @@ class ModelLogicStoreHome
     public function execute()
     {
         $banners = $this->modelDataStore->getBanner();
-        $types = $this->modelDataStore->queryType();
+        $types = $this->modelDataStore->queryAll();
 
         $hotScript = $this->modelDataStore->getHotScripts(CommonConst::STORE_HOT_SCRIPT_NUM);
         $newScript = $this->modelDataStore->getNewScripts(CommonConst::STORE_NEW_SCRIPT_NUM);
