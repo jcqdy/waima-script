@@ -24,12 +24,12 @@ class StoreHomeEntity
         }
 
         foreach ($types as $type) {
-            $bannerEtag = isset($banner['coverUrl']) ? $banner['coverUrl'] :'';
+            $coverEtag = isset($type['coverUrl']) ? $type['coverUrl'] :'';
             $this->scriptType[] = [
                 'typeId' => isset($type['_id']) ? $type['_id'] : '',
                 'typeName' => isset($type['name']) ? $type['name'] : '',
                 'typeEname' => isset($type['eName']) ? $type['eName'] : '',
-                'coverUrl' => $urlPrefix . $bannerEtag,
+                'coverUrl' => $urlPrefix . $coverEtag,
             ];
         }
 
