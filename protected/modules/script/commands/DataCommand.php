@@ -25,7 +25,7 @@ class DataCommand extends CConsoleCommand
                     $etag = QiniuHelper::uploadPic(base64_encode($cover));
                     if ($etag === false)
                         continue;
-                    $dbData['coverUrl'] = $urlPrefix . $etag;
+                    $dbData['coverUrl'] = $etag;
                     continue;
                 }
                 if (strpos($n, $name) !== false) {
@@ -33,7 +33,7 @@ class DataCommand extends CConsoleCommand
                     $etag = QiniuHelper::uploadFile($scFileDir.'/'.$name.'/'.$n, $name.time());
                     if ($etag === false)
                         continue;
-                    $dbData['fileUrl'] = $urlPrefix . $etag;
+                    $dbData['fileUrl'] = $etag;
                 }
                 if (strpos($n, 'data') !== false) {
                     $data = file_get_contents($scFileDir.'/'.$name.'/'.$n);

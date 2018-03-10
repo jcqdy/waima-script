@@ -21,10 +21,14 @@ class ScriptEntity
 
     public function __construct($data)
     {
+        $urlPrefix = Yii::app()->params['qiniu_prefix'];
+
         $this->scriptId = isset($data['_id']) ? (string)$data['_id'] : '';
         $this->scriptName = isset($data['name']) ? $data['name'] : '';
-        $this->fileUrl = isset($data['fileUrl']) ? $data['fileUrl'] : '';
-        $this->coverUrl = isset($data['coverUrl']) ? $data['coverUrl'] : '';
+        $fileEtag = isset($data['fileUrl']) ? $data['fileUrl'] : '';
+        $this->fileUrl = $urlPrefix . $fileEtag;
+        $coverEtag = isset($data['coverUrl']) ? $data['coverUrl'] : '';
+        $this->coverUrl = $urlPrefix . $coverEtag;
         $this->scriptTypeId = isset($data['typeIds']) ? $data['typeIds'] : [];
         $this->scriptType = isset($data['scriptType']) ? $data['scriptType'] : [];
         $this->writer = isset($data['writer']) ? $data['writer'] : [];
