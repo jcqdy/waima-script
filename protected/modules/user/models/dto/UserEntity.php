@@ -6,6 +6,8 @@ class UserEntity
 
     public $avatarUrl;
 
+    public $nickName;
+
     public $gender;
 
     public $city;
@@ -25,5 +27,6 @@ class UserEntity
         $this->province = isset($user['province']) ? (string)$user['province'] : '';
         $this->country = isset($user['country']) ? (string)$user['country'] : '';
         $this->language = isset($user['language']) ? (string)$user['language'] : '';
+        $this->nickName = isset($user['nickName']) ? (string)$user['nickName'] : '';
     }
 }
