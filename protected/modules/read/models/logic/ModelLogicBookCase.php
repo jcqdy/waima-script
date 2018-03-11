@@ -54,7 +54,7 @@ class ModelLogicBookCase
             if (is_array($val)) {
                 $scriptList = [];
                 foreach ($val['scriptIds'] as $id) {
-                    $scriptList = $scripts[$id];
+                    $scriptList[] = $scripts[$id];
                 }
                 $ret[] = new BookCaseScriptEntity(1, $scriptList, $val['folderName'], $val['folderId']);
             }
