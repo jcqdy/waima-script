@@ -18,6 +18,8 @@ class UserEntity
 
     public $language;
 
+    public $phoneNum;
+
     public function __construct($user)
     {
         $this->userId = isset($user['_id']) ? (string)$user['_id'] : '';
@@ -28,5 +30,6 @@ class UserEntity
         $this->country = isset($user['country']) ? (string)$user['country'] : '';
         $this->language = isset($user['language']) ? (string)$user['language'] : '';
         $this->nickName = isset($user['nickName']) ? (string)$user['nickName'] : '';
+        $this->phoneNum = isset($user['phoneNum']) ? (string)$user['phoneNum'] : '';
     }
 }
