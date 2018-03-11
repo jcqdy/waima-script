@@ -5,7 +5,7 @@ class TypeController extends Controller
     {
         $typeId = ParameterValidatorHelper::validateMongoIdAsString($_POST, 'typeId');
 //        $isTypeList = ParameterValidatorHelper::validateEnumInteger($_POST, 'isTypeList', [0,1]);
-        $sp = ParameterValidatorHelper::validateInteger($_POST, 'sp', 0);
+        $sp = ParameterValidatorHelper::validateInteger($_POST, 'sp', 0, PHP_INT_MAX, 0);
         $num = ParameterValidatorHelper::validateInteger($_POST, 'num', 1, 20, 20);
 
         $modelLogicTypeScriptList = new ModelLogicTypeScriptList();
