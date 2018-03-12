@@ -1,6 +1,6 @@
 <?php
 
-class DataCommand extends CConsoleCommand
+class DataCommand extends ConsoleCommand
 {
     public $types = [
         '剧情','爱情','喜剧','科幻','动作','悬疑','犯罪','恐怖','青春','励志','战争',
@@ -46,7 +46,7 @@ class DataCommand extends CConsoleCommand
                             $res = $modelDaoScriptType->findOne(['name' => $val]);
                             if (empty($res)) {
                                 $typeId = new MongoId();
-                                $modelDaoScriptType->add(['_id' => $typeId, 'name' => $val, 'eName' => '', 'scriptNum' => 99, 'coverUrl' => ['http://scriptfile.ekaogo.com/WechatIMG1222.jpeg', 'http://scriptfile.ekaogo.com/WechatIMG1222.jpeg', 'http://scriptfile.ekaogo.com/WechatIMG1222.jpeg']]);
+                                $modelDaoScriptType->add(['_id' => $typeId, 'name' => $val, 'eName' => '', 'scriptNum' => 99, 'coverUrl' => 'comdeyCover']);
                             } else {
                                 $typeId = $res['_id'];
                             }

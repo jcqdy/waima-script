@@ -19,8 +19,8 @@ class ModelDataUser
         return $this->modelDaoUser->findUser($userId);
     }
 
-    public function updatePhoneNum($userId, $phoneNum)
+    public function updatePhoneNum($userId, $phoneNum = null, $avatarUrl = null, $nickName = null)
     {
-        return $this->modelDaoUser->updatePhoneNum($userId, $phoneNum);
+        return $this->modelDaoUser->updatePhoneNum($userId, $phoneNum, $avatarUrl, $nickName);
     }
 }

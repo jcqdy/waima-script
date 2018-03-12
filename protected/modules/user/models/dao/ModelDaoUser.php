@@ -40,6 +40,8 @@ class ModelDaoUser extends ModelDataMongoCollection
 
     const UPDATE_TIME = 'updateTime';
 
+    const OPEN_ID = 'openId';
+
     public function __construct()
     {
         parent::__construct('dbwaima-script', 'waima-script', 'user');
@@ -65,6 +67,18 @@ class ModelDaoUser extends ModelDataMongoCollection
         $doc[self::FONT_SIZE] = CommonConst::DEFAULT_FONT_SIZE;
         $doc[self::BACK_COLOR] = CommonConst::DEFAULT_BACK_COLOR;
         $doc[self::CREATE_TIME] = $doc[self::UPDATE_TIME] = $createTime;
+
+        $ret = $this->add($doc);
+        if ($ret === false)
+            return false;
+
+        return DbWrapper::transform($doc);
+    }
+
+    public function addUserId($openId)
+    {
+        $doc[self::_ID] = new MongoId();
+        $doc[self::OPEN_ID] = $openId;
 
         $ret = $this->add($doc);
         if ($ret === false)
@@ -102,10 +116,19 @@ class ModelDaoUser extends ModelDataMongoCollection
         return $this->modify($query, $doc);
     }
 
-    public function updatePhoneNum($userId, $phoneNum)
+    public function updatePhoneNum($userId, $phoneNum, $avatarUrl, $nickName)
     {
         $query[self::_ID] = $userId instanceof MongoId ? $userId : new MongoId($userId);
-        $doc[self::PHONE_NUM] = $phoneNum;
+        $doc = [];
+        if (! is_null($phoneNum))
+            $doc[self::PHONE_NUM] = $phoneNum;
+        if (! is_null($phoneNum))
+            $doc[self::AVATAR_URL] = $avatarUrl;
+        if (! is_null($nickName))
+            $doc[self::NICK_NAME] = $nickName;
+
+        if (empty($doc))
+            return true;
 
         return $this->modify($query, $doc);
     }
@@ -118,5 +141,13 @@ class ModelDaoUser extends ModelDataMongoCollection
         $doc[self::UPDATE_TIME] = $updateTime;
 
         return $this->modify($query, $doc);
+    }
+
+    public function findByOpenId($openId)
+    {
+        $query[self::OPEN_ID] = $openId;
+
+        $ret = $this->findOne($query);
+        return DbWrapper::transform($ret);
     }
 }

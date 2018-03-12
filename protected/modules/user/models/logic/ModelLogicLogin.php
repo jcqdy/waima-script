@@ -2,6 +2,13 @@
 
 class ModelLogicLogin
 {
+    protected $modelDataLogin;
+
+    public function __construct()
+    {
+        $this->modelDataLogin = new ModelDataLogin();
+    }
+
     public function openId($code)
     {
         $weChatApi = Yii::app()->params['wechat_sessionKeyApi'];
@@ -18,6 +25,10 @@ class ModelLogicLogin
         if (! isset($ret['openid']))
             throw new Exception('get openId failed', Errno::FATAL);
 
-        
+        $openId = $ret['openid'];
+        $sessionKey = $ret['sessionKey'];
+        $unionId = $ret['unionid'];
+
+        return $this->modelDataLogin->getUserByOpenId($openId);
     }
 }
