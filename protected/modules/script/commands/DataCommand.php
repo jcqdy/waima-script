@@ -20,15 +20,15 @@ class DataCommand extends ConsoleCommand
             $dbData = ['name' => $name, 'readerNum' => rand(3, 99), 'createTime' => time() - rand(99, 999999)];
             $cons = scandir($scFileDir.'/'.$name);
             foreach ($cons as $n) {
-//                if (strpos($n, 'cover') !== false) {
+                if (strpos($n, 'cover') !== false) {
 //                    $cover = file_get_contents($scFileDir.'/'.$name.'/'.$n);
-//                    $etag = QiniuHelper::uploadFile($scFileDir.'/'.$name.'/'.$n);
-//                    if ($etag === false)
-//                        continue;
-//                    $dbData['coverUrl'] = $etag;
-//                    echo $name . " cover upload success ; coverUrl : " . $dbData['coverUrl'] . "\n";
-//                    continue;
-//                }
+                    $etag = QiniuHelper::uploadFile($scFileDir.'/'.$name.'/'.$n);
+                    if ($etag === false)
+                        continue;
+                    $dbData['coverUrl'] = $etag;
+                    echo $name . " cover upload success ; coverUrl : " . $dbData['coverUrl'] . "\n";
+                    continue;
+                }
                 if (strpos($n, $name) !== false) {
                     $etag = QiniuHelper::uploadFile($scFileDir.'/'.$name.'/'.$n);
                     if ($etag === false)
@@ -36,31 +36,31 @@ class DataCommand extends ConsoleCommand
                     $dbData['fileUrl'] = $etag;
                     echo $name . " script upload success ; fileUrl : " . $dbData['fileUrl'] . "\n";
                 }
-//                if (strpos($n, 'data') !== false) {
-//                    $data = file_get_contents($scFileDir.'/'.$name.'/'.$n);
-//                    $dataArr = explode("\n", $data);
-//                    foreach ($dataArr as $val) {
-//                        if (empty($val))
-//                            continue;
-//                        //  处理剧本类型
-//                        if (in_array($val, $this->types)) {
-//                            $res = $modelDaoScriptType->findOne(['name' => $val]);
-//                            if (empty($res)) {
-//                                $typeId = new MongoId();
-//                                $modelDaoScriptType->add(['_id' => $typeId, 'name' => $val, 'eName' => '', 'scriptNum' => 99, 'coverUrl' => 'comdeyCover']);
-//                            } else {
-//                                $typeId = $res['_id'];
-//                            }
-//                            $dbData['typeIds'][] = $typeId;
-//                            $dbData['scriptType'][] = $val;
-//                        } else {
-//                            $dbData['writer'][] = $val;
-//                        }
-//                    }
-//                    echo $name . " data  \n";
-//                }
+                if (strpos($n, 'data') !== false) {
+                    $data = file_get_contents($scFileDir.'/'.$name.'/'.$n);
+                    $dataArr = explode("\n", $data);
+                    foreach ($dataArr as $val) {
+                        if (empty($val))
+                            continue;
+                        //  处理剧本类型
+                        if (in_array($val, $this->types)) {
+                            $res = $modelDaoScriptType->findOne(['name' => $val]);
+                            if (empty($res)) {
+                                $typeId = new MongoId();
+                                $modelDaoScriptType->add(['_id' => $typeId, 'name' => $val, 'eName' => '', 'scriptNum' => 99, 'coverUrl' => 'comdeyCover']);
+                            } else {
+                                $typeId = $res['_id'];
+                            }
+                            $dbData['typeIds'][] = $typeId;
+                            $dbData['scriptType'][] = $val;
+                        } else {
+                            $dbData['writer'][] = $val;
+                        }
+                    }
+                    echo $name . " data  \n";
+                }
             }
-//            $modelDaoScript->add($dbData);
+            $modelDaoScript->add($dbData);
         }
 
     }
