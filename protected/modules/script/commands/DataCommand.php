@@ -51,7 +51,7 @@ class DataCommand extends ConsoleCommand
                             } else {
                                 $typeId = $res['_id'];
                             }
-                            $dbData['typeIds'][] = $typeId;
+                            $dbData['typeIds'][] = (string)$typeId;
                             $dbData['scriptType'][] = $val;
                         } else {
                             $dbData['writer'][] = $val;
