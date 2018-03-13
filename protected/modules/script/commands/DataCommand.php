@@ -22,7 +22,8 @@ class DataCommand extends ConsoleCommand
             foreach ($cons as $n) {
                 if (strpos($n, 'cover') !== false) {
                     $cover = file_get_contents($scFileDir.'/'.$name.'/'.$n);
-                    $etag = QiniuHelper::uploadPic(base64_encode($cover));
+//                    $etag = QiniuHelper::uploadPic(base64_encode($cover));
+                    $etag = QiniuHelper::uploadFile($scFileDir.'/'.$name.'/'.$n, $name.time());
                     if ($etag === false)
                         continue;
                     $dbData['coverUrl'] = $etag;
