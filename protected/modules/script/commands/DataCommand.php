@@ -13,7 +13,7 @@ class DataCommand extends ConsoleCommand
         $modelDaoScript = new ModelDaoScript();
         $scFileDir = '/home/worker/data/剧本';
         $fileNames = scandir($scFileDir);
-        unset($fileNames[0], $fileNames[1]);
+        unset($fileNames[0], $fileNames[1], $fileNames[2]);
         $urlPrefix = Yii::app()->params['qiniu_prefix'];
 
         foreach ($fileNames as $name) {
