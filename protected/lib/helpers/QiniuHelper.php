@@ -70,7 +70,7 @@ class QiniuHelper
      */
     public static function uploadFile($file, $key)
     {
-        $ret = QboxHelper::upload($file, AlbumQboxHelper::QBOX_RS_BUCKET, $key);
+//        $ret = QboxHelper::upload($file, AlbumQboxHelper::QBOX_RS_BUCKET, $key);
 //
 //        if ($ret === true) {
 //            return $key;
