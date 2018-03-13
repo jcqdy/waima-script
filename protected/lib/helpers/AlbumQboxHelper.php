@@ -8,8 +8,8 @@ class AlbumQboxHelper extends Qbox6Helper
 {
 
     const QBOX_RS_BUCKET = 'waima-script';
-//  const QBOX_ACCESS_KEY = 'SLgWmV0UykhTyfY9UUdIHqlKjGeI68u9ksYjHh6x';
-//  const QBOX_SECRET_KEY = 'F1bG2JKea9v624AzqVsneHZIoxJWQyMvRBUcVspk';
+    const QBOX_ACCESS_KEY = 'wgJbZY1zXnm4FzvXsrl57G14ecsx5DnRODRCbwn_';
+    const QBOX_SECRET_KEY = 'WVcxFsXldRwOFnN4hoA68hsEem7tdt0qOFnIsat5';
     const CALLBACK_PATH = '';
     const VIDEO_CALLBACK_PATH = '';
     const SHARE_VIDEO_CALLBACK_PATH = '';

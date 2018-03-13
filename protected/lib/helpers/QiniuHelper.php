@@ -1,5 +1,9 @@
 <?php
+require_once(Yii::app()->basePath . '/lib/qbox7/autoload.php');
 require_once(Yii::app()->basePath . '/components/qetag.php');
+use Qiniu\Auth;
+use Qiniu\Storage\UploadManager;
+
 
 /**
  * 七牛helper
@@ -67,11 +71,24 @@ class QiniuHelper
     public static function uploadFile($file, $key)
     {
         $ret = QboxHelper::upload($file, AlbumQboxHelper::QBOX_RS_BUCKET, $key);
+//
+//        if ($ret === true) {
+//            return $key;
+//        } else {
+//            return false;
+//        }
 
-        if ($ret === true) {
-            return $key;
-        } else {
+        $auth = new Auth(AlbumQboxHelper::QBOX_ACCESS_KEY,
+            AlbumQboxHelper::QBOX_SECRET_KEY
+        );
+
+        $token = $auth->uploadToken(AlbumQboxHelper::QBOX_RS_BUCKET);
+        $uploadMgr = new UploadManager();
+        list($ret, $err) = $uploadMgr->putFile($token, $key, $file);
+        if ($err !== null) {
             return false;
+        } else {
+            return $key;
         }
     }
 }
