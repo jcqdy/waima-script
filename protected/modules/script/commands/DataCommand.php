@@ -26,6 +26,7 @@ class DataCommand extends ConsoleCommand
                     if ($etag === false)
                         continue;
                     $dbData['coverUrl'] = $etag;
+                    echo $name . " cover upload success ; coverUrl : " . $dbData['coverUrl'] . "\n";
                     continue;
                 }
                 if (strpos($n, $name) !== false) {
@@ -34,6 +35,7 @@ class DataCommand extends ConsoleCommand
                     if ($etag === false)
                         continue;
                     $dbData['fileUrl'] = $etag;
+                    echo $name . " script upload success ; fileUrl : " . $dbData['fileUrl'] . "\n";
                 }
                 if (strpos($n, 'data') !== false) {
                     $data = file_get_contents($scFileDir.'/'.$name.'/'.$n);
@@ -56,6 +58,7 @@ class DataCommand extends ConsoleCommand
                             $dbData['writer'][] = $val;
                         }
                     }
+                    echo $name . " data  \n";
                 }
             }
             $modelDaoScript->add($dbData);
