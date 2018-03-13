@@ -67,20 +67,13 @@ class QiniuHelper
 
     /**
      * 上传文件到七牛
-     * @param string $file 图片地址
+     * @param string $file 文件地址
      * @param string $key 上传后存储在bucket中的名字
      */
     public static function uploadFile($file)
     {
-//        $ret = QboxHelper::upload($file, AlbumQboxHelper::QBOX_RS_BUCKET, $key);
-//
-//        if ($ret === true) {
-//            return $key;
-//        } else {
-//            return false;
-//        }
-
         $etag = GetEtag($file);
+        $etag = $etag[0];
 
         $auth = new Auth(AlbumQboxHelper::QBOX_ACCESS_KEY,
             AlbumQboxHelper::QBOX_SECRET_KEY

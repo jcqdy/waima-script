@@ -20,24 +20,22 @@ class DataCommand extends ConsoleCommand
             $dbData = ['name' => $name, 'readerNum' => rand(3, 99), 'createTime' => time() - rand(99, 999999)];
             $cons = scandir($scFileDir.'/'.$name);
             foreach ($cons as $n) {
-                if (strpos($n, 'cover') !== false) {
-                    $cover = file_get_contents($scFileDir.'/'.$name.'/'.$n);
-//                    $etag = QiniuHelper::uploadPic(base64_encode($cover));
-                    $etag = QiniuHelper::uploadFile($scFileDir.'/'.$name.'/'.$n, $name.time());
-                    if ($etag === false)
-                        continue;
-                    $dbData['coverUrl'] = $etag;
-                    echo $name . " cover upload success ; coverUrl : " . $dbData['coverUrl'] . "\n";
-                    continue;
-                }
-//                if (strpos($n, $name) !== false) {
-////                    $script = file_get_contents($scFileDir.'/'.$name.'/'.$n);
-//                    $etag = QiniuHelper::uploadFile($scFileDir.'/'.$name.'/'.$n, $name.time());
+//                if (strpos($n, 'cover') !== false) {
+//                    $cover = file_get_contents($scFileDir.'/'.$name.'/'.$n);
+//                    $etag = QiniuHelper::uploadFile($scFileDir.'/'.$name.'/'.$n);
 //                    if ($etag === false)
 //                        continue;
-//                    $dbData['fileUrl'] = $etag;
-//                    echo $name . " script upload success ; fileUrl : " . $dbData['fileUrl'] . "\n";
+//                    $dbData['coverUrl'] = $etag;
+//                    echo $name . " cover upload success ; coverUrl : " . $dbData['coverUrl'] . "\n";
+//                    continue;
 //                }
+                if (strpos($n, $name) !== false) {
+                    $etag = QiniuHelper::uploadFile($scFileDir.'/'.$name.'/'.$n);
+                    if ($etag === false)
+                        continue;
+                    $dbData['fileUrl'] = $etag;
+                    echo $name . " script upload success ; fileUrl : " . $dbData['fileUrl'] . "\n";
+                }
 //                if (strpos($n, 'data') !== false) {
 //                    $data = file_get_contents($scFileDir.'/'.$name.'/'.$n);
 //                    $dataArr = explode("\n", $data);
