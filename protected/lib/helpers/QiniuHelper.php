@@ -3,6 +3,8 @@ require_once(Yii::app()->basePath . '/lib/qbox7/autoload.php');
 require_once(Yii::app()->basePath . '/components/qetag.php');
 use Qiniu\Auth;
 use Qiniu\Storage\UploadManager;
+use Qiniu\Config;
+use Qiniu\Zone;
 
 
 /**
@@ -68,7 +70,7 @@ class QiniuHelper
      * @param string $file 图片地址
      * @param string $key 上传后存储在bucket中的名字
      */
-    public static function uploadFile($file, $key)
+    public static function uploadFile($file)
     {
 //        $ret = QboxHelper::upload($file, AlbumQboxHelper::QBOX_RS_BUCKET, $key);
 //
@@ -78,17 +80,22 @@ class QiniuHelper
 //            return false;
 //        }
 
+        $etag = GetEtag($file);
+
         $auth = new Auth(AlbumQboxHelper::QBOX_ACCESS_KEY,
             AlbumQboxHelper::QBOX_SECRET_KEY
         );
 
         $token = $auth->uploadToken(AlbumQboxHelper::QBOX_RS_BUCKET);
-        $uploadMgr = new UploadManager();
-        list($ret, $err) = $uploadMgr->putFile($token, $key, $file);
+
+        $uploadMgr = new UploadManager(
+            new Config(Zone::zone1())
+        );
+        list($ret, $err) = $uploadMgr->putFile($token, $etag, $file);
         if ($err !== null) {
             return false;
         } else {
-            return $key;
+            return $etag;
         }
     }
 }
