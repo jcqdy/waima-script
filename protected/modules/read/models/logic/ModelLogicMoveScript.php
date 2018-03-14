@@ -49,7 +49,7 @@ class ModelLogicMoveScript
                     unset($bookCase[$key]);
                     continue;
                 }
-                if (is_array($val) && $val['folderId'] !== $newFolderId && in_array($scriptId, $val['scriptIds'])) {
+                if (is_array($val) && $val['folderId'] != $newFolderId && in_array($scriptId, $val['scriptIds'])) {
                     $k = array_search($scriptId, $val['scriptIds']);
                     unset($bookCase[$key]['scriptIds'][$k]);
 

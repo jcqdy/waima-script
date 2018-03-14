@@ -23,7 +23,7 @@ class ModelLogicCollectFetch
         if (empty($pkg))
             return $this->defaultRet;
 
-        if ($pkg['userId'] !== $userId)
+        if ($pkg['userId'] != $userId)
             throw new Exception('userId is wrong', Errno::INVALID_PARAMETER);
 
         $collects = $this->modelDataCollect->queryCollectList($pkgId, $sp, $num);
