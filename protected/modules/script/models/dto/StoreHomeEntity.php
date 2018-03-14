@@ -16,8 +16,9 @@ class StoreHomeEntity
         foreach ($banners as $banner) {
             $bannerEtag = isset($banner['resourceUrl']) ? $banner['resourceUrl'] :'';
             $this->banner[] = [
+                'opId' => isset($banner['_id']) ? (string)$banner['_id'] : '',
                 'resourceUrl' => $urlPrefix . $bannerEtag,
-                'gotoUrl' => isset($banner['gotoUrl']) ? $banner['gotoUrl'] :'',
+                'gotoType' => isset($banner['gotoType']) ? $banner['gotoType'] : 1,
                 'sort' => isset($banner['sort']) ? $banner['sort'] :'',
                 'type' => isset($banner['type']) ? $banner['type'] :'',
             ];
