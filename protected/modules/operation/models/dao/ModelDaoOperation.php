@@ -5,9 +5,15 @@ class ModelDaoOperation extends ModelDataMongoCollection
 
     const TYPE = 'type';
 
+    const GOTO_TYPE = 'gotoType';
+
+    const GOTO_URL= 'gotoUrl';
+
     const RESOURCE_URL = 'resourceUrl';
 
     const SORT = 'sort';
+
+    const CREATE_TIME = 'createTime';
 
     const STATUS = 'status';
 

@@ -26,4 +26,10 @@ class CommonConst
     const GENDER_UNKNOWN = 1;
 
     const DAY_SEC = 86400;
+
+    const ACTIVE_SCRIPT_LIST = 1;
+
+    const ACTIVE_SCRIPT = 2;
+
+    const ACTIVE_H5 = 3;
 }

@@ -9,10 +9,6 @@ class ModelDaoReadStatus extends ModelDataMongoCollection
 
     const READ_POS = 'readPos';
 
-    const FONT_SIZE = 'fontSize';
-
-    const BACK_COLOR = 'backColor';
-
     const UPDATE_TIME = 'updateTime';
 
     public function __construct()

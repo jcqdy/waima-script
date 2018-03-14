@@ -20,11 +20,6 @@ class ModelDataStore
         return $this->modelDaoOperation->queryBanner();
     }
 
-    public function queryType()
-    {
-        return $this->modelDaoScriptType->queryLimit();
-    }
-
     public function getHotScripts($limit)
     {
         return $this->modelDaoScript->querySortByReadNum(0, $limit);

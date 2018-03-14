@@ -17,5 +17,5 @@ class Errno
     const AWARD_ERROR                   = 11020;    // 领奖错误
     const NO_AWARD                      = 11021;    // 该用户并未中奖
 
-    const QBOX_CALLBACK_ILLEGALITY      = 12001;    // qbox回调地址错误
+    const ACTIVE_OFF_LINE               = 12000;    // 活动已经下线
 }

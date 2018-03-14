@@ -25,4 +25,15 @@ class ScriptController extends Controller
 
         ResponseHelper::outputJsonV2([], 'ok', 200);
     }
+
+    public function actionFetch()
+    {
+        $userId = ParameterValidatorHelper::validateMongoIdAsString($_POST, 'userId');
+        $scriptId = ParameterValidatorHelper::validateMongoIdAsString($_POST, 'scriptId');
+
+        $modelLogicFetch = new ModelLogicFetch();
+        $ret = $modelLogicFetch->execute($scriptId, $userId);
+
+        ResponseHelper::outputJsonV2($ret, 'ok', 200);
+    }
 }

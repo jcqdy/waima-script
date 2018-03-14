@@ -9,6 +9,7 @@ return array(
         'application.modules.script.models.logic.*',
         'application.modules.script.helpers.*',
         'application.modules.script.components.*',
+        'application.modules.operation.models.dao.*',
     ),
     'params' => array(),
 );

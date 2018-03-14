@@ -36,6 +36,7 @@ return array(
         'read' => array(), // module setting
         'script' => array(),
         'user' => array(),
+        'operation' => array(),
     ),
     // application components
     'components' => array(

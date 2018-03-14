@@ -26,7 +26,6 @@ class ModelDataBookCase
         return $this->modelDaoBookCase->getById($userId);
     }
 
-
     public function queryScripts(array $scriptIds)
     {
         return $this->modelDaoScript->queryByIds($scriptIds);
@@ -45,6 +44,11 @@ class ModelDataBookCase
     public function deleteReadStatus($userId, $scriptId)
     {
         return $this->modelDaoReadStatus->deleteReadStatus($userId, $scriptId);
+    }
+
+    public function findScript($scriptId)
+    {
+        return $this->modelDaoScript->findOneScript($scriptId);
     }
 
 }
