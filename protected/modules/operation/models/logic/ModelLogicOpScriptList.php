@@ -15,7 +15,7 @@ class ModelLogicOpScriptList
         if (empty($active))
             throw new Exception('该专题已经下线', Errno::ACTIVE_OFF_LINE);
 
-        if ($active['type'] !== CommonConst::ACTIVE_SCRIPT_LIST)
+        if ($active['type'] != CommonConst::ACTIVE_SCRIPT_LIST)
             throw new Exception('该专题已经下线', Errno::ACTIVE_OFF_LINE);
 
         $scriptIds = $active['data']['script'];

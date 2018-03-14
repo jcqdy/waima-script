@@ -7,8 +7,6 @@ class ModelDaoOperation extends ModelDataMongoCollection
 
     const GOTO_TYPE = 'gotoType';
 
-    const GOTO_URL= 'gotoUrl';
-
     const RESOURCE_URL = 'resourceUrl';
 
     const SORT = 'sort';
