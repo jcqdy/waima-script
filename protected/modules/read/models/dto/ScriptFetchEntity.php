@@ -12,7 +12,7 @@ class ScriptFetchEntity
         $this->readStatus['backColor'] = isset($readStatus['backColor']) ? $readStatus['backColor'] : CommonConst::DEFAULT_READ_POS;
 
         $this->script = new ScriptEntity($script);
-        $this->script['readPos'] = isset($status['readPos']) ? $status['readPos'] : 0;
-        $this->script['inBookCase'] = $inBookCase;
+        $this->script->readPos = isset($status['readPos']) ? $status['readPos'] : 0;
+        $this->script->inBookCase = $inBookCase;
     }
 }
