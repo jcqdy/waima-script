@@ -75,10 +75,19 @@ class ModelDaoUser extends ModelDataMongoCollection
         return DbWrapper::transform($doc);
     }
 
-    public function addUserId($openId)
+    public function addUserId($openId, $createTime)
     {
         $doc[self::_ID] = new MongoId();
         $doc[self::OPEN_ID] = $openId;
+        $doc[self::READ_NUM] = 0;
+        $doc[self::READ_DAYS] = 0;
+        $doc[self::KEEP_READ_DAYS] = 0;
+        $doc[self::LAST_READ_TIME] = 0;
+        $doc[self::READ_NUM_RATIO] = 0;
+        $doc[self::READ_DAY_RATIO] = 0;
+        $doc[self::FONT_SIZE] = CommonConst::DEFAULT_FONT_SIZE;
+        $doc[self::BACK_COLOR] = CommonConst::DEFAULT_BACK_COLOR;
+        $doc[self::CREATE_TIME] = $doc[self::UPDATE_TIME] = $createTime;
 
         $ret = $this->add($doc);
         if ($ret === false)

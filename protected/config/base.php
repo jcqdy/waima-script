@@ -51,11 +51,7 @@ return array(
         // uncomment the following to enable URLs in path-format
         'urlManager' => array(
             'urlFormat' => 'path',
-            'rules' => array(
-                //pic模块合并到task模块
-                'pic/<action:\w+>' => 'task/<action>',
-                'pic/inner/<action:\w+>' => 'task/inner/<action>',
-            ),
+            'rules' => array(),
         ),
         'errorHandler'=>array(
             'errorAction'=>'site/error',

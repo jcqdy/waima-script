@@ -15,7 +15,7 @@ class ModelDataLogin
         if (empty($user))
             return ['openId' => $openId, 'userId' => ''];
 
-        $user = $this->modelDaoUser->addUserId($openId);
+        $user = $this->modelDaoUser->addUserId($openId, time());
         
         return ['openId' => $openId, 'userId' => $user['_id']];
     }
