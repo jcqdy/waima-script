@@ -97,7 +97,7 @@ class ModelDaoScript extends ModelDataMongoCollection
         return DbWrapper::transform($ret);
     }
 
-    public function search($keywords)
+    public function search($keywords, $skip, $limit)
     {
         $query['$or'] = [];
         foreach ($keywords as $word) {
@@ -106,7 +106,7 @@ class ModelDaoScript extends ModelDataMongoCollection
             ];
         }
 
-        $ret = $this->query($query);
+        $ret = $this->query($query, [], [], $limit, $skip);
         return DbWrapper::transform($ret);
     }
 }

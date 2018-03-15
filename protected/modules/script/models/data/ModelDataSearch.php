@@ -9,8 +9,8 @@ class ModelDataSearch
         $this->modelDaoScript = new ModelDaoScript();
     }
 
-    public function search($keywords)
+    public function search($keywords, $sp, $num)
     {
-        return $this->modelDaoScript->search($keywords);
+        return $this->modelDaoScript->search($keywords, $sp, $num);
     }
 }
