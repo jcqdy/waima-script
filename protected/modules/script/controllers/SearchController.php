@@ -13,5 +13,4 @@ class SearchController extends Controller
 
         ResponseHelper::outputJsonV2($ret, 'ok', 200);
     }
-
 }
