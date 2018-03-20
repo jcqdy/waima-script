@@ -164,4 +164,14 @@ class ModelDaoNoteMark extends ModelDataMongoCollection
 
         return DbWrapper::transform($ret);
     }
+
+    public function queryByUidDistSid($userId, $status = 1)
+    {
+        $query[self::USER_ID] = $userId instanceof MongoId ? $userId : new MongoId($userId);
+        $query[self::STATUS] = $status;
+
+        $ret = $this->distinct(self::SCRIPT_ID, $query);
+
+        return DbWrapper::transform($ret);
+    }
 }

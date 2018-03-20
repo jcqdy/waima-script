@@ -64,4 +64,14 @@ class ModelDataNoteMark
     {
         return $this->modelDaoPartPkg->delPkg($pkgId);
     }
+
+    public function queryNoteScriptIds($userId, $status = 1)
+    {
+        return $this->modelDaoNoteMark->queryByUidDistSid($userId, $status);
+    }
+
+    public function queryBySids($scriptIds)
+    {
+        return $this->modelDaoScript->queryByIds($scriptIds);
+    }
 }

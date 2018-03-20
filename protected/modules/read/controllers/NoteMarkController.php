@@ -72,6 +72,16 @@ class NoteMarkController extends Controller
         ResponseHelper::outputJsonV2($ret, 'ok', 200);
     }
 
+    public function actionScriptList()
+    {
+        $userId = ParameterValidatorHelper::validateMongoIdAsString($_POST, 'userId');
+
+        $modelLogicNoteScriptList = new ModelLogicNoteScriptList();
+        $ret = $modelLogicNoteScriptList->execute($userId);
+
+        ResponseHelper::outputJsonV2($ret, 'ok', 200);
+    }
+
 //    public function actionAddMark()
 //    {
 //        $userId = ParameterValidatorHelper::validateMongoIdAsString($_POST, 'userId');
