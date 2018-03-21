@@ -10,7 +10,7 @@ class ModelLogicDeleteScript
         $this->modelDataBookCase = new ModelDataBookCase();
     }
 
-    public function execute($userId, $scriptId)
+    public function execute($userId, $scriptIds)
     {
         $bookCase = $this->modelDataBookCase->getBookCase($userId);
         if (empty($bookCase))
@@ -18,15 +18,18 @@ class ModelLogicDeleteScript
 
         $bookCase = $bookCase['scriptIds'];
         foreach ($bookCase as $key => $val) {
-            if (is_string($val) && $val === $scriptId) {
+            if (is_string($val) && in_array($val, $scriptIds)) {
                 unset($bookCase[$key]);
-                break;
             }
 
-            if (is_array($val) && in_array($scriptId, $val['scriptIds'])) {
-                $k = array_search($scriptId, $val['scriptIds']);
-                unset($bookCase[$key]['scriptIds'][$k]);
-                break;
+            if (is_array($val)) {
+                $inIds = array_intersect($val['scriptIds'], $scriptIds);
+                if (! empty($inIds)) {
+                    $inIdskey = array_keys($inIds);
+                    foreach ($inIdskey as $k) {
+                        unset($bookCase[$key]['scriptIds'][$k]);
+                    }
+                }
             }
         }
         

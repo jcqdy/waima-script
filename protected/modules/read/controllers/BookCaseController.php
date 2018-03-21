@@ -16,10 +16,10 @@ class BookCaseController extends Controller
     public function actionDelete()
     {
         $userId = ParameterValidatorHelper::validateMongoIdAsString($_POST, 'userId');
-        $scriptId = ParameterValidatorHelper::validateMongoIdAsString($_POST, 'scriptId');
+        $scriptIds = ParameterValidatorHelper::validateArray($_POST, 'scriptIds', ',');
 
         $modelLogicDeleteScript = new ModelLogicDeleteScript();
-        $modelLogicDeleteScript->execute($userId, $scriptId);
+        $modelLogicDeleteScript->execute($userId, $scriptIds);
 
         ResponseHelper::outputJsonV2([], 'ok', 200);
     }
@@ -27,13 +27,13 @@ class BookCaseController extends Controller
     public function actionMove()
     {
         $userId = ParameterValidatorHelper::validateMongoIdAsString($_POST, 'userId');
-        $scriptId = ParameterValidatorHelper::validateMongoIdAsString($_POST, 'scriptId');
+        $scriptIds = ParameterValidatorHelper::validateArray($_POST, 'scriptIds', ',');
         $newFolderId = ParameterValidatorHelper::validateMongoIdAsString($_POST, 'newFolderId', '');
         $name = ParameterValidatorHelper::validateString($_POST, 'name', 1, 50, '');
         $makeFolder = ParameterValidatorHelper::validateEnumInteger($_POST, 'makeFolder', [0,1]);
 
         $modelLogicMoveScript = new ModelLogicMoveScript();
-        $modelLogicMoveScript->execute($userId, $scriptId, $newFolderId, $name, $makeFolder);
+        $modelLogicMoveScript->execute($userId, $scriptIds, $newFolderId, $name, $makeFolder);
 
         ResponseHelper::outputJsonV2([], 'ok', 200);
     }
