@@ -129,11 +129,11 @@ class ModelDaoUser extends ModelDataMongoCollection
     {
         $query[self::_ID] = $userId instanceof MongoId ? $userId : new MongoId($userId);
         $doc = [];
-        if (! is_null($phoneNum))
+        if (! empty($phoneNum))
             $doc[self::PHONE_NUM] = $phoneNum;
-        if (! is_null($phoneNum))
+        if (! empty($phoneNum))
             $doc[self::AVATAR_URL] = $avatarUrl;
-        if (! is_null($nickName))
+        if (! empty($nickName))
             $doc[self::NICK_NAME] = $nickName;
 
         if (empty($doc))
