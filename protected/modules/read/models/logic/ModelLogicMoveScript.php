@@ -39,6 +39,8 @@ class ModelLogicMoveScript
                         foreach ($inIdskey as $k) {
                             unset($bookCase[$key]['scriptIds'][$k]);
                         }
+                        if (empty($bookCase[$key]['scriptIds']))
+                            unset($bookCase[$key]);
                     }
                 }
             }
@@ -65,6 +67,8 @@ class ModelLogicMoveScript
                     foreach ($inIdskey as $k) {
                         unset($bookCase[$key]['scriptIds'][$k]);
                     }
+                    if (empty($bookCase[$key]['scriptIds']))
+                        unset($bookCase[$key]);
 
                     // 如果没有指定移动到其他文件夹,就移动到文件夹外面
                     if (empty($newFolderId)) {
