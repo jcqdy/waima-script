@@ -42,9 +42,9 @@ class UserController extends Controller
     public function actionEdit()
     {
         $userId = ParameterValidatorHelper::validateMongoIdAsString($_POST, 'userId');
-        $phoneNum = ParameterValidatorHelper::validateString($_POST, 'phoneNum', null, null, null);
-        $avatarUrl = ParameterValidatorHelper::validateString($_POST, 'avatarUrl', null, null, null);
-        $nickName = ParameterValidatorHelper::validateString($_POST, 'nickName', null, null, null);
+        $phoneNum = ParameterValidatorHelper::validateString($_POST, 'phoneNum', null, null, '');
+        $avatarUrl = ParameterValidatorHelper::validateString($_POST, 'avatarUrl', null, null, '');
+        $nickName = ParameterValidatorHelper::validateString($_POST, 'nickName', null, null, '');
 
         $modelLogicEditUser = new ModelLogicEditUser();
         $modelLogicEditUser->execute($userId, $phoneNum, $avatarUrl, $nickName);
