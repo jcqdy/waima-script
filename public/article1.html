@@ -1,0 +1,201 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,height=device-height, user-scalable=no,initial-scale=1, minimum-scale=1, maximum-scale=1,target-densitydpi=device-dpi">
+<title>文本被选中</title>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.3.2.js"></script>
+<style type = "text/css">
+ #showSelected{
+ margin:100px auto;
+ width:100%;
+ height:200px;
+ background:#ececec;
+ border:1px solid #ccc;
+ }
+
+ .span {
+ 	border-bottom: 1px solid red;
+ }
+
+ .note {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  background-color: red;
+  display: none;
+  z-index: 100;
+ }
+
+</style>
+<script type = "text/javascript">
+//传入要获取其中选择文本的对象
+function getSelectedText(e){
+  //IE下获取选择文本
+  if (document.selection) {
+   return document.selection.createRange().text;
+  }
+  //firefox下获取选择文本
+  else
+   if (window.getSelection().toString()) {
+   	console.log(window.getSelection())
+    return window.getSelection().toString();
+   }
+   //firefox下获取input或textArea域的选择文本
+   else
+    if (e.selectionStart != undefined && e.selectionEnd != undefined) {
+     var start = e.selectionStart;
+     var end = e.selectionEnd;
+     return e.value.substring(start, end);
+    }
+}
+
+var currentText = ''
+
+document.onmouseup = function(){
+  var ta = document.getElementById("myDiv");
+  var selectedText = getSelectedText(document.body);
+  if (selectedText !== undefined) {
+        currentText = selectedText
+        document.getElementById("textText").innerHTML = currentText
+        document.getElementById("note").style.display = "block"
+  }else {
+        currentText = ''
+        document.getElementById("note").style.display = "none"
+  }
+  //document.getElementById("showSelected").innerHTML = getSelectedText(document.body);
+}
+
+document.addEventListener('touchend',touchend, false);
+document.addEventListener('touchmove',touchend, false);
+
+function touchend() {
+  var ta = document.getElementById("myDiv");
+  var selectedText = getSelectedText(document.body);
+  if (selectedText !== undefined) {
+        currentText = selectedText
+        document.getElementById("textText").innerHTML = currentText
+        document.getElementById("note").style.display = "block"
+  }else {
+        currentText = ''
+        document.getElementById("note").style.display = "none"
+  }
+  //document.getElementById("showSelected").innerHTML = getSelectedText(document.body);
+}
+
+document.addEventListener('touchstart',touchstart, false);
+
+function touchstart() {
+	document.getElementById("textText").innerHTML = ""
+  //document.getElementById("showSelected").innerHTML = getSelectedText(document.body);
+}
+
+</script>
+</head>
+  <body>
+    <div id="myDiv">
+      　央视网消息：善用诗词古语来表情达意，是习近平的语言风格。习近平总书记一系列重要讲话和文章中所引用的古典名句，闪耀着博大精深的智慧光芒，寓意深邃，生动传神。
+
+      　　今年两会期间，习近平六下团组，与代表委员面对面共商国是；发表主旨讲话，为新时代的中国把舵定向。这期间他数次引用古语典故阐述思想，谆谆告诫，语重心长；殷殷期望，启迪深远。
+      
+      　　读懂了习近平的辞中典，也就读懂了他的牵挂、嘱托与期待。
+      
+      　　深深牵挂
+      
+      　　每年两会，习近平与基层代表的互动和对话，最能体现他作为人民领袖平易近人的作风，也是媒体最关注的焦点之一。
+      
+      　　十三届全国人大代表米雪梅，是千万来粤务工人员中的一名。3月7日，习近平在广东团参加审议时，米雪梅向他讲述了自己务工创业21年来的酸甜苦辣。
+      
+      3月7日，习近平参加十三届全国人大一次会议广东代表团的审议。 （图片来源：新华社）3月7日，习近平参加十三届全国人大一次会议广东代表团的审议。 （图片来源：新华社）
+      　　听完米雪梅的讲述，习近平很有感慨：“你的名字就像你的经历一样，梅花香自苦寒来。”
+      
+      　　这句出自于《警世贤文•勤奋篇》的古语，恰如其分地总结了米雪梅代表在艰苦困难环境中仍不忘奋斗努力的可贵品质，饱含着习近平对普通百姓的尊重与关怀。
+      
+      　　“新时代是奋斗者的时代”。在习近平的带领下，像米雪梅这样“不畏严寒独自开”的“报春花”一定能绽放最美姿态。
+      
+      　　治国理政千头万绪，习近平历年下团组，关切的不只有人，还有那些与国家发展关系最为密切的事儿。
+      
+      　　2016年两会期间，习近平参加黑龙江代表团审议。当地企业龙煤集团正面临转型升级的时代课题。对这场改革生存攻坚战，习近平问得仔细。他强调：“临渊羡鱼不如退而结网”，要“瞄准方向、保持定力，一以贯之、久久为功，急躁是不行的，浮躁更不行。”
+      
+      　　一句“临渊羡鱼不如退而结网”凝结着中国人千百年来所推崇的务实精神，与习近平多次强调的“空谈误国、实干兴邦”一脉相承。
+      
+      　　切切叮嘱
+      
+      　　两千多年来，修身、正己、立德一直是中国人做人处事、为官从政的根本出发点，也为长期关注党员干部为政之德的习近平所高度重视。
+      
+      　　2018年3月10日，在参加重庆代表团审议时，习近平数次引用古语，反复叮嘱党员干部要讲政德。
+      
+      3月10日，习近平参加十三届全国人大一次会议重庆代表团的审议。 （图片来源：新华社）3月10日，习近平参加十三届全国人大一次会议重庆代表团的审议。 （图片来源：新华社）
+      　　习近平强调，领导干部一定要牢记“堤溃蚁孔，气泄针芒”的古训，坚持从小事小节上加强修养，从一点一滴中完善自己，严以修身，正心明道，防微杜渐，时刻保持人民公仆本色。
+      
+      　　“心不动于微利之诱，目不眩于五色之惑”。习近平引用的这句古语，化用了中国古代“慎微”和“节欲”两种思想，意在告诫人们不要被蝇头小利诱惑，因此失去操守，坏了大事，忘了大义。
+      
+      　　“要慎独慎初慎微慎欲，培养和强化自我约束、自我控制的意识和能力”。只有时刻如履薄冰、如临深渊，才能克己奉公，“切实把人民赋予的权力用来造福人民”。
+      
+      　　三年前，习近平在参加十二届全国人大三次会议上海代表团审议时，也曾向党员干部提出同样要求。他说：“对领导干部，要求就是要严一些，正所谓‘其身正，不令而行；其身不正，虽令不从’”。
+      
+      　　殷殷期望
+      
+      　　今年两会召开在中华民族阔步迈入新时代这一特殊历史时刻。
+      
+      　　在重庆代表团谈及实现中华民族伟大复兴时，习近平强调：“要苟日新、日日新，要天行健、自强不息。”这两句古语气概万千，道出了新时代的新作为与新气象。“苟日新、日日新”是目标，“自强不息”是动力，民族复兴的时代伟力在诗中凝聚。
+      
+      3月12日上午，习近平出席十三届全国人大一次会议解放军和武警部队代表团全体会议并发表重要讲话。（图片来源：新华社）　　3月12日上午，习近平出席十三届全国人大一次会议解放军和武警部队代表团全体会议并发表重要讲话。（图片来源：新华社）
+      　　自古以来，军队强则国家强。强军梦与中国梦紧紧联系在一起。在解放军代表团，习近平说：“部队还是要练，要随时准备打仗，枕戈待旦不是唱歌唱出来的。”
+      
+      　　“枕戈待旦”典出《晋书·刘琨传》，意指军人枕着兵器等待天亮，形容时刻警惕敌人，准备作战。这正是对习近平“实战化练兵”思想的生动表达。作为军队的最高统帅，习近平的言语中，饱含着对新时代强军梦的期待。
+      
+      　　2018年3月20日，十三届全国人大一次会议在京闭幕，习近平发表重要讲话：“等闲识得东风面，万紫千红总是春。在中国共产党领导下，经过近70年奋斗，我们的人民共和国茁壮成长，正以崭新的姿态屹立于世界东方！”他引用朱熹的《春日》一诗，传递了新时代的春天催人奋进的讯息。（文/樊帆）
+    
+    </div>
+
+    <button onclick="copy()">复制</button>
+    <button onclick="line()">划线</button>
+    <div id="textText"></div>
+    <button class="note" id="note" onclick="show()">做笔记</button>
+
+  </body>
+
+  <script>
+  			
+  			function test() {
+  				alert(123);
+  			}
+  	
+
+          function copy() {
+                document.execCommand('copy');
+          }
+
+          function show() {
+            //alert(document.getElementById("textText").innerHTML)
+            wx.miniProgram.navigateTo({
+              url: "../noteDetail/noteDetail?text=" + document.getElementById("textText").innerHTML
+            })
+          }
+
+          function line() {
+          		var sel = window.getSelection()
+          		console.log(sel)
+          		//console.log(sel.focusNode.localName)
+          		console.log(sel.focusNode.parentNode.className)
+          		if (sel.focusNode.parentNode.className == 'span') {
+          			alert('已经划过了')
+          			return;
+          		}
+          		var span = document.createElement("span");
+          		span.className = "span"
+          		span.onclick = function() {
+          			test()
+          		}
+          		window.getSelection().getRangeAt(0).surroundContents(span);
+                // var myDiv = document.getElementById('myDiv');
+                // var html = myDiv.innerHTML;
+                // html = html.replace(currentText, '<a href="">'+ currentText +'</a>');
+                // myDiv.innerHTML = html;
+          }
+  </script>
+</html>
