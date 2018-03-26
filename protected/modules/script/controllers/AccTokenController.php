@@ -26,7 +26,7 @@ class AccTokenController extends H5Controller
 
     public function actionFile()
     {
-        $con = file_get_contents('/home/worker/data/www/waima-script/public/21克的副本');
+        $con = file_get_contents('/home/worker/data/www/waima-script/public/21file');
         echo $con;die();
     }
 }
