@@ -23,4 +23,10 @@ class AccTokenController extends H5Controller
 
         ResponseHelper::outputJsonV2($ret, 'ok', 200);
     }
+
+    public function actionFile()
+    {
+        $con = file_get_contents('/home/worker/data/www/waima-script/public/21克的副本');
+        echo $con;die();
+    }
 }
