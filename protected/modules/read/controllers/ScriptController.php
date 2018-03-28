@@ -28,8 +28,8 @@ class ScriptController extends Controller
 
     public function actionFetch()
     {
-        $userId = ParameterValidatorHelper::validateMongoIdAsString($_POST, 'userId');
-        $scriptId = ParameterValidatorHelper::validateMongoIdAsString($_POST, 'scriptId');
+        $userId = ParameterValidatorHelper::validateMongoIdAsString($_REQUEST, 'userId');
+        $scriptId = ParameterValidatorHelper::validateMongoIdAsString($_REQUEST, 'scriptId');
 
         $modelLogicFetch = new ModelLogicFetch();
         $ret = $modelLogicFetch->execute($scriptId, $userId);
