@@ -4,15 +4,15 @@ class UserController extends Controller
 {
     public function actionAdd()
     {
-        $openId = ParameterValidatorHelper::validateString($_POST, 'openId');
-        $userId = ParameterValidatorHelper::validateMongoIdAsString($_POST, 'userId');
-        $nickName = ParameterValidatorHelper::validateString($_POST, 'nickName');
-        $avatarUrl = ParameterValidatorHelper::validateString($_POST, 'avatarUrl');
-        $gender = ParameterValidatorHelper::validateEnumInteger($_POST, 'gender', [1,2,0]);
-        $city = ParameterValidatorHelper::validateString($_POST, 'city');
-        $province = ParameterValidatorHelper::validateString($_POST, 'province');
-        $country = ParameterValidatorHelper::validateString($_POST, 'country');
-        $language = ParameterValidatorHelper::validateString($_POST, 'language');
+        $openId = ParameterValidatorHelper::validateString($_REQUEST, 'openId');
+        $userId = ParameterValidatorHelper::validateMongoIdAsString($_REQUEST, 'userId');
+        $nickName = ParameterValidatorHelper::validateString($_REQUEST, 'nickName');
+        $avatarUrl = ParameterValidatorHelper::validateString($_REQUEST, 'avatarUrl');
+        $gender = ParameterValidatorHelper::validateEnumInteger($_REQUEST, 'gender', [1,2,0]);
+        $city = ParameterValidatorHelper::validateString($_REQUEST, 'city');
+        $province = ParameterValidatorHelper::validateString($_REQUEST, 'province');
+        $country = ParameterValidatorHelper::validateString($_REQUEST, 'country');
+        $language = ParameterValidatorHelper::validateString($_REQUEST, 'language');
 
         $modelLogicAddUser = new ModelLogicAddUser();
         $ret = $modelLogicAddUser->execute($openId, $userId, $nickName, $avatarUrl, $gender, $city, $province, $country, $language);
@@ -22,7 +22,7 @@ class UserController extends Controller
 
     public function actionFetch()
     {
-        $userId = ParameterValidatorHelper::validateMongoIdAsString($_POST, 'userId');
+        $userId = ParameterValidatorHelper::validateMongoIdAsString($_REQUEST, 'userId');
 
         $modelLogicAddUser = new ModelLogicFetchUser();
         $ret = $modelLogicAddUser->execute($userId);
@@ -32,8 +32,8 @@ class UserController extends Controller
 
     public function actionReadRecord()
     {
-        $userId = ParameterValidatorHelper::validateMongoIdAsString($_POST, 'userId');
-        $scriptId = ParameterValidatorHelper::validateMongoIdAsString($_POST, 'scriptId');
+        $userId = ParameterValidatorHelper::validateMongoIdAsString($_REQUEST, 'userId');
+        $scriptId = ParameterValidatorHelper::validateMongoIdAsString($_REQUEST, 'scriptId');
 
         $modelLogicReadRecord = new ModelLogicReadRecord();
         $modelLogicReadRecord->execute($userId, $scriptId);
@@ -43,10 +43,10 @@ class UserController extends Controller
 
     public function actionEdit()
     {
-        $userId = ParameterValidatorHelper::validateMongoIdAsString($_POST, 'userId');
-        $phoneNum = ParameterValidatorHelper::validateString($_POST, 'phoneNum', null, null, '');
-        $avatarUrl = ParameterValidatorHelper::validateString($_POST, 'avatarUrl', null, null, '');
-        $nickName = ParameterValidatorHelper::validateString($_POST, 'nickName', null, null, '');
+        $userId = ParameterValidatorHelper::validateMongoIdAsString($_REQUEST, 'userId');
+        $phoneNum = ParameterValidatorHelper::validateString($_REQUEST, 'phoneNum', null, null, '');
+        $avatarUrl = ParameterValidatorHelper::validateString($_REQUEST, 'avatarUrl', null, null, '');
+        $nickName = ParameterValidatorHelper::validateString($_REQUEST, 'nickName', null, null, '');
 
         $modelLogicEditUser = new ModelLogicEditUser();
         $modelLogicEditUser->execute($userId, $phoneNum, $avatarUrl, $nickName);

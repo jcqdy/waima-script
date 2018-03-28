@@ -3,8 +3,8 @@ class ScriptController extends Controller
 {
     public function actionBatchFetch()
     {
-        $userId = ParameterValidatorHelper::validateMongoIdAsString($_POST, 'userId');
-        $scriptIds = ParameterValidatorHelper::validateArray($_POST, 'scriptIds', ',');
+        $userId = ParameterValidatorHelper::validateMongoIdAsString($_REQUEST, 'userId');
+        $scriptIds = ParameterValidatorHelper::validateArray($_REQUEST, 'scriptIds', ',');
         
         $modelLogicBatchFetch = new ModelLogicBatchFetch();
         $ret = $modelLogicBatchFetch->execute($userId, $scriptIds);
@@ -14,11 +14,11 @@ class ScriptController extends Controller
 
     public function actionPutStatus()
     {
-        $userId = ParameterValidatorHelper::validateMongoIdAsString($_POST, 'userId');
-        $scriptId = ParameterValidatorHelper::validateMongoIdAsString($_POST, 'scriptId');
-        $readPos = ParameterValidatorHelper::validateInteger($_POST, 'readPos');
-        $fontSize = ParameterValidatorHelper::validateEnumInteger($_POST, 'fontSize', [13,15,17,19,21]);
-        $backColor = ParameterValidatorHelper::validateEnumInteger($_POST, 'backColor', [1,2,3,4]);
+        $userId = ParameterValidatorHelper::validateMongoIdAsString($_REQUEST, 'userId');
+        $scriptId = ParameterValidatorHelper::validateMongoIdAsString($_REQUEST, 'scriptId');
+        $readPos = ParameterValidatorHelper::validateInteger($_REQUEST, 'readPos');
+        $fontSize = ParameterValidatorHelper::validateEnumInteger($_REQUEST, 'fontSize', [13,15,17,19,21]);
+        $backColor = ParameterValidatorHelper::validateEnumInteger($_REQUEST, 'backColor', [1,2,3,4]);
 
         $modelLogicPutStatus = new ModelLogicPutStatus();
         $modelLogicPutStatus->execute($userId, $scriptId, $readPos, $fontSize, $backColor);

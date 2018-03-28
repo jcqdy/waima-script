@@ -3,7 +3,7 @@ class LoginController extends H5Controller
 {
     public function actionOpenId()
     {
-        $code = ParameterValidatorHelper::validateString($_POST, 'code');
+        $code = ParameterValidatorHelper::validateString($_REQUEST, 'code');
 
         $modelLogicLogin = new ModelLogicLogin();
         $ret = $modelLogicLogin->openId($code);
