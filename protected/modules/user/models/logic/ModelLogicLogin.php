@@ -29,6 +29,8 @@ class ModelLogicLogin
         $sessionKey = $ret['sessionKey'];
         $unionId = $ret['unionid'];
 
-        return $this->modelDataLogin->getUserByOpenId($openId);
+        $user = $this->modelDataLogin->getUserByOpenId($openId);
+
+        return new UserEntity($user);
     }
 }

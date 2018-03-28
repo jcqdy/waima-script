@@ -34,6 +34,6 @@ class ScriptController extends Controller
         $modelLogicFetch = new ModelLogicFetch();
         $ret = $modelLogicFetch->execute($scriptId, $userId);
 
-        ResponseHelper::outputJsonV2($ret, 'ok', 200);
+        ResponseHelper::outputJsonApp($ret, 'ok', 200);
     }
 }

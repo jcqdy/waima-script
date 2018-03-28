@@ -19,7 +19,8 @@ class ScriptStatusEntity
         foreach ($noteList as $note) {
             $item = [];
             $item['noteId'] = isset($note['_id']) ? (string)$note['_id'] : '';
-            $item['markPos'] = isset($note['markPos']) ? $note['markPos'] : [];
+//            $item['markPos'] = isset($note['markPos']) ? $note['markPos'] : [];
+            $item['markId'] = isset($note['markId']) ? $note['markId'] : [];
             $this->noteMark[] = $item;
         }
     }

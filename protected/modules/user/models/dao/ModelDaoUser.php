@@ -79,6 +79,13 @@ class ModelDaoUser extends ModelDataMongoCollection
     {
         $doc[self::_ID] = new MongoId();
         $doc[self::OPEN_ID] = $openId;
+        $doc[self::NICK_NAME] = '';
+        $doc[self::AVATAR_URL] = '';
+        $doc[self::GENDER] = '';
+        $doc[self::CITY] = '';
+        $doc[self::PROVINCE] = '';
+        $doc[self::COUNTRY] = '';
+        $doc[self::LANGUAGE] = '';
         $doc[self::READ_NUM] = 0;
         $doc[self::READ_DAYS] = 0;
         $doc[self::KEEP_READ_DAYS] = 0;
@@ -158,5 +165,21 @@ class ModelDaoUser extends ModelDataMongoCollection
 
         $ret = $this->findOne($query);
         return DbWrapper::transform($ret);
+    }
+
+    public function updateUserInfo($userId, $doc)
+    {
+        $query[self::_ID] = $userId instanceof MongoId ? $userId : new MongoId($userId);
+
+        $doc[self::NICK_NAME] = isset($doc['nickName']) ? $doc['nickName'] : '';
+        $doc[self::AVATAR_URL] = isset($doc['avatarUrl']) ? $doc['avatarUrl'] : '';
+        $doc[self::GENDER] = isset($doc['gender']) ? $doc['gender'] : '';
+        $doc[self::CITY] = isset($doc['city']) ? $doc['city'] : '';
+        $doc[self::PROVINCE] = isset($doc['province']) ? $doc['province'] : '';
+        $doc[self::COUNTRY] = isset($doc['country']) ? $doc['country'] : '';
+        $doc[self::LANGUAGE] = isset($doc['language']) ? $doc['language'] : '';
+        $doc[self::UPDATE_TIME] = isset($doc['updateTime']) ? $doc['updateTime'] : time();
+
+        return $this->modify($query, $doc);
     }
 }

@@ -40,9 +40,9 @@ class ModelDataNoteMark
         return $this->modelDaoNoteMark->editNote($noteId, $note, $updateTime);
     }
 
-    public function addNote($scriptId, $userId, $markPos, $mark, $note, $createTime)
+    public function addNote($scriptId, $userId, $mark, $markId, $note, $createTime)
     {
-        return $this->modelDaoNoteMark->addNote($scriptId, $userId, $markPos, $mark, $note, $createTime);
+        return $this->modelDaoNoteMark->addNote($scriptId, $userId, $mark, $markId, $note, $createTime);
     }
 
     public function addMark($scriptId, $userId, $markPos, $mark, $createTime)

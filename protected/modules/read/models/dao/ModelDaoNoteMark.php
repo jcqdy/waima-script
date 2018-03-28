@@ -9,7 +9,9 @@ class ModelDaoNoteMark extends ModelDataMongoCollection
 
     const USER_ID = 'userId';
 
-    const MARK_POS = 'markPos';
+//    const MARK_POS = 'markPos';
+
+    const MARK_ID = 'markId';
 
     const MARK = 'mark';
 
@@ -83,13 +85,14 @@ class ModelDaoNoteMark extends ModelDataMongoCollection
         return $this->modify($query, $doc);
     }
 
-    public function addNote($scriptId, $userId, $markPos, $mark, $note, $createTime)
+    public function addNote($scriptId, $userId, $mark, $markId, $note, $createTime)
     {
         $doc[self::_ID] = new MongoId();
         $doc[self::TYPE] = 1;
         $doc[self::SCRIPT_ID] = $scriptId instanceof MongoId ? $scriptId : new MongoId($scriptId);
         $doc[self::USER_ID] = $userId instanceof MongoId ? $userId : new MongoId($userId);
-        $doc[self::MARK_POS] = $markPos;
+        $doc[self::MARK_ID] = $markId;
+//        $doc[self::MARK_POS] = $markPos;
         $doc[self::MARK] = $mark;
         $doc[self::NOTE] = $note;
         $doc[self::CREATE_TIME] = $doc[self::UPDATE_TIME] = $createTime;
@@ -109,7 +112,7 @@ class ModelDaoNoteMark extends ModelDataMongoCollection
         $doc[self::TYPE] = 2;
         $doc[self::SCRIPT_ID] = $scriptId instanceof MongoId ? $scriptId : new MongoId($scriptId);
         $doc[self::USER_ID] = $userId instanceof MongoId ? $userId : new MongoId($userId);
-        $doc[self::MARK_POS] = $markPos;
+//        $doc[self::MARK_POS] = $markPos;
         $doc[self::MARK] = $mark;
         $doc[self::NOTE] = '';
         $doc[self::CREATE_TIME] = $doc[self::CREATE_TIME] = $createTime;

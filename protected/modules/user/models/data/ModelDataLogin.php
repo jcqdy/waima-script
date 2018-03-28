@@ -12,11 +12,11 @@ class ModelDataLogin
     public function getUserByOpenId($openId)
     {
         $user = $this->modelDaoUser->findByOpenId($openId);
-        if (empty($user))
-            return ['openId' => $openId, 'userId' => ''];
+        if (! empty($user))
+            return $user;
 
         $user = $this->modelDaoUser->addUserId($openId, time());
         
-        return ['openId' => $openId, 'userId' => $user['_id']];
+        return $user;
     }
 }

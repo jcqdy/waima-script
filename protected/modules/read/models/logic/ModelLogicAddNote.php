@@ -9,7 +9,7 @@ class ModelLogicAddNote
         $this->modelDataNoteMark = new ModelDataNoteMark();
     }
 
-    public function execute($userId, $note, $scriptId, $mark, $markPos)
+    public function execute($userId, $note, $scriptId, $mark, $markId)
     {
         $script = $this->modelDataNoteMark->getScript($scriptId);
         if (empty($script))
@@ -37,7 +37,7 @@ class ModelLogicAddNote
 
         $createTime = time();
 
-        $ret = $this->modelDataNoteMark->addNote($scriptId, $userId, $markPos, $mark, $note, $createTime);
+        $ret = $this->modelDataNoteMark->addNote($scriptId, $userId, $mark, $markId, $note, $createTime);
         if ($ret === false)
             throw new Exception('add note failed', Errno::FATAL);
 
