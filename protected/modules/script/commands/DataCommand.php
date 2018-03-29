@@ -73,7 +73,7 @@ class DataCommand extends ConsoleCommand
         $cur = $modelDaoScript->find();
         while ($cur->hasNext()) {
             $data = $cur->getNext();
-            if ($data['name'] == '低俗小说')
+            if ($data['name'] !== '低俗小说')
                 continue;
 
             $script = file_get_contents($scFileDir.$data['name'].'/'.$data['name']);
