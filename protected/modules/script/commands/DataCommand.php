@@ -100,6 +100,7 @@ class DataCommand extends ConsoleCommand
             }
 
             $modelDaoScript->modify(['_id' => $data['_id']], ['fileUrl' => $etag]);
+            echo $data['name'];
         }
 
     }
