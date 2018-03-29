@@ -67,6 +67,7 @@ class DataCommand extends ConsoleCommand
 
     public function actionFake2()
     {
+        $scFileDir = '/home/worker/data/剧本/';
         $dir = '/home/worker/data/修改剧本/';
         $modelDaoScript = new ModelDaoScript();
         $cur = $modelDaoScript->find();
@@ -75,15 +76,24 @@ class DataCommand extends ConsoleCommand
             if ($data['name'] == '低俗小说')
                 continue;
 
-            $script = file_get_contents('http://scriptfile.ekaogo.com/'.$data['fileUrl']);
+            $script = file_get_contents($scFileDir.$data['name'].'/'.$data['name']);
+            if (empty($script)) {
+                LogHelper::error('file_get_contents error : '.$data['name']);
+                continue;
+            }
+
             $scriptArr = explode('<br>', $script);
 
             foreach ($scriptArr as $key => $line) {
                 if (empty($line))
                     continue;
 
-                if (strpos($line, '<span>') != false) {
-                    $scriptArr[$key] = str_replace('<span>', '<span class="subtitle">', $line);
+                if (strpos($line, '<span>') !== false) {
+                    if (strpos($line, '<span><span>') !== false) {
+                        $scriptArr[$key] = str_replace('<span><span>', '<span class="subtitle">', $line);
+                    } else {
+                        $scriptArr[$key] = str_replace('<span>', '<span class="subtitle">', $line);
+                    }
                     continue;
                 }
 
@@ -100,7 +110,7 @@ class DataCommand extends ConsoleCommand
             }
 
             $modelDaoScript->modify(['_id' => $data['_id']], ['fileUrl' => $etag]);
-            echo $data['name'];
+            LogHelper::error($data['name'] . ' 成功');
         }
 
     }
