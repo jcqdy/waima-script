@@ -65,8 +65,42 @@ class DataCommand extends ConsoleCommand
 
     }
 
-    public function actionA()
+    public function actionFake2()
     {
+        $dir = '/home/worker/data/修改剧本/';
+        $modelDaoScript = new ModelDaoScript();
+        $cur = $modelDaoScript->find();
+        while ($cur->hasNext()) {
+            $data = $cur->getNext();
+            if ($data['name'] == '低俗小说')
+                continue;
+
+            $script = file_get_contents('http://scriptfile.ekaogo.com/'.$data['fileUrl']);
+            $scriptArr = explode('<br>', $script);
+
+            foreach ($scriptArr as $key => $line) {
+                if (empty($line))
+                    continue;
+
+                if (strpos($line, '<span>') != false) {
+                    $scriptArr[$key] = str_replace('<span>', '<span class="subtitle">', $line);
+                    continue;
+                }
+
+                $scriptArr[$key] = '<span class="text">' . $line . '</span>';
+            }
+
+            $newScript = implode('<br>', $scriptArr);
+            file_put_contents($dir . $data['name'], $newScript);
+
+            $etag = QiniuHelper::uploadFile($dir . $data['name']);
+            if ($etag == false) {
+                LogHelper::error('剧本上传失败: ' . $data['name']);
+                continue;
+            }
+
+            $modelDaoScript->modify(['_id' => $data['_id']], ['fileUrl' => $etag]);
+        }
 
     }
 }
