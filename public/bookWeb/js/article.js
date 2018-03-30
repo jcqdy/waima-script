@@ -42,7 +42,7 @@ $().ready(function(){
 
             $("#article").html(content)
             
-            $("span.text").bind("taphold", function(event) {
+            $("span.text").bind("longTap", function(event) {
                 event.preventDefault()
                 event.stopPropagation()
                 console.log(this.dataset.index)
@@ -54,24 +54,24 @@ $().ready(function(){
                 }
             })
 
-            $("span.text").bind("click", function(event) {
-                //let endx = Math.floor(event.changedTouches[0].pageX)
-                //let endy = Math.floor(event.changedTouches[0].pageY)
-                event.preventDefault()
-                event.stopPropagation()
-                console.log('====================================');
-                console.log(event);
-                console.log('====================================');
+            // $("span.text").bind("click", function(event) {
+            //     //let endx = Math.floor(event.changedTouches[0].pageX)
+            //     //let endy = Math.floor(event.changedTouches[0].pageY)
+            //     event.preventDefault()
+            //     event.stopPropagation()
+            //     console.log('====================================');
+            //     console.log(event);
+            //     console.log('====================================');
                 
-                let $footer = $("#footer")
-                if ($footer.hasClass('footer-show')) {
-                    $footer.removeClass('footer-show')
-                    footerResetStatus()
-                }else {
-                    $footer.addClass('footer-show')
-                    showSizeBar()
-                }
-            })
+            //     let $footer = $("#footer")
+            //     if ($footer.hasClass('footer-show')) {
+            //         $footer.removeClass('footer-show')
+            //         footerResetStatus()
+            //     }else {
+            //         $footer.addClass('footer-show')
+            //         showSizeBar()
+            //     }
+            // })
         })
         
     }
@@ -121,24 +121,21 @@ $().ready(function(){
         showOperation(id)
     })
 
-    // $("#article").bind("tap", function(event) {
-    //     //let endx = Math.floor(event.changedTouches[0].pageX)
-    //     //let endy = Math.floor(event.changedTouches[0].pageY)
-    //     event.preventDefault()
-    //     event.stopPropagation()
-    //     console.log('====================================');
-    //     console.log(event);
-    //     console.log('====================================');
+    $("#article").bind("tap", function(event) {
+        //let endx = Math.floor(event.changedTouches[0].pageX)
+        //let endy = Math.floor(event.changedTouches[0].pageY)
+        event.preventDefault()
+        event.stopPropagation()
         
-    //     let $footer = $("#footer")
-    //     if ($footer.hasClass('footer-show')) {
-    //         $footer.removeClass('footer-show')
-    //         footerResetStatus()
-    //     }else {
-    //         $footer.addClass('footer-show')
-    //         showSizeBar()
-    //     }
-    // })
+        let $footer = $("#footer")
+        if ($footer.hasClass('footer-show')) {
+            $footer.removeClass('footer-show')
+            footerResetStatus()
+        }else {
+            $footer.addClass('footer-show')
+            showSizeBar()
+        }
+    })
 
     $("#fontSlider").ionRangeSlider({
         type: "single",

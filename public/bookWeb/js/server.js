@@ -6,7 +6,7 @@ let request = function(url, data, callback) {
 
     data = Object.assign(data, {appName:'waima-script', appVersion:'1.0', platform:'ios', userId: '5a9bb12f50cc87d908cde1ab'})
     if (jsonp) {
-        $.ajax({
+        Zepto.ajax({
             type: "GET",
             url: url,
             dataType: 'json',
@@ -50,7 +50,7 @@ a.scriptFetch = function(data, callback) {
 }
 
 a.scriptFileFetch = function(url, callback) {
-    $.ajax({
+    Zepto.ajax({
         type: 'GET',
         url: url,
         dataType: 'json',
@@ -60,13 +60,15 @@ a.scriptFileFetch = function(url, callback) {
             //callback && callback(data)
         },
         error: function(xhr, type){
-          
-
-        },
-        complete: function(data) {
-            if (data.responseText) {
-                callback && callback(data.responseText)
+            if (xhr.response) {
+                callback && callback(xhr.response)
             }
+        },
+
+        complete: function(data) {
+            // if (data.responseText) {
+            //     callback && callback(data.responseText)
+            // }
         }
     })
 }
