@@ -166,3 +166,7 @@ span {
     width: 90%;
     height: 20px;
 }
+
+.ui-loader {
+    display: none;
+}
