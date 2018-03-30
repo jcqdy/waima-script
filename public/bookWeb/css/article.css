@@ -1,0 +1,168 @@
+p {
+    margin:0;
+    padding:0;
+}
+
+span {
+    -moz-user-select:none;
+    -webkit-user-select:none;
+}
+
+#article span {
+    font-size: 14px;
+    color: black;
+}
+
+#article .subtitle {
+    font-weight: bold;
+}
+
+.marked {
+    border-bottom: 1px solid red;
+}
+
+.footer {
+    width: 100%;
+    height: 55px;
+    background-color: white;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    display: none;
+}
+
+.footer-show {
+    display: block;
+}
+
+.footer-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.footer-content div {
+    flex:1;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.font-button {
+    background-image: url(../asset/images/font.png);
+}
+
+.back-button {
+    background-image: url(../asset/images/backcolor.png);
+}
+
+.progress-button {
+    background-image: url(../asset/images/progress.png);
+}
+
+.collection-button {
+    background-image: url(../asset/images/collection.png);
+}
+
+.font-button.footer-selected {
+    background-image: url(../asset/images/font-selected.png);
+}
+
+.back-button.footer-selected {
+    background-image: url(../asset/images/backcolor-selected.png);
+}
+
+.progress-button.footer-selected {
+    background-image: url(../asset/images/progress-selected.png);
+}
+
+.collection-button.footer-selected {
+    background-image: url(../asset/images/collection-selected.png);
+}
+
+.notes {
+    width: 55px;
+    height: 55px;
+    position: fixed;
+    right: 14px;
+    bottom: 200px;
+    background: url(../asset/images/notes.png) no-repeat;
+    background-position: center center;
+    display: none;
+}
+
+.share {
+    display: none;
+    width: 55px;
+    height: 55px;
+    position: fixed;
+    right: 14px;
+    bottom: 140px;
+    background: url(../asset/images/share.png) no-repeat;
+    background-position: center center;
+}
+
+.font-operation {
+    width: 100%;
+    height: 60px;
+    position: fixed;
+    bottom: 55px;
+    left: 0;
+    background-color: white;
+    display: none;
+}
+
+.font-input {
+    width: 90%;
+    height: 100%;
+}
+
+.back-operation {
+    width: 100%;
+    height: 60px;
+    position: fixed;
+    bottom: 55px;
+    left: 0;
+    background-color: white;
+    display: none;
+}
+
+.back-content {
+    width: 90%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 5%;
+}
+
+.back-content div {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+}
+
+.back-one {
+    background-color: white;
+}
+
+.back-two {
+    background-color: #F7F0DF;
+}
+
+.back-three {
+    background-color: #CCF0CF;
+}
+
+.back-four {
+    background-color: black;
+    background-image: url(../asset/images/night.png);
+    background-position: center center;
+    background-size: cover;
+}
+
+.font-slider {
+    width: 90%;
+    height: 20px;
+}
