@@ -5,6 +5,11 @@ $().ready(function(){
     let screenWidth = $(window).width()
     let screenHeight = $(window).height()
     let footerShowDelta = 30
+    let $allTextSpan = null
+    let $article = $("#article")
+    let $footer = $("#footer")
+    let currentSelectedText = []
+    let $body = $("body")
 
     let data = JSON.parse(decodeURI(window.location.href).split(".html?")[1].split("article=")[1])
 
@@ -21,70 +26,92 @@ $().ready(function(){
         window.server.scriptFileFetch(url, function(res) {
             let content = res
 
-            // let tempArr = content.split("\n")
-            // let newArr = []
-            // let html = ""
+            $article.html(content)
+            $allTextSpan = $("#article span.text")
 
-            // console.log('====================================');
-            // console.log(tempArr);
-            // console.log('====================================');
-
-            // tempArr.map((obj, index) => {
-            //   newArr.push({text: obj, selected: false, index: index})
-            //   if (obj == "") {
-            //     html += "</br>"
-            //   }else {
-            //     html += "<span class='fragment' data-index="+ index +">"+ obj +"</span></br>"
-            //   }
-            // })
-
-            // textArr = newArr
-
-            $("#article").html(content)
+            for(let i=0; i < $allTextSpan.length; i++) {
+                $item = $($allTextSpan[i])
+                $item.data("index", i)
+            }
             
-            $("span.text").bind("longTap", function(event) {
-                event.preventDefault()
+            $allTextSpan.bind("longTap", function(event) {
                 event.stopPropagation()
-                console.log(this.dataset.index)
                 let _this = $(this)
-                if (_this.hasClass('marked')) {
-                    _this.removeClass('marked')
+                let index = _this.data().index
+                if (_this.hasClass('text-selected')) {
+                    // _this.removeClass('text-selected')
+                    // $("#writeNoteButton").hide(0)
+                    // currentSelectedText = currentSelectedText.filter((obj) => {
+                    //     return obj.index != index
+                    // })
                 }else {
-                    _this.addClass('marked')    
+                    _this.addClass('text-selected')   
+                    $("#writeNoteButton").show(0)
+                    footerResetStatus()
+                    currentSelectedText.push({index: index, text: _this.text()})
+                    $article.unbind("click")
                 }
             })
 
-            // $("span.text").bind("click", function(event) {
-            //     //let endx = Math.floor(event.changedTouches[0].pageX)
-            //     //let endy = Math.floor(event.changedTouches[0].pageY)
-            //     event.preventDefault()
-            //     event.stopPropagation()
-            //     console.log('====================================');
-            //     console.log(event);
-            //     console.log('====================================');
+            $allTextSpan.bind("click", function() {
                 
-            //     let $footer = $("#footer")
-            //     if ($footer.hasClass('footer-show')) {
-            //         $footer.removeClass('footer-show')
-            //         footerResetStatus()
-            //     }else {
-            //         $footer.addClass('footer-show')
-            //         showSizeBar()
-            //     }
-            // })
+                let _this = $(this)
+                let index = _this.data().index
+                if (_this.hasClass('text-selected')) {
+                    _this.removeClass('text-selected')
+                    currentSelectedText = currentSelectedText.filter((obj) => {
+                        return obj.index != index
+                    })
+
+                    if (currentSelectedText.length <= 0) {
+                        $("#writeNoteButton").hide(0)
+                        setTimeout(function(){
+                            bindArticleClick()
+                        }, 500)
+                    }
+                }
+            })
+
         })
         
     }
     
     /*事件 */
 
-    let footerResetStatus = function() {
-        $("#footer").find('div').removeClass('footer-selected')
-        $("#notes").hide(0)
-        $("#share").hide(0)
+    var bindArticleClick = function() {
+        $article.bind("click", function(event) {
+
+            if (currentSelectedText.length > 0) {
+                //$currentSelectedText.trigger("longTap")
+                //$currentSelectedText = null
+            }else {
+                if ($footer.hasClass('footer-show')) {
+                    $footer.removeClass('footer-show')
+                    footerResetStatus()
+                }else {
+                    $footer.addClass('footer-show')
+                    showSideBar()
+                    updateProgress()
+                }
+            }
+        })
     }
 
-    let showSizeBar = function() {
+    let footerResetStatus = function() {
+        $footer.removeClass('footer-show')
+        $footer.find('div').removeClass('footer-selected')
+        $("#notes").hide(0)
+        $("#share").hide(0)
+        resetFooterOperation()
+    }
+
+    let resetFooterOperation = function() {
+        $(".font-operation").removeClass('operation-show')
+        $(".back-operation").removeClass('operation-show')
+        $(".progress-operation").removeClass('operation-show')
+    }
+
+    let showSideBar = function() {
         $("#notes").show(0)
         $("#share").show(0)
     }
@@ -92,19 +119,22 @@ $().ready(function(){
     let showOperation = function(id) {
         switch (id) {
             case "fontButton":
-                $('.font-operation').show(0)
+                resetFooterOperation()
+                $('.font-operation').addClass('operation-show')
                 break;
 
             case "backButton":
-                $('.back-operation').show(0)
+                resetFooterOperation()
+                $('.back-operation').addClass('operation-show')
                 break;
 
             case "progressButton":
-                
+                resetFooterOperation()
+                $('.progress-operation').addClass('operation-show')
                 break;
 
             case "collectionButton":
-                
+                resetFooterOperation()
                 break;
         
             default:
@@ -113,51 +143,102 @@ $().ready(function(){
     }
 
     $("#footer div").on("touchend", function(event){
-        event.preventDefault()
-        event.stopPropagation()
-        $("#footer").find('div').removeClass('footer-selected')
+      
+        $footer.find('div').removeClass('footer-selected')
         $(event.target).addClass('footer-selected')
         let id = $(this)[0]["id"]
         showOperation(id)
     })
 
-    $("#article").bind("tap", function(event) {
-        //let endx = Math.floor(event.changedTouches[0].pageX)
-        //let endy = Math.floor(event.changedTouches[0].pageY)
-        event.preventDefault()
-        event.stopPropagation()
-        
-        let $footer = $("#footer")
-        if ($footer.hasClass('footer-show')) {
-            $footer.removeClass('footer-show')
-            footerResetStatus()
-        }else {
-            $footer.addClass('footer-show')
-            showSizeBar()
-        }
+    $article.bind("touchmove", function(event) {
+        footerResetStatus()
     })
 
     $("#fontSlider").ionRangeSlider({
         type: "single",
         min: 0,
         max: 100,
-        from: 50,
-        keyboard: true,
+        from: 20,
+        step: 25,
         onStart: function (data) {
-            console.log("onStart");
+            
         },
         onChange: function (data) {
-            console.log("onChange");
+            // let from = data.from
+            // $article.removeClass("f0 f25 f50 f75 f100")
+            // $article.addClass("f" + from)
         },
         onFinish: function (data) {
-            console.log("onFinish");
-        },
-        onUpdate: function (data) {
-            console.log("onUpdate");
+            let from = data.from
+            $article.removeClass("f0 f25 f50 f75 f100")
+            $article.addClass("f" + from)
         }
-    });
+    })
 
-    
-    
+    $("#progressSlider").ionRangeSlider({
+        type: "single",
+        min: 0,
+        max: 100,
+        from: 20,
+        onStart: function (data) {
+
+        },
+        onChange: function (data) {
+            // let from = data.from
+            // $article.removeClass("f0 f25 f50 f75 f100")
+            // $article.addClass("f" + from)
+        },
+        onFinish: function (data) {
+            let from = data.from
+            let totalHeight = $("html").height()
+            let scrollToHeight = totalHeight * from / 100
+            $("html").scrollTop(scrollToHeight)
+        }
+    })
+
+    var progressSlider = $("#progressSlider").data("ionRangeSlider")
+
+    var updateProgress = function() {
+        let currentOffset = $("html").scrollTop()
+        let totalHeight = $("html").height()
+
+        let from = Math.floor(currentOffset / totalHeight * 100)
+        
+        progressSlider.update({
+            min: 0,
+            max: 100,
+            from: from
+        })
+    }
+
+    $(".back-content div").bind("tap", function() {
+        event.stopPropagation()
+
+        let id = $(this)[0]["id"]
+        $body.removeClass("back-white back-yellow back-green back-black")
+        $article.removeClass("text-color-white")
+        switch (id) {
+            case "backWhite":
+                $body.addClass("back-white")
+                break;
+
+            case "backYellow":
+                $body.addClass("back-yellow")
+                break;
+
+            case "backGreen":
+                $body.addClass("back-green")
+                break;
+
+            case "backBlack":
+                $body.addClass("back-black")
+                $article.addClass("text-color-white")
+                break;
+        
+            default:
+                break;
+        }
+    })
+
 })
 

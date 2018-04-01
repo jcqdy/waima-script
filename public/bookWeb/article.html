@@ -14,10 +14,10 @@
 
 </script>
 </head>
-<body>
+<body oncontextmenu="return false">
 
     <div id="article">
-        这是测试文字         
+
     </div>
 
     <footer class="footer" id="footer">
@@ -31,18 +31,27 @@
 
     <div class="notes" id="notes"></div>
     <div class="share" id="share"></div>
+    <button class="write-note-button" id="writeNoteButton"></button>
 
-    <div class="font-operation">
-        <input type="text" class="font-slider" id="fontSlider" name="fontSlider" value="" />
+    <div class="font-operation footer-operation">
+        <div class="font-input-wrap">
+            <input type="text" class="font-slider" id="fontSlider" name="fontSlider" value="" />
+        </div>
     </div>
 
-    <div class="back-operation">
+    <div class="back-operation footer-operation">
         <div class="back-content">
-            <div class="back-one"></div>
-            <div class="back-two"></div>
-            <div class="back-three"></div>
-            <div class="back-four"></div>
+            <div class="back-white" id="backWhite"></div>
+            <div class="back-yellow" id="backYellow"></div>
+            <div class="back-green" id="backGreen"></div>
+            <div class="back-black back-black-special" id="backBlack"></div>
         </div>
+    </div>
+
+    <div class="progress-operation footer-operation">
+        <div class="font-input-wrap">
+            <input type="text" class="progress-slider" id="progressSlider" name="progressSlider" value="" />
+        </div>        
     </div>
 
 </body>
