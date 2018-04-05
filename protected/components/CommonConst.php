@@ -13,7 +13,7 @@ class CommonConst
 
     const STORE_NEW_SCRIPT_NUM = 6;
 
-    const DEFAULT_FONT_SIZE = 17;
+    const DEFAULT_FONT_SIZE = 16;
 
     const DEFAULT_BACK_COLOR = 1;
 

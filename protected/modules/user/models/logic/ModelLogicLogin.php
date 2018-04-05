@@ -23,7 +23,7 @@ class ModelLogicLogin
         $ret = Http::get($weChatApi . $param);
         $ret = @json_decode($ret, true);
         if (! isset($ret['openid']))
-            throw new Exception('get openId failed', Errno::FATAL);
+            throw new Exception('get openId failed, errmsg : ' . $ret['errmsg'], Errno::FATAL);
 
         $openId = $ret['openid'];
         $sessionKey = $ret['sessionKey'];
