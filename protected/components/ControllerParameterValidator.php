@@ -344,7 +344,7 @@ class ControllerParameterValidator
             $appVersion = ControllerParameterValidator::validateString($aryData, 'appversion', 1, 50);
         }
 
-        $platform = ControllerParameterValidator::validateEnumString($aryData, 'platform', array('ios', 'android', 'iphone', 'wp', 'other', 'h5'));
+        $platform = ControllerParameterValidator::validateString($aryData, 'platform');
         if ($platform == 'iphone') {
             $platform = 'ios';
         }
