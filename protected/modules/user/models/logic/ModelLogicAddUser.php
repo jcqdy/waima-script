@@ -12,19 +12,19 @@ class ModelLogicAddUser
     public function execute($openId, $userId, $nickName, $avatarUrl, $gender, $city, $province, $country, $language)
     {
         $doc = [];
-        if (! empty($nickName))
+        if (! is_null($nickName))
             $doc['nickName'] = $nickName;
-        if (! empty($avatarUrl))
+        if (! is_null($avatarUrl))
             $doc['avatarUrl'] = $avatarUrl;
-        if (! empty($gender))
+        if (! is_null($gender))
             $doc['gender'] = $gender;
-        if (! empty($city))
+        if (! is_null($city))
             $doc['city'] = $city;
-        if (! empty($province))
+        if (! is_null($province))
             $doc['province'] = $province;
-        if (! empty($country))
+        if (! is_null($country))
             $doc['country'] = $country;
-        if (! empty($language))
+        if (! is_null($language))
             $doc['language'] = $language;
 
         if (empty($doc))
