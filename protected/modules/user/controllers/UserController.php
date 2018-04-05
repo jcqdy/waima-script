@@ -6,13 +6,13 @@ class UserController extends Controller
     {
         $openId = ParameterValidatorHelper::validateString($_REQUEST, 'openId');
         $userId = ParameterValidatorHelper::validateMongoIdAsString($_REQUEST, 'userId');
-        $nickName = ParameterValidatorHelper::validateString($_REQUEST, 'nickName');
-        $avatarUrl = ParameterValidatorHelper::validateString($_REQUEST, 'avatarUrl');
-        $gender = ParameterValidatorHelper::validateEnumInteger($_REQUEST, 'gender', [1,2,0]);
-        $city = ParameterValidatorHelper::validateString($_REQUEST, 'city');
-        $province = ParameterValidatorHelper::validateString($_REQUEST, 'province');
-        $country = ParameterValidatorHelper::validateString($_REQUEST, 'country');
-        $language = ParameterValidatorHelper::validateString($_REQUEST, 'language');
+        $nickName = ParameterValidatorHelper::validateString($_REQUEST, 'nickName', null, null, '');
+        $avatarUrl = ParameterValidatorHelper::validateString($_REQUEST, 'avatarUrl', null, null, '');
+        $gender = ParameterValidatorHelper::validateEnumInteger($_REQUEST, 'gender', [1,2,0], 0);
+        $city = ParameterValidatorHelper::validateString($_REQUEST, 'city', null, null, '');
+        $province = ParameterValidatorHelper::validateString($_REQUEST, 'province', null, null, '');
+        $country = ParameterValidatorHelper::validateString($_REQUEST, 'country', null, null, '');
+        $language = ParameterValidatorHelper::validateString($_REQUEST, 'language', null, null, '');
 
         $modelLogicAddUser = new ModelLogicAddUser();
         $ret = $modelLogicAddUser->execute($openId, $userId, $nickName, $avatarUrl, $gender, $city, $province, $country, $language);
