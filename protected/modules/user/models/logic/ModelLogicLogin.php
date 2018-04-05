@@ -26,8 +26,8 @@ class ModelLogicLogin
             throw new Exception('get openId failed, errmsg : ' . $ret['errmsg'], Errno::FATAL);
 
         $openId = $ret['openid'];
-        $sessionKey = $ret['sessionKey'];
-        $unionId = $ret['unionid'];
+        $sessionKey = $ret['session_key'];
+//        $unionId = $ret['unionid'];
 
         $user = $this->modelDataLogin->getUserByOpenId($openId);
 
