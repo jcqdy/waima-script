@@ -9,19 +9,8 @@ class ModelDataUser
         $this->modelDaoUser = new ModelDaoUser();
     }
 
-    public function addUser($userId, $nickName, $avatarUrl, $gender, $city, $province, $country, $language, $createTime)
+    public function addUser($userId, $doc)
     {
-        $doc = [
-            'nickName' => $nickName,
-            'avatarUrl' => $avatarUrl,
-            'gender' => $gender,
-            'city' => $city,
-            'province' => $province,
-            'country' => $country,
-            'language' => $language,
-            'updateTime' => time(),
-        ];
-
         return $this->modelDaoUser->updateUserInfo($userId, $doc);
     }
 

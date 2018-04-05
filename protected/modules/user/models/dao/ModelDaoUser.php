@@ -171,15 +171,6 @@ class ModelDaoUser extends ModelDataMongoCollection
     {
         $query[self::_ID] = $userId instanceof MongoId ? $userId : new MongoId($userId);
 
-        $doc[self::NICK_NAME] = isset($doc['nickName']) ? $doc['nickName'] : '';
-        $doc[self::AVATAR_URL] = isset($doc['avatarUrl']) ? $doc['avatarUrl'] : '';
-        $doc[self::GENDER] = isset($doc['gender']) ? $doc['gender'] : 0;
-        $doc[self::CITY] = isset($doc['city']) ? $doc['city'] : '';
-        $doc[self::PROVINCE] = isset($doc['province']) ? $doc['province'] : '';
-        $doc[self::COUNTRY] = isset($doc['country']) ? $doc['country'] : '';
-        $doc[self::LANGUAGE] = isset($doc['language']) ? $doc['language'] : '';
-        $doc[self::UPDATE_TIME] = isset($doc['updateTime']) ? $doc['updateTime'] : time();
-
         return $this->modify($query, $doc);
     }
 }
