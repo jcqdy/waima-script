@@ -11,6 +11,6 @@ class SearchController extends Controller
         $modelLogicSearch = new ModelLogicSearch();
         $ret = $modelLogicSearch->execute($keyword, $sp, $num);
 
-        ResponseHelper::outputJsonV2($ret, 'ok', 200);
+        ResponseHelper::outputJsonApp($ret, 'ok', 200);
     }
 }

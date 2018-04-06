@@ -6,6 +6,6 @@ class StoreController extends Controller
         $modelLogicStoreHome = new ModelLogicStoreHome();
         $ret = $modelLogicStoreHome->execute();
 
-        ResponseHelper::outputJsonV2($ret, 'ok', 200);
+        ResponseHelper::outputJsonApp($ret, 'ok', 200);
     }
 }

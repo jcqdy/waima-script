@@ -11,6 +11,6 @@ class TypeController extends Controller
         $modelLogicTypeScriptList = new ModelLogicTypeScriptList();
         $ret = $modelLogicTypeScriptList->execute($typeId, $sp, $num);
 
-        ResponseHelper::outputJsonV2($ret, 'ok', 200);
+        ResponseHelper::outputJsonApp($ret, 'ok', 200);
     }
 }

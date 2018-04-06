@@ -10,7 +10,7 @@ class BookCaseController extends Controller
         $modelLogicBookCase = new ModelLogicBookCase();
         $ret = $modelLogicBookCase->execute($userId);
 
-        ResponseHelper::outputJsonV2($ret, 'ok', 200);
+        ResponseHelper::outputJsonApp($ret, 'ok', 200);
     }
 
     public function actionDelete()
@@ -21,7 +21,7 @@ class BookCaseController extends Controller
         $modelLogicDeleteScript = new ModelLogicDeleteScript();
         $modelLogicDeleteScript->execute($userId, $scriptIds);
 
-        ResponseHelper::outputJsonV2([], 'ok', 200);
+        ResponseHelper::outputJsonApp([], 'ok', 200);
     }
 
     public function actionMove()
@@ -35,7 +35,7 @@ class BookCaseController extends Controller
         $modelLogicMoveScript = new ModelLogicMoveScript();
         $modelLogicMoveScript->execute($userId, $scriptIds, $newFolderId, $name, $makeFolder);
 
-        ResponseHelper::outputJsonV2([], 'ok', 200);
+        ResponseHelper::outputJsonApp([], 'ok', 200);
     }
 
     public function actionEdit()
@@ -47,7 +47,7 @@ class BookCaseController extends Controller
         $modelLogicEditFolder = new ModelLogicEditFolder();
         $modelLogicEditFolder->execute($userId, $name, $folderId);
 
-        ResponseHelper::outputJsonV2([], 'ok', 200);
+        ResponseHelper::outputJsonApp([], 'ok', 200);
     }
 
     public function actionAdd()
@@ -58,6 +58,6 @@ class BookCaseController extends Controller
         $modelLogicAddScript = new ModelLogicAddScript();
         $modelLogicAddScript->execute($userId, $scriptId);
 
-        ResponseHelper::outputJsonV2([], 'ok', 200);
+        ResponseHelper::outputJsonApp([], 'ok', 200);
     }
 }

@@ -10,7 +10,7 @@ class CollectController extends Controller
         $modelLogicAddCollect = new ModelLogicAddCollect();
         $modelLogicAddCollect->execute($pkgId, $noteId);
 
-        ResponseHelper::outputJsonV2([], 'ok', 200);
+        ResponseHelper::outputJsonApp([], 'ok', 200);
     }
 
     public function actionAddPkg()
@@ -21,7 +21,7 @@ class CollectController extends Controller
         $modelLogicAddPkg = new ModelLogicAddPkg();
         $ret = $modelLogicAddPkg->execute($userId, $pkgName);
 
-        ResponseHelper::outputJsonV2($ret, 'ok', 200);
+        ResponseHelper::outputJsonApp($ret, 'ok', 200);
     }
 
     public function actionDel()
@@ -33,7 +33,7 @@ class CollectController extends Controller
         $modelLogicDelCollect = new ModelLogicDelCollect();
         $modelLogicDelCollect->execute($userId, $noteId, $pkgId);
 
-        ResponseHelper::outputJsonV2([], 'ok', 200);
+        ResponseHelper::outputJsonApp([], 'ok', 200);
     }
 
     public function actionEditPkg()
@@ -45,7 +45,7 @@ class CollectController extends Controller
         $modelLogicEditPkg = new ModelLogicEditPkg();
         $modelLogicEditPkg->execute($userId, $pkgId, $pkgName);
 
-        ResponseHelper::outputJsonV2([], 'ok', 200);
+        ResponseHelper::outputJsonApp([], 'ok', 200);
     }
 
     public function actionPkgList()
@@ -55,7 +55,7 @@ class CollectController extends Controller
         $modelLogicPkgList = new ModelLogicPkgList();
         $ret = $modelLogicPkgList->execute($userId);
 
-        ResponseHelper::outputJsonV2($ret, 'ok', 200);
+        ResponseHelper::outputJsonApp($ret, 'ok', 200);
     }
 
     public function actionFetch()
@@ -68,6 +68,6 @@ class CollectController extends Controller
         $modelLogicCollectFetch = new ModelLogicCollectFetch();
         $ret = $modelLogicCollectFetch->execute($userId, $pkgId, $sp, $num);
 
-        ResponseHelper::outputJsonV2($ret, 'ok', 200);
+        ResponseHelper::outputJsonApp($ret, 'ok', 200);
     }
 }

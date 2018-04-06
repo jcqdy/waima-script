@@ -8,6 +8,6 @@ class LoginController extends H5Controller
         $modelLogicLogin = new ModelLogicLogin();
         $ret = $modelLogicLogin->openId($code);
 
-        ResponseHelper::outputJsonV2($ret, 'ok', 200);
+        ResponseHelper::outputJsonApp($ret, 'ok', 200);
     }
 }

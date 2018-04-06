@@ -12,7 +12,7 @@ class NoteMarkController extends Controller
         $modelLogicNoteMarkList = new ModelLogicNoteMarkList();
         $ret = $modelLogicNoteMarkList->execute($userId, $scriptId, $sp, $num);
 
-        ResponseHelper::outputJsonV2($ret, 'ok', 200);
+        ResponseHelper::outputJsonApp($ret, 'ok', 200);
     }
 
     public function actionDel()
@@ -23,7 +23,7 @@ class NoteMarkController extends Controller
         $modelLogicDelNoteMark = new ModelLogicDelNoteMark();
         $modelLogicDelNoteMark->execute($noteId);
 
-        ResponseHelper::outputJsonV2([], 'ok', 200);
+        ResponseHelper::outputJsonApp([], 'ok', 200);
     }
 
     public function actionDetail()
@@ -33,7 +33,7 @@ class NoteMarkController extends Controller
         $modelLogicNoteDetail = new ModelLogicNoteDetail();
         $ret = $modelLogicNoteDetail->execute($noteId);
 
-        ResponseHelper::outputJsonV2($ret, 'ok', 200);
+        ResponseHelper::outputJsonApp($ret, 'ok', 200);
     }
 
 //    public function actionMark()
@@ -55,7 +55,7 @@ class NoteMarkController extends Controller
         $modelLogicEditNote = new ModelLogicEditNote();
         $modelLogicEditNote->execute($userId, $noteId, $note);
 
-        ResponseHelper::outputJsonV2([], 'ok', 200);
+        ResponseHelper::outputJsonApp([], 'ok', 200);
     }
 
     public function actionAddNote()
@@ -71,7 +71,7 @@ class NoteMarkController extends Controller
         $modelLogicAddNote = new ModelLogicAddNote();
         $ret = $modelLogicAddNote->execute($userId, $note, $scriptId, $mark, $markId);
 
-        ResponseHelper::outputJsonV2($ret, 'ok', 200);
+        ResponseHelper::outputJsonApp($ret, 'ok', 200);
     }
 
     public function actionScriptList()
@@ -81,7 +81,7 @@ class NoteMarkController extends Controller
         $modelLogicNoteScriptList = new ModelLogicNoteScriptList();
         $ret = $modelLogicNoteScriptList->execute($userId);
 
-        ResponseHelper::outputJsonV2($ret, 'ok', 200);
+        ResponseHelper::outputJsonApp($ret, 'ok', 200);
     }
 
 //    public function actionAddMark()

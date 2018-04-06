@@ -9,7 +9,7 @@ class ScriptController extends Controller
         $modelLogicBatchFetch = new ModelLogicBatchFetch();
         $ret = $modelLogicBatchFetch->execute($userId, $scriptIds);
 
-        ResponseHelper::outputJsonV2($ret, 'ok', 200);
+        ResponseHelper::outputJsonApp($ret, 'ok', 200);
     }
 
     public function actionPutStatus()
@@ -23,7 +23,7 @@ class ScriptController extends Controller
         $modelLogicPutStatus = new ModelLogicPutStatus();
         $modelLogicPutStatus->execute($userId, $scriptId, $readPos, $fontSize, $backColor);
 
-        ResponseHelper::outputJsonV2([], 'ok', 200);
+        ResponseHelper::outputJsonApp([], 'ok', 200);
     }
 
     public function actionFetch()

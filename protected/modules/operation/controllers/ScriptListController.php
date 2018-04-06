@@ -11,6 +11,6 @@ class ScriptListController extends Controller
         $modelLogicOpScriptList = new ModelLogicOpScriptList();
         $ret = $modelLogicOpScriptList->execute($opId, $sp, $num);
 
-        ResponseHelper::outputJsonV2($ret, 'ok', 200);
+        ResponseHelper::outputJsonApp($ret, 'ok', 200);
     }
 }

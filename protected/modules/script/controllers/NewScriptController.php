@@ -9,6 +9,6 @@ class NewScriptController extends Controller
         $modelLogicNewScriptList = new ModelLogicNewScriptList();
         $ret = $modelLogicNewScriptList->execute($sp, $num);
 
-        ResponseHelper::outputJsonV2($ret, 'ok', 200);
+        ResponseHelper::outputJsonApp($ret, 'ok', 200);
     }
 }

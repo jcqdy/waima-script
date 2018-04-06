@@ -17,7 +17,7 @@ class UserController extends Controller
         $modelLogicAddUser = new ModelLogicAddUser();
         $ret = $modelLogicAddUser->execute($openId, $userId, $nickName, $avatarUrl, $gender, $city, $province, $country, $language);
 
-        ResponseHelper::outputJsonV2($ret, 'ok', 200);
+        ResponseHelper::outputJsonApp($ret, 'ok', 200);
     }
 
     public function actionFetch()
@@ -27,7 +27,7 @@ class UserController extends Controller
         $modelLogicAddUser = new ModelLogicFetchUser();
         $ret = $modelLogicAddUser->execute($userId);
 
-        ResponseHelper::outputJsonV2($ret, 'ok', 200);
+        ResponseHelper::outputJsonApp($ret, 'ok', 200);
     }
 
     public function actionReadRecord()
@@ -38,7 +38,7 @@ class UserController extends Controller
         $modelLogicReadRecord = new ModelLogicReadRecord();
         $modelLogicReadRecord->execute($userId, $scriptId);
 
-        ResponseHelper::outputJsonV2([], 'ok', 200);
+        ResponseHelper::outputJsonApp([], 'ok', 200);
     }
 
     public function actionEdit()
@@ -51,7 +51,7 @@ class UserController extends Controller
         $modelLogicEditUser = new ModelLogicEditUser();
         $modelLogicEditUser->execute($userId, $phoneNum, $avatarUrl, $nickName);
 
-        ResponseHelper::outputJsonV2([], 'ok', 200);
+        ResponseHelper::outputJsonApp([], 'ok', 200);
     }
 
     

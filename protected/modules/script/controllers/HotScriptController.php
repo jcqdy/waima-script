@@ -9,6 +9,6 @@ class HotScriptController extends Controller
         $modelLogicHotScriptList = new ModelLogicHotScriptList();
         $ret = $modelLogicHotScriptList->execute($sp, $num);
 
-        ResponseHelper::outputJsonV2($ret, 'ok', 200);
+        ResponseHelper::outputJsonApp($ret, 'ok', 200);
     }
 }
