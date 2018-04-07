@@ -226,15 +226,15 @@ class Controller extends CController
             parent::run($actionID);
         } catch (ParameterValidationException $e) {
             LogHelper::warning($e->getMessage() . ' with code ' . Errno::PARAMETER_VALIDATION_FAILED);
-            ResponseHelper::outputJsonV2(array(), $e->getMessage(), Errno::PARAMETER_VALIDATION_FAILED);
+            ResponseHelper::outputJsonApp(array(), $e->getMessage(), Errno::PARAMETER_VALIDATION_FAILED);
         } catch (PrivilegeException $e) {
             LogHelper::warning($e->getMessage() . ' with code ' . Errno::PRIVILEGE_NOT_PASS);
-            ResponseHelper::outputJsonV2(array(), $e->getMessage(), Errno::PRIVILEGE_NOT_PASS);
+            ResponseHelper::outputJsonApp(array(), $e->getMessage(), Errno::PRIVILEGE_NOT_PASS);
         } catch (MongoException $e) {
             LogHelper::error($e->getMessage() . ' with code ' . $e->getCode());
-            ResponseHelper::outputJsonV2(array(), '网络不给力', Errno::FATAL);
+            ResponseHelper::outputJsonApp(array(), '网络不给力', Errno::FATAL);
         } catch (Exception $e) {
-            ResponseHelper::outputJsonV2(array(), $e->getMessage(), $e->getCode());
+            ResponseHelper::outputJsonApp(array(), $e->getMessage(), $e->getCode());
         }
     }
 
