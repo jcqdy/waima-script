@@ -26,9 +26,15 @@ class QrcodeCommand extends CConsoleCommand
             $header = ['content-type:application/json'];
             $qrcode = HttpHelper::request($qrcodeApi, $params, 10, 'POST', [], $header);
             if ($qrcode === false) {
-                LogHelper::error($name . ' get qrcode failed');
+                LogHelper::error($name . ' get qrcode failed, errmsg : ' . $qrcode);
                 exit();
             }
+            $qrcodeArr = @json_decode($qrcode, true);
+            if (is_array($qrcodeArr)) {
+                LogHelper::error($name . ' get qrcode failed, errmsg : ' . $qrcode['errmsg']);
+                exit();
+            }
+
             file_put_contents($qrcodeDir.$name, $qrcode);
             $etag = QiniuHelper::uploadFile($qrcodeDir.$name);
             if ($etag === false)

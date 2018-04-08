@@ -141,7 +141,10 @@ class ModelLogicAccToken
             throw new Exception('get wechat accessToken failed', Errno::INTERNAL_SERVER_ERROR);
         }
 
-        $ret = json_decode($ret, true);
+        $ret = @json_decode($ret, true);
+        if (! isset($ret['access_token']))
+            throw new Exception('get wechat accessToken failed, errmsg : ' . $ret['errmsg'], Errno::INTERNAL_SERVER_ERROR);
+
         return array_values($ret);
     }
 
