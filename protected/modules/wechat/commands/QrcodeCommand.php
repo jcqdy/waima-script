@@ -43,8 +43,7 @@ class QrcodeCommand extends CConsoleCommand
             $modelDaoScript->modify(['_id' => $data['_id']], ['qrcodeUrl' => $etag]);
 
             LogHelper::error($name . ' success');
-
-            exit();
+            
         }
 
 
