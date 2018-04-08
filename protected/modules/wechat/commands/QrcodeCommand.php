@@ -23,7 +23,7 @@ class QrcodeCommand extends CConsoleCommand
             ];
 
 //            $postPar = json_encode($params);
-            $header = 'content-type:application/json';
+            $header = ['content-type:application/json'];
             $qrcode = HttpHelper::request($qrcodeApi, $params, 10, 'POST', [], $header);
             if ($qrcode === false) {
                 LogHelper::error($name . ' get qrcode failed');
