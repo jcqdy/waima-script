@@ -137,6 +137,8 @@ class ModelLogicAccToken
 
         $ret = HttpHelper::get($wechatUrl);
 
+        LogHelper::error($wechatUrl);
+
         if (! $ret) {
             throw new Exception('get wechat accessToken failed', Errno::INTERNAL_SERVER_ERROR);
         }
