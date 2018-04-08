@@ -133,11 +133,9 @@ class ModelLogicAccToken
             'appid' => Yii::app()->params['appId'],
             'secret' => Yii::app()->params['appSecret'],
         ];
-        $wechatUrl = Yii::app()->params['wechat_accTokenApi'] . '?' . http_build_query($param);
+        $wechatUrl = Yii::app()->params['wechat_accTokenApi'] . http_build_query($param);
 
         $ret = HttpHelper::get($wechatUrl);
-
-        LogHelper::error($wechatUrl);
 
         if (! $ret) {
             throw new Exception('get wechat accessToken failed', Errno::INTERNAL_SERVER_ERROR);
