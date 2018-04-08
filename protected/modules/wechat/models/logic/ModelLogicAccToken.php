@@ -1,13 +1,6 @@
 <?php
 class ModelLogicAccToken
 {
-    protected $wechatConf;
-
-    public function __construct()
-    {
-        $this->wechatConf = Yii::app()->params['wechat'];
-    }
-
     /**
      * 获取AccessToken
      *
@@ -54,7 +47,7 @@ class ModelLogicAccToken
                     'jsapi_ticket' => $data['ticket'],
                     'timestamp' => $data['timestamp'],
                     'url' => $data['url'],
-                    'appId' => $this->wechatConf['appId'],
+                    'appId' => Yii::app()->params['appId'],
                     'signature' => $data['signature'],
                 ];
             } else {
@@ -72,7 +65,7 @@ class ModelLogicAccToken
                     'jsapi_ticket' => $ticket,
                     'timestamp' => $sigData['timestamp'],
                     'url' => $url,
-                    'appId' => $this->wechatConf['appId'],
+                    'appId' => Yii::app()->params['appId'],
                     'signature' => $sigData['signature'],
                 ];
             }
@@ -91,7 +84,7 @@ class ModelLogicAccToken
                 'jsapi_ticket' => $ticket,
                 'timestamp' => $sigData['timestamp'],
                 'url' => $url,
-                'appId' => $this->wechatConf['appId'],
+                'appId' => Yii::app()->params['appId'],
                 'signature' => $sigData['signature'],
             ];
         }
@@ -137,10 +130,10 @@ class ModelLogicAccToken
     {
         $param = [
             'grant_type' => 'client_credential',
-            'appid' => $this->wechatConf['appId'],
-            'secret' => $this->wechatConf['appSecret'],
+            'appid' => Yii::app()->params['appId'],
+            'secret' => Yii::app()->params['appSecret'],
         ];
-        $wechatUrl = $this->wechatConf['getAccTokenUrl'] . '?' . http_build_query($param);
+        $wechatUrl = Yii::app()->params['wechat_accTokenApi'] . '?' . http_build_query($param);
 
         $ret = HttpHelper::get($wechatUrl);
 
@@ -165,7 +158,7 @@ class ModelLogicAccToken
             'access_token' => $accToken,
             'type' => 'jsapi',
         ];
-        $wechatUrl = $this->wechatConf['getTicketUrl'] . '?' . http_build_query($param);
+        $wechatUrl = Yii::app()->params['getTicketUrl'] . '?' . http_build_query($param);
 
         $ret = HttpHelper::get($wechatUrl);
 

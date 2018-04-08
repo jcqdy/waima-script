@@ -37,6 +37,7 @@ return array(
         'script' => array(),
         'user' => array(),
         'operation' => array(),
+        'wechat' => array(),
     ),
     // application components
     'components' => array(
@@ -94,6 +95,8 @@ return array(
         'appSecret' => '4afdb06fcdc550e97fdc254ce3fe3c20',
         'appId' => 'wx7e537298ff00ddda',
         'wechat_sessionKeyApi' => 'https://api.weixin.qq.com/sns/jscode2session?',
+        'wechat_accTokenApi' => 'https://api.weixin.qq.com/cgi-bin/token?',
+        'wechat_qrcodeApi' => 'https://api.weixin.qq.com/cgi-bin/wxaapp/createwxaqrcode?',
         'qiniu_prefix' => 'https://scriptfile.ekaogo.com/',
         'tempImage' => RUNTIME_DIR . DIRECTORY_SEPARATOR . 'temp_image' . DIRECTORY_SEPARATOR,
     ),
