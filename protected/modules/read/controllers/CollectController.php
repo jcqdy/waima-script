@@ -60,7 +60,7 @@ class CollectController extends Controller
 
     public function actionFetch()
     {
-        $sp = ParameterValidatorHelper::validateInteger($_REQUEST, 'sp', 0);
+        $sp = ParameterValidatorHelper::validateInteger($_REQUEST, 'sp', 0, PHP_INT_MAX, 0);
         $num = ParameterValidatorHelper::validateInteger($_REQUEST, 'num', 1, 20, 20);
         $userId = ParameterValidatorHelper::validateMongoIdAsString($_REQUEST, 'userId');
         $pkgId = ParameterValidatorHelper::validateMongoIdAsString($_REQUEST, 'pkgId');

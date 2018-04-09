@@ -27,10 +27,8 @@ class ModelLogicCollectFetch
             throw new Exception('userId is wrong', Errno::INVALID_PARAMETER);
 
         $collects = $this->modelDataCollect->queryCollectList($pkgId, $sp, $num);
-        if (empty($collects))
-            return $this->defaultRet;
 
-        $newSp = end($collects)['updateTime'];
+        $newSp = empty($collect) ? -1 : end($collects)['updateTime'];
 
         $scriptIds = [];
         foreach ($collects as $collect) {
