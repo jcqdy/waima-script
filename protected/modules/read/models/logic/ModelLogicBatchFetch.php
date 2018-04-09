@@ -35,14 +35,16 @@ class ModelLogicBatchFetch
                     break;
                 }
             }
-            foreach ($bookCase['scriptIds'] as $value) {
-                if (is_string($value) && $value === $id) {
-                    $inBookCase = 1;
-                    break;
-                }
-                if (is_array($value) && in_array($id, $value['scriptIds'])) {
-                    $inBookCase = 1;
-                    break;
+            if (isset($bookCase['scriptIds'])) {
+                foreach ($bookCase['scriptIds'] as $value) {
+                    if (is_string($value) && $value === $id) {
+                        $inBookCase = 1;
+                        break;
+                    }
+                    if (is_array($value) && in_array($id, $value['scriptIds'])) {
+                        $inBookCase = 1;
+                        break;
+                    }
                 }
             }
 
