@@ -14,11 +14,13 @@ class ScriptFetchEntity
         $this->script = new ScriptEntity($script);
         $this->script->readPos = isset($status['readPos']) ? $status['readPos'] : 0;
         $this->script->inBookCase = $inBookCase;
-        if (empty($note))
-            $this->script->noteMark = [];
 
-        $this->script->noteMark->noteId = isset($note['_id']) ? (string)$note['_id'] : '';
-        $this->script->noteMark->markId = isset($note['markId']) ? $note['markId'] : [];
-        $this->script->noteMark->note = isset($note['note']) ? (string)$note['note'] : '';
+        $this->script->noteMark = [];
+
+        if (! empty($note)) {
+            $this->script->noteMark['noteId'] = isset($note['_id']) ? (string)$note['_id'] : '';
+            $this->script->noteMark['markId'] = isset($note['markId']) ? $note['markId'] : [];
+            $this->script->noteMark['note'] = isset($note['note']) ? (string)$note['note'] : '';
+        }
     }
 }
