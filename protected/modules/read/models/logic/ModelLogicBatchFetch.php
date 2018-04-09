@@ -13,6 +13,7 @@ class ModelLogicBatchFetch
 
     public function execute($userId, $scriptIds)
     {
+        $scripts = $this->modelDataBookCase->queryScripts($scriptIds);
         $status = $this->modelDataRead->queryReadStatus($userId, $scriptIds);
         $noteMarks = $this->modelDataRead->getNoteMark($userId, $scriptIds);
         $bookCase = $this->modelDataBookCase->getBookCase($userId);
@@ -23,6 +24,10 @@ class ModelLogicBatchFetch
         foreach ($scriptIds as $id) {
             $noteList = $statList = [];
             $inBookCase = 0;
+            if (! isset($scripts[$id])) {
+                continue;
+            }
+
             foreach ($noteMarks as $note) {
                 if ($note['scriptId'] === $id) {
                     $noteList[] = $note;
@@ -48,7 +53,7 @@ class ModelLogicBatchFetch
                 }
             }
 
-            $scriptItems[] = new ScriptStatusEntity($id, $noteList, $inBookCase, $statList);
+            $scriptItems[] = new ScriptStatusEntity($id, $noteList, $inBookCase, $statList, $scriptIds[$id]);
         }
         
         return new ReadStatusEntity($readStatus, $scriptItems);
