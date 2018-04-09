@@ -17,7 +17,7 @@ class ScriptFetchEntity
 
         $this->script->noteMark = [];
 
-        if (! empty($note)) {
+        if (! empty($notes)) {
             foreach ($notes as $note) {
                 $item = [];
                 $item['noteId'] = isset($note['_id']) ? (string)$note['_id'] : '';
@@ -26,7 +26,6 @@ class ScriptFetchEntity
 
                 $this->script->noteMark[] = $item;
             }
-
         }
     }
 }
