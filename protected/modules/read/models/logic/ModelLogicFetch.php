@@ -20,8 +20,7 @@ class ModelLogicFetch
 
         $inBookCase = 0;
         $bookCase = $this->modelDataBookCase->getBookCase($userId);
-        $noteMarks = $this->modelDataRead->getNoteMark($userId, [$scriptId]);
-        $note = isset($noteMarks[$scriptId]) ? $noteMarks[$scriptId] : [];
+        $notes = $this->modelDataRead->getNoteMark($userId, [$scriptId]);
 
         if (! empty($bookCase)) {
             foreach ($bookCase['scriptIds'] as $value) {
@@ -39,6 +38,6 @@ class ModelLogicFetch
         $readStatus = $this->modelDataRead->getUserReadStatus($userId);
         $status = $this->modelDataRead->getReadStatus($userId, $scriptId);
 
-        return new ScriptFetchEntity($readStatus, $script, $inBookCase, $status, $note);
+        return new ScriptFetchEntity($readStatus, $script, $inBookCase, $status, $notes);
     }
 }
