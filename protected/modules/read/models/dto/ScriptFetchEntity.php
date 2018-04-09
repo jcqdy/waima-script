@@ -23,6 +23,7 @@ class ScriptFetchEntity
                 $item['noteId'] = isset($note['_id']) ? (string)$note['_id'] : '';
                 $item['markId'] = isset($note['markId']) ? $note['markId'] : [];
                 $item['note'] = isset($note['note']) ? (string)$note['note'] : '';
+                $item['pkgId'] = isset($note['pkgId']) ? (string)$note['pkgId'] : '';
 
                 $this->script->noteMark[] = $item;
             }

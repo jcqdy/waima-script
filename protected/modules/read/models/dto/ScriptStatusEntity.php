@@ -26,6 +26,8 @@ class ScriptStatusEntity
 //            $item['markPos'] = isset($note['markPos']) ? $note['markPos'] : [];
             $item['markId'] = isset($note['markId']) ? $note['markId'] : [];
             $item['note'] = isset($note['note']) ? (string)$note['note'] : '';
+            $item['pkgId'] = isset($note['pkgId']) ? (string)$note['pkgId'] : '';
+
             $this->noteMark[] = $item;
         }
     }
