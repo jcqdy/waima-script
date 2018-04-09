@@ -35,7 +35,7 @@ class NoteMarkEntity
         $this->userId = isset($noteMark['userId']) ? (string)$noteMark['userId'] : '';
         $this->scriptId = isset($noteMark['scriptId']) ? (string)$noteMark['scriptId'] : '';
 //        $this->markPos = isset($noteMark['markPos']) ? $noteMark['markPos'] : [];
-        $this->mark = isset($noteMark['mark']) ? (string)$noteMark['mark'] : [];
+        $this->mark = isset($noteMark['mark']) ? $noteMark['mark'] : [];
         $this->markId = isset($noteMark['markId']) ? $noteMark['markId'] : [];
         $this->note = isset($noteMark['note']) ? (string)$noteMark['note'] : '';
         $this->pkgId = isset($noteMark['pkgId']) ? (string)$noteMark['pkgId'] : '';
