@@ -53,7 +53,7 @@ class ModelLogicBatchFetch
                 }
             }
 
-            $scriptItems[] = new ScriptStatusEntity($id, $noteList, $inBookCase, $statList, $scriptIds[$id]);
+            $scriptItems[] = new ScriptStatusEntity($id, $noteList, $inBookCase, $statList, $scripts[$id]);
         }
         
         return new ReadStatusEntity($readStatus, $scriptItems);
