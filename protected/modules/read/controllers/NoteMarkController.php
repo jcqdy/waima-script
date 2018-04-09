@@ -64,9 +64,13 @@ class NoteMarkController extends Controller
         $note = ParameterValidatorHelper::validateString($_REQUEST, 'note');
         $scriptId = ParameterValidatorHelper::validateMongoIdAsString($_REQUEST, 'scriptId');
 //        $mark = ParameterValidatorHelper::validateArray($_REQUEST, 'mark');
-        $mark = ParameterValidatorHelper::validateJson($_REQUEST, 'mark');
+        $mark = ParameterValidatorHelper::validateString($_REQUEST, 'mark');
         $markId = ParameterValidatorHelper::validateArray($_REQUEST, 'markId');
 //        $markPos = ParameterValidatorHelper::validateArray($_REQUEST, 'markPos');
+
+        $mark = @json_decode($mark, true);
+        if (! is_array($mark))
+            throw new Exception('mark is wrong', Errno::INVALID_PARAMETER);
 
         $modelLogicAddNote = new ModelLogicAddNote();
         $ret = $modelLogicAddNote->execute($userId, $note, $scriptId, $mark, $markId);
