@@ -13,6 +13,7 @@ class ModelDataStore
         $this->modelDaoScriptType = new ModelDaoScriptType();
         $this->modelDaoScript = new ModelDaoScript();
         $this->modelDaoOperation = new ModelDaoOperation();
+        $this->modelDaoActive = new ModelDaoActive();
     }
 
     public function getBanner()
@@ -35,4 +36,13 @@ class ModelDataStore
         return $this->modelDaoScriptType->queryAll();
     }
 
+    public function queryByOpIds($opIds, $status)
+    {
+        return $this->modelDaoActive->queryByOpId($opIds, $status);
+    }
+
+    public function findScript($scriptId)
+    {
+        return $this->modelDaoScript->findOneScript($scriptId);
+    }
 }

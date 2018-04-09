@@ -28,4 +28,19 @@ class ModelDaoActive extends ModelDataMongoCollection
         return DbWrapper::transform($ret);
     }
 
+    public function queryByOpId(array $opIds, $status = 1)
+    {
+        $ids = [];
+        foreach ($opIds as $opId) {
+            $ids[] = $opId instanceof MongoId ? $opId : new MongoId($opId);
+        }
+
+        $query[self::OP_ID] = ['$in' => $ids];
+        $query[self::STATUS] = $status;
+
+        $ret = $this->query($query);
+
+        return DbWrapper::transform($ret);
+    }
+
 }

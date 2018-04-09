@@ -10,7 +10,7 @@ class StoreHomeEntity
 
     public $newScript = [];
 
-    public function __construct($banners, $types, $hotScript, $newScript)
+    public function __construct($banners, $types, $hotScript, $newScript, $datas)
     {
         $urlPrefix = Yii::app()->params['qiniu_prefix'];
         foreach ($banners as $banner) {
@@ -21,6 +21,7 @@ class StoreHomeEntity
                 'gotoType' => isset($banner['gotoType']) ? $banner['gotoType'] : 1,
                 'sort' => isset($banner['sort']) ? $banner['sort'] :'',
                 'type' => isset($banner['type']) ? $banner['type'] :'',
+                'data' => isset($datas[$banner['_id']]) ? $datas[$banner['_id']] : '',
             ];
         }
 
