@@ -17,8 +17,8 @@ class ScriptFetchEntity
         if (empty($note))
             $this->script->noteMark = [];
 
-        $this->script['noteMark']['noteId'] = isset($note['_id']) ? (string)$note['_id'] : '';
-        $this->script['noteMark']['markId'] = isset($note['markId']) ? $note['markId'] : [];
-        $this->script['noteMark']['note'] = isset($note['note']) ? (string)$note['note'] : '';
+        $this->script->noteMark->noteId = isset($note['_id']) ? (string)$note['_id'] : '';
+        $this->script->noteMark->markId = isset($note['markId']) ? $note['markId'] : [];
+        $this->script->noteMark->note = isset($note['note']) ? (string)$note['note'] : '';
     }
 }
