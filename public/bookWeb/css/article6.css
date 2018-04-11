@@ -8,9 +8,33 @@ span {
     -webkit-user-select:none;
 }
 
+a,img,button,input,textarea {
+    -webkit-tap-highlight-color:rgba(255,255,255,0);
+}
+
 body, html {
     padding: 0;
     margin: 0 auto;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+input {
+    border: none;
+    padding: 0;
+    margin: 0 auto;
+    outline: none;
+}
+
+textarea {
+    border: none;
+    padding: 0;
+    margin: 0 auto;
+    outline: none;
+}
+
+.body-modal {
+    overflow: hidden;
 }
 
 button {
@@ -26,23 +50,23 @@ button {
     color: white;
 }
 
-.f0 {
+.f12 {
     font-size: 12px;
 }
 
-.f25 {
+.f14 {
     font-size: 14px;
 }
 
-.f50 {
+.f16 {
     font-size: 16px;
 }
 
-.f75 {
+.f18 {
     font-size: 18px;
 }
 
-.f100 {
+.f20 {
     font-size: 20px;
 }
 
@@ -160,7 +184,6 @@ button {
     position: fixed;
     bottom: 55px;
     left: 10000px;
-    background-color: white;
 }
 
 .font-input {
@@ -174,7 +197,6 @@ button {
     position: fixed;
     bottom: 55px;
     left: 10000px;
-    background-color: white;
 }
 
 .back-content {
@@ -191,6 +213,11 @@ button {
     width: 40px;
     height: 40px;
     border-radius: 20px;
+    box-sizing: border-box;
+}
+
+.back-selected {
+    border: 1px solid gray;
 }
 
 .back-white {
@@ -237,7 +264,6 @@ button {
     position: fixed;
     bottom: 55px;
     left: 10000px;
-    background-color: white;
 }
 
 .progress-slider {

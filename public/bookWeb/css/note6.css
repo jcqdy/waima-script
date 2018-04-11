@@ -1,0 +1,255 @@
+
+.note-container {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    overflow: hidden;
+    display: none;
+
+}
+.note-content {
+    width: 100%;
+    height: 100%;
+    margin-top: 30px;
+    background-color: #5D646E;
+    border-top-left-radius: 14px;
+    border-top-right-radius: 14px;
+}
+
+.note-content-header {
+    width: 90%;
+    height: 17px;
+    margin: 10px 0 10px 5%;
+    margin-top: 10px;
+    padding-top: 10px;
+}
+
+.note-back {
+    width: 17px;
+    height: 17px;
+    background-image: url(../asset/images/note-back.png);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    float: right;
+}
+
+.mark-text {
+    width: 90%;
+    height: 180px;
+    margin-left: 5%;
+    border: 1px solid white;
+    border-radius: 5px;
+    padding: 10px;
+    box-sizing: border-box;
+    overflow: auto;
+    font-size: 14px;
+    color: white;
+    -webkit-overflow-scrolling: touch;
+}
+
+.clear-both {
+    clear: both;
+}
+
+.note-operation {
+    width: 80%;
+    height:40px;
+    margin: 10px 0 0 10%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.icon-star {
+    width: 22px;
+    height: 22px;
+    background-image: url(../asset/images/star.png);
+    background-repeat: no-repeat;
+}
+
+.icon-star.disable {
+    background-image: url(../asset/images/star-disable.png);
+}
+
+.icon-star.selected {
+    background-image: url(../asset/images/star-selected.png);
+}
+
+.icon-plant {
+    width: 23px;
+    height: 21px;
+    background-image: url(../asset/images/plant.png);
+    background-repeat: no-repeat;
+}
+
+.icon-plant.disable {
+    background-image: url(../asset/images/plant-disable.png);
+}
+
+.collection-text {
+    width: 200px;
+    height: 100%;
+    line-height: 40px;
+    font-size: 15px;
+    color: white;
+    flex:1;
+    margin-left: 5px;
+}
+
+.collection-text::after {
+    content: "收藏为素材"
+}
+
+.collection-text.disable {
+    color: #9B9B9B;
+}
+
+.collection-text.selected::after {
+    content: "取消收藏"
+}
+
+.note-textarea {
+    width: 84%;
+    height: 64px;
+    margin: 10px 0 0 8%;
+    resize:none;
+    font-size: 14px;
+    color: white;
+    background: none;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+/*mask*/
+
+.folder-mask {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: rgba(255, 255, 255, 0.96);
+    position: fixed;
+    z-index: 10001;
+    top: 0;
+    left: 0;
+    display: none;
+}
+
+.folder-mask-close {
+    width: 40px;
+    height: 41px;
+    background-image: url(../asset/images/close.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 21px 21px;
+    position: absolute;
+    left: 40px;
+    top: 50px;
+    z-index: 1001;
+}
+
+.folder-mask-select-content {
+    width: 100%;
+    height: 70%;
+    top: 100px;
+    left: 0;
+    position: absolute;
+}
+
+.folder-mask-select-content-flex {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.folder-mask-title {
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    font-size: 20px;
+    color: black;
+}
+
+.folder-mask-folders-wrap {
+    flex: 1;
+    width: 100%;
+    text-align: center;
+    overflow: auto;
+    margin-top: 10px;
+}
+
+.folder-mask-folders-item {
+    width: 100%;
+    height: 20px;
+    line-height: 20px;
+    margin-top: 25px;
+    text-align: center;
+    color: black;
+    font-size: 15px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.folder-mask-create {
+    width: 120px;
+    height: 50px;
+    line-height: 50px;
+    font-size: 20px;
+    color: #1971E9;
+    text-align: center;
+    margin-top:10px;
+}
+
+.folder-mask-create-content {
+    width: 100%;
+    height: 50%;
+    top: 180px;
+    left: 100%;
+    position: absolute;
+    text-align: center;
+}
+
+.folder-mask-create-content-flex {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.folder-mask-create-title {
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    font-size: 20px;
+    color: black;
+}
+
+.folder-mask-create-input {
+    width: 260px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 15px;
+    background: none;
+    border-bottom: 1px solid black;
+    margin-top: 70px;
+}
+
+.folder-mask-create-confirm {
+    font-size: 20px;
+    color: #1971E9;
+    width: 100px;
+    height: 50px;
+    line-height: 50px;
+    margin-top: 30px;
+    text-align: center;
+}
