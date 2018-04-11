@@ -40,4 +40,16 @@ class ModelDaoBookCase extends ModelDataMongoCollection
             return true;
         }
     }
+
+    public function addScript($userId, $scriptIds)
+    {
+        $doc['_id'] = $userId instanceof MongoId ? $userId : new mongoId($userId);
+        $doc['scriptIds'] = $scriptIds;
+
+        $ret = $this->add($doc);
+        if ($ret === false)
+            return false;
+
+        return DbWrapper::transform($doc);
+    }
 }

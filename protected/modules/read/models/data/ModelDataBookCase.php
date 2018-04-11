@@ -51,4 +51,8 @@ class ModelDataBookCase
         return $this->modelDaoScript->findOneScript($scriptId);
     }
 
+    public function addScript($userId, $scriptIds)
+    {
+        return $this->modelDaoBookCase->addScript($userId, $scriptIds);
+    }
 }
