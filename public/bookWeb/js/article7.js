@@ -98,7 +98,7 @@ $().ready(function(){
                     $("#writeNoteButton").show(0)
                     footerResetStatus()
                     currentSelectedText.push({index: index, text: _this.html()})
-                    $article.unbind("click")
+                    $article.unbind("tap")
                 }
             })
 
@@ -131,7 +131,7 @@ $().ready(function(){
     
     /*事件 */
     var bindArticleClick = function() {
-        $article.bind("click", function(event) {
+        $article.bind("tap", function(event) {
 
             if (currentSelectedText.length > 0) {
                 //$currentSelectedText.trigger("longTap")
