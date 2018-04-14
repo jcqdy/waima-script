@@ -18,6 +18,9 @@ class ModelLogicDelNoteMark
         if ($ret == false)
             throw new Exception('del noteMark failed', Errno::FATAL);
 
+        if (empty($note['pkgId']))
+            return;
+
         $updateTime = time();
         $ret = $this->modelDataNoteMark->incPartNum($note['pkgId'], -1, $updateTime);
         if ($ret === false)
