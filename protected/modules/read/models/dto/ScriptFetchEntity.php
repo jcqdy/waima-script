@@ -24,6 +24,11 @@ class ScriptFetchEntity
                 $item['markId'] = isset($note['markId']) ? $note['markId'] : [];
                 $item['note'] = isset($note['note']) ? (string)$note['note'] : '';
                 $item['pkgId'] = isset($note['pkgId']) ? (string)$note['pkgId'] : '';
+                $item['createTime'] = isset($note['createTime']) ? $note['createTime'] : time();
+                $date = isset($note['createTime']) ? explode(':', date('Y:m:d', $note['createTime'])) : explode(':', date('Y:m:d', time()));
+                $item['year'] = $date[0];
+                $item['mon'] = $date[1];
+                $item['day'] = $date[2];
 
                 $this->script->noteMark[] = $item;
             }
