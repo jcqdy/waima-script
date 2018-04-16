@@ -14,6 +14,7 @@ $().ready(function(){
         $fontButton = $("#fontButton"),
         $backButton = $("#backButton"),
         $progressButton = $("#progressButton"),
+        $collectionButton = $('#collectionButton'),
         $body = $("body"),
         puStatus = {
             readPos: 1.0,
@@ -24,6 +25,10 @@ $().ready(function(){
 
     let queryStrings = utils.getQueryString()
     window.article = JSON.parse(queryStrings['article'])
+
+    $('.refresh-button').bind('tap', function() {
+        window.location.reload()
+    })
 
     //上报阅读记录
     setTimeout(function() {
@@ -72,7 +77,8 @@ $().ready(function(){
 
         window.server.scriptFileFetch(url, function(res) {
             let content = res
-
+            content = "<div class='article-header'>" + article.scriptName + "</div>" + content
+        
             $article.html(content)
             $allTextSpan = $("#article span.text")
 
@@ -96,6 +102,7 @@ $().ready(function(){
                 if (!_this.hasClass('text-selected') && !_this.hasClass('text-marked')) {
                     _this.addClass('text-selected')   
                     $("#writeNoteButton").show(0)
+                    $('#cancelNoteButton').show(0)
                     footerResetStatus()
                     currentSelectedText.push({index: index, text: _this.html()})
                     $article.unbind("tap")
@@ -114,6 +121,7 @@ $().ready(function(){
 
                     if (currentSelectedText.length <= 0) {
                         $("#writeNoteButton").hide(0)
+                        $('#cancelNoteButton').hide(0)
                         setTimeout(function(){
                             bindArticleClick()
                         }, 500)
@@ -128,9 +136,22 @@ $().ready(function(){
         })
         
     }
+
+    $('#cancelNoteButton').bind('tap', function(e) {
+        e.stopPropagation()
+        currentSelectedText.map(obj => {
+            $allTextSpan.eq(Number(obj.index)).removeClass('text-selected')
+        })
+        currentSelectedText = []
+        $(this).hide(0)
+        $('#writeNoteButton').hide(0)
+        setTimeout(function(){
+            bindArticleClick()
+        }, 500)
+    })
     
     /*事件 */
-    var bindArticleClick = function() {
+    window.bindArticleClick = function() {
         $article.bind("tap", function(event) {
 
             if (currentSelectedText.length > 0) {
@@ -143,7 +164,7 @@ $().ready(function(){
                 }else {
                     $footer.addClass('footer-show')
                     showSideBar()
-                    updateProgress()
+                    updateProgress() 
                 }
             }
         })
@@ -154,7 +175,9 @@ $().ready(function(){
     //状态重置
     let footerResetStatus = function() {
         $footer.removeClass('footer-show')
-        $footer.find('div').removeClass('footer-selected')
+        $fontButton.removeClass('footer-selected')
+        $backButton.removeClass('footer-selected')
+        $progressButton.removeClass('footer-selected')
         $("#notes").hide(0)
         $("#share").hide(0)
         resetFooterOperation()
@@ -201,6 +224,7 @@ $().ready(function(){
 
     //点击底部菜单
     $("#footer div").on("touchend", function(event){
+        event.stopPropagation()
         let id = $(this)[0]["id"]
         if (id != 'collectionButton') {
 
@@ -218,13 +242,14 @@ $().ready(function(){
 
             if ($(this).hasClass('footer-selected')) {
                 
-                $(this).removeClass('footer-selected')
+                $collectionButton.removeClass('footer-selected')
                 window.server.unCollectionBook({
                     userId: globalData.userInfo.userId,
                     scriptIds: article.scriptId
                 }, function(res) {
                     window.utils.hideLoading()
                     isLoading = false
+                    window.utils.showToast('取消收藏', true)
                 })
             }else {
                 $(this).addClass('footer-selected')
@@ -234,6 +259,7 @@ $().ready(function(){
                 }, function(res) {
                     window.utils.hideLoading()
                     isLoading = false
+                    window.utils.showToast('收藏成功', true)
                 })
             }
         }
@@ -284,17 +310,17 @@ $().ready(function(){
         },
         onFinish: function (data) {
             let from = data.from
-            let totalHeight = $("html").height()
+            let totalHeight = $('#article').prop('scrollHeight')
             let scrollToHeight = totalHeight * from / 100
-            $("html").scrollTop(scrollToHeight)
+            $("#article").scrollTop(scrollToHeight)
         }
     })
 
     var progressSlider = $("#progressSlider").data("ionRangeSlider")
 
     var updateProgress = function() {
-        let currentOffset = $("html").scrollTop()
-        let totalHeight = $("html").height()
+        let currentOffset = $("#article").scrollTop()
+        let totalHeight = $('#article').prop('scrollHeight')
 
         let from = Math.floor(currentOffset / totalHeight * 100)
         

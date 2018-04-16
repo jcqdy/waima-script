@@ -46,6 +46,21 @@ Utils.prototype.hidePrompt = () => {
     $(".prompt-operation-right").text("").unbind("tap")
 }
 
+Utils.prototype.showToast = (text, success) => {
+
+    if (success) {
+        $('.toast-content').removeClass('hidden')
+    }else {
+        $('.toast-content').addClass('hidden')
+    }
+    $('.toast-text').text(text)
+    $(".toast").fadeIn(200)
+
+    setTimeout(() => {
+        $(".toast").fadeOut(200)
+    }, 1500)
+}
+
 window.utils = new Utils()
 
 let queryStrings = utils.getQueryString()

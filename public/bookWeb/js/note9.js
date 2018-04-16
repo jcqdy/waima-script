@@ -6,11 +6,13 @@ $().ready(function() {
         pkgId = "",
         noteId = null,
         article = window.article,
-        asyncNote = {}
+        asyncNote = {},
+        origin = ''
 
     let $noteContainer = $("#noteContainer"),
         $noteBack = $("#noteBack"),
         $writeNoteButton = $("#writeNoteButton"),
+        $cancelNoteButton = $('#cancelNoteButton'),
         $markText = $("#markText"),
         $iconStar = $(".icon-star"),
         $collectionText = $(".collection-text"),
@@ -74,13 +76,22 @@ $().ready(function() {
     }
 
     let resetPageUI = () => {
-        $("body, html").removeClass("body-modal")
+        $("#article").removeClass("body-modal")
+        $('#notesList').removeClass('body-modal')
         $noteContainer.hide(0)
-        $collectionText.addClass("disable").removeClass('selected')
+        $collectionText.addClass("disable").removeClass('selected') 
         $iconStar.addClass("disable").removeClass('selected')
         $iconPlant.addClass("disable")
         $("#noteTextarea").val("")
     }
+
+    // $noteContainer.bind('touchmove', function(e) {
+    //     console.log('====================================');
+    //     console.log(2223232);
+    //     console.log('====================================');
+    //     e.preventDefault()
+    //     e.stopPropagation()
+    // })
 
     //打开笔记界面
     $writeNoteButton.bind("tap", function() {
@@ -98,7 +109,7 @@ $().ready(function() {
         $markText.html(marksString)
 
         $noteContainer.show(0, function() {
-            $("body, html").addClass("body-modal")
+            $("#article").addClass("body-modal")
             $noteContainer.animate({
                 top: 0
             }, 300)
@@ -110,28 +121,51 @@ $().ready(function() {
     var asyncData = (pkgId) => {
 
         let $articleSpan = $("#article span.text")
-        console.log('====================================');
-        console.log(asyncNote);
-        console.log('====================================');
+        let newNote = Object.assign(asyncNote, {pkgId: pkgId})
         asyncNote.markId.map((id, index) => {
-            $articleSpan.eq(Number(id)).data("note", Object.assign(asyncNote, {pkgId: pkgId}))
+            $articleSpan.eq(Number(id)).data("note", newNote)
         })
+        window.noteMarks.map((obj, index) => {
+            if (obj.noteId == newNote.noteId) {
+                obj = newNote
+            }
+        })
+
     }
 
     var addData = (data) => {
+        console.log('====================================');
+        console.log(data);
+        console.log('====================================');
         let $articleSpan = $("#article span.text")
-        let note = {
-            noteId: data.noteId,
-            markId: data.markId,
-            note: data.note,
-            pkgId: data.pkgId
-        }
+        let note = data
         window.noteMarks.push(note)
         window.currentSelectedText = []
-        $("#writeNoteButton").hide(0)
+        $writeNoteButton.hide(0)
+        $cancelNoteButton.hide(0)
+        window.bindArticleClick()
         data.markId.map((id) => {
             $articleSpan.eq(Number(id)).data("note", note).removeClass('text-selected').addClass('text-marked')
         })
+    }
+
+    var updateData = (newNote) => {
+        window.noteMarks.map((obj, index) => {
+            if (obj.noteId == newNote.noteId) {
+                obj = newNote
+            }
+        })
+
+        if (origin == 'list') {
+            $('.notes-list-content .notes-list-item').map((index, obj) => {
+                let item = $(obj)
+                let note = item.data('note')
+                if (newNote.noteId == note.noteId) {
+                    item.data('note', newNote)
+                    item.find('.notes-list-note').html(newNote.note)
+                }
+            })
+        }
     }
 
     //选择收藏文件夹
@@ -152,14 +186,13 @@ $().ready(function() {
                 window.utils.hideLoading()
                 isLoading = false
                 if (res.status == 200) {
+                    window.utils.showToast('收藏成功', true)
                     $iconStar.addClass('selected')
                     $collectionText.addClass('selected')
                     resetMaskUI()
                     asyncData(pkgId)
                 }else {
-                    console.log('====================================');
-                    console.log(res);
-                    console.log('====================================');
+                    window.utils.showToast('请重试', false)
                 }
 
             })
@@ -171,9 +204,18 @@ $().ready(function() {
         }
     })
 
-    $(document).on("tap", "#article span.text.text-marked", (e) => {
-        e.stopPropagation()
-        let note = $(e.target).data("note")
+    window.startEditNote = function(note, from) {
+        origin = from
+        if (from == 'list') {
+            $('.note-content').addClass('edit')
+            $('.note-content-header').hide(0)
+            $('#otherBack').show(0)
+        }else {
+            $('.note-content').removeClass('edit')
+            $('.note-content-header').show(0)
+            $('#otherBack').hide(0)
+        }
+
         asyncNote = note
         noteStatus = 1
         initPageUI(noteStatus, note)
@@ -190,15 +232,22 @@ $().ready(function() {
         $markText.html(marksString)
 
         $noteContainer.show(0, function() {
-            $("body, html").addClass("body-modal")
+            $("#article").addClass("body-modal")
+            $('#notesList').addClass('body-modal')
             $noteContainer.animate({
                 top: 0
             }, 300)
         })
+    }
+
+    $(document).on("tap", "#article span.text.text-marked", (e) => {
+        e.stopPropagation()
+        let note = $(e.target).data("note")
+        startEditNote(note)
     })
 
     //关闭笔记界面
-    $noteBack.bind("tap", function() {
+    $('#noteBack, #otherBack').bind("tap", function() {
 
         if (pkgId.length > 0 && noteId == null && noteStatus == 0 && $iconStar.hasClass("selected")) {
             window.utils.showPrompt("退出此次编辑？", "笔记将不会被保存，素材收藏也会无效", "退出", "继续编辑", () => {
@@ -328,6 +377,7 @@ $().ready(function() {
                             }, (res1) => {
                 
                                 if (res1.status == 200) {
+                                    window.utils.showToast('收藏成功', true)
                                     $iconStar.addClass('selected')
                                     $collectionText.addClass('selected')
                                     resetMaskUI()
@@ -344,16 +394,18 @@ $().ready(function() {
                     }
 
                     pkgId = res.data.pkgId
-                    
-
                     resetMaskUI()
+
+                }else {
+                    isLoading = false
+                    window.utils.hideLoading()
+                    window.utils.showToast('创建失败', false)
                 }
             })
 
         }else {
-            console.log('====================================');
-            console.log("请输入收藏夹名称");
-            console.log('====================================');
+            isLoading = false
+            window.utils.showToast('请输入名称', false)
         }
     })
 
@@ -399,6 +451,7 @@ $().ready(function() {
                             }, (response) => {
                                 if (response.status == 200) {
                                     addData(Object.assign(res.data, {pkgId: pkgId}))
+                                    window.utils.showToast('提交成功', true)
                                     $noteContainer.animate({
                                         top: '100%'
                                     }, 300, function() {
@@ -412,6 +465,7 @@ $().ready(function() {
                         
                     }else {
                         addData(res.data)
+                        window.utils.showToast('提交成功', true)
                         $noteContainer.animate({
                             top: '100%'
                         }, 300, function() {
@@ -420,7 +474,7 @@ $().ready(function() {
                     }
                     
                 }else {
-
+                    window.utils.showToast('请重试', false)
                 }
             })
 
@@ -433,15 +487,20 @@ $().ready(function() {
                 window.utils.hideLoading()
                 isLoading = false
                 if (res.status == 200) {
+                    window.utils.showToast('编辑成功', true)
                     let $articleSpan = $("#article span.text")
+                    let newNote = Object.assign(asyncNote, {note: note})
+                    updateData(newNote)
                     asyncNote.markId.map((id, index) => {
-                        $articleSpan.eq(Number(id)).data("note", Object.assign(asyncNote, {note: note}))
+                        $articleSpan.eq(Number(id)).data("note", newNote)
                     })
                     $noteContainer.animate({
                         top: '100%'
                     }, 300, function() {
                         resetPageUI()
                     })
+                }else {
+                    window.utils.showToast('请重试', false)
                 }
             })
 

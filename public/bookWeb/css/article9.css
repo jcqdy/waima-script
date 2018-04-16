@@ -3,20 +3,31 @@ p {
     padding:0;
 }
 
+/* .refresh-button {
+    position: fixed;
+    width: 80px;
+    height: 50px;
+    right: 100px;
+    top: 10px;
+    background-color: red;
+    z-index: 100000001;
+} */
+
 span {
     -moz-user-select:none;
     -webkit-user-select:none;
 }
 
-a,img,button,input,textarea {
+* {
     -webkit-tap-highlight-color:rgba(255,255,255,0);
 }
 
 body, html {
     padding: 0;
     margin: 0 auto;
-    overflow: auto;
-    -webkit-overflow-scrolling: touch;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
 }
 
 input {
@@ -34,7 +45,7 @@ textarea {
 }
 
 .body-modal {
-    overflow: hidden;
+    pointer-events: none;
 }
 
 button {
@@ -44,6 +55,26 @@ button {
 
 #article {
     padding-bottom: 70px;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    box-sizing: border-box;
+    padding: 0 23px 0 23px;
+}
+
+.article-header {
+    font-size: 30px;
+    color: black;
+    text-align: left;
+    width: 100%;
+    height:42px;
+    line-height: 42px;
+    margin: 20px 0 35px 0;
+}
+
+#article span.text, #article span.subtitle {
+    line-height: 33px;
 }
 
 .text-color-white {
@@ -111,18 +142,22 @@ button {
 
 .font-button {
     background-image: url(../asset/images/font.png);
+    background-size: 19px 20px;
 }
 
 .back-button {
     background-image: url(../asset/images/backcolor.png);
+    background-size: 24px 24px;
 }
 
 .progress-button {
     background-image: url(../asset/images/progress.png);
+    background-size: 24px 13px;
 }
 
 .collection-button {
     background-image: url(../asset/images/collection.png);
+    background-size: 19px 22px;
 }
 
 .font-button.footer-selected {
@@ -142,39 +177,64 @@ button {
 }
 
 .notes {
-    width: 55px;
-    height: 55px;
+    width: 46px;
+    height: 46px;
     position: fixed;
     right: 14px;
     bottom: 200px;
     background: url(../asset/images/notes.png) no-repeat;
     background-position: center center;
+    background-size: 22px 22px;
+    background-color: #5D646E;
     display: none;
+    border-radius: 23px;
+    box-shadow: 0 0 4px #000000;
 }
 
 .share {
     display: none;
-    width: 55px;
-    height: 55px;
+    width: 46px;
+    height: 46px;
     position: fixed;
     right: 14px;
     bottom: 140px;
     background: url(../asset/images/share.png) no-repeat;
     background-position: center center;
+    background-size: 22px 22px;
+    background-color: white;
+    border-radius: 23px;
+    box-shadow: 0 0 4px #5D646E;
 }
 
 .write-note-button {
-    width: 58px;
-    height: 58px;
+    width: 46px;
+    height: 46px;
     background-color: #5D646E;
     background-image: url(../asset/images/edit.png);
     background-repeat: no-repeat;
     background-position: center center;
-    border-radius: 29px;
+    background-size: 19px 19px;
+    border-radius: 23px;
     box-shadow: 0 0 4px black;
     position: fixed;
-    left: 20px;
-    bottom: 50px;
+    left: 14px;
+    bottom: 110px;
+    display: none;
+}
+
+.cancel-note-button {
+    width: 46px;
+    height: 46px;
+    background-color: white;
+    background-image: url(../asset/images/close.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 20px 20px;
+    border-radius: 23px;
+    box-shadow: 0 0 4px black;
+    position: fixed;
+    left: 14px;
+    bottom: 48px;
     display: none;
 }
 

@@ -118,4 +118,8 @@ a.collectDel = function(data, callback) {
 	request(root + "/read/collect/del", data, callback, "POST")
 }
 
+a.noteDel = function(data, callback) {
+	request(root + "/read/noteMark/del", data, callback, "POST")
+}
+
 window.server = new window.Server()
