@@ -9,7 +9,7 @@ class ModelLogicAddUser
         $this->modelDataUser = new ModelDataUser();
     }
 
-    public function execute($openId, $userId, $nickName, $avatarUrl, $gender, $city, $province, $country, $language)
+    public function execute($userId, $nickName, $avatarUrl, $gender, $city, $province, $country, $language)
     {
         $doc = [];
         if (! is_null($nickName))

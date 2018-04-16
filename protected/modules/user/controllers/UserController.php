@@ -4,7 +4,6 @@ class UserController extends Controller
 {
     public function actionAdd()
     {
-        $openId = ParameterValidatorHelper::validateString($_REQUEST, 'openId');
         $userId = ParameterValidatorHelper::validateMongoIdAsString($_REQUEST, 'userId');
         $nickName = ParameterValidatorHelper::validateString($_REQUEST, 'nickName', null, null, null);
         $avatarUrl = ParameterValidatorHelper::validateString($_REQUEST, 'avatarUrl', null, null, null);
@@ -15,7 +14,7 @@ class UserController extends Controller
         $language = ParameterValidatorHelper::validateString($_REQUEST, 'language', null, null, null);
 
         $modelLogicAddUser = new ModelLogicAddUser();
-        $ret = $modelLogicAddUser->execute($openId, $userId, $nickName, $avatarUrl, $gender, $city, $province, $country, $language);
+        $ret = $modelLogicAddUser->execute($userId, $nickName, $avatarUrl, $gender, $city, $province, $country, $language);
 
         ResponseHelper::outputJsonApp($ret, 'ok', 200);
     }
