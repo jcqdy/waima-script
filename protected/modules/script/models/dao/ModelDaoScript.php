@@ -89,11 +89,13 @@ class ModelDaoScript extends ModelDataMongoCollection
 
     public function querySortByCreatTime($skip, $limit)
     {
+        $query = [];
         if ($skip !== 0)
             $query[self::CREATE_TIME] = ['$lt' => $skip];
+        
         $sort = [self::CREATE_TIME => -1];
 
-        $ret = $this->query([], [], $sort, $limit);
+        $ret = $this->query($query, [], $sort, $limit);
         return DbWrapper::transform($ret);
     }
 
