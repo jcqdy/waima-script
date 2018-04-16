@@ -5,13 +5,13 @@ class UserController extends Controller
     public function actionAdd()
     {
         $userId = ParameterValidatorHelper::validateMongoIdAsString($_REQUEST, 'userId');
-        $nickName = ParameterValidatorHelper::validateString($_REQUEST, 'nickName', null, null, null);
-        $avatarUrl = ParameterValidatorHelper::validateString($_REQUEST, 'avatarUrl', null, null, null);
-        $gender = ParameterValidatorHelper::validateEnumInteger($_REQUEST, 'gender', [1,2,0], null);
-        $city = ParameterValidatorHelper::validateString($_REQUEST, 'city', null, null, null);
-        $province = ParameterValidatorHelper::validateString($_REQUEST, 'province', null, null, null);
-        $country = ParameterValidatorHelper::validateString($_REQUEST, 'country', null, null, null);
-        $language = ParameterValidatorHelper::validateString($_REQUEST, 'language', null, null, null);
+        $nickName = ParameterValidatorHelper::validateString($_REQUEST, 'nickName', null, null, '');
+        $avatarUrl = ParameterValidatorHelper::validateString($_REQUEST, 'avatarUrl', null, null, '');
+        $gender = ParameterValidatorHelper::validateEnumInteger($_REQUEST, 'gender', [1,2,0], 3);
+        $city = ParameterValidatorHelper::validateString($_REQUEST, 'city', null, null, '');
+        $province = ParameterValidatorHelper::validateString($_REQUEST, 'province', null, null, '');
+        $country = ParameterValidatorHelper::validateString($_REQUEST, 'country', null, null, '');
+        $language = ParameterValidatorHelper::validateString($_REQUEST, 'language', null, null, '');
 
         $modelLogicAddUser = new ModelLogicAddUser();
         $ret = $modelLogicAddUser->execute($userId, $nickName, $avatarUrl, $gender, $city, $province, $country, $language);
