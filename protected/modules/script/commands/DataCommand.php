@@ -92,6 +92,22 @@ class DataCommand extends ConsoleCommand
         "5aa7b62f50cc87a43507d5b4" => "雄狮",
     ];
 
+    public function actionA()
+    {
+        $modelDaoScript = new ModelDaoScript();
+        foreach ($this->arr as $id => $v) {
+            $data = $modelDaoScript->findOne(["_id" => new MongoId($id)]);
+            $readerNum = $data['set']['readerNum'];
+            $doc = [
+                '$unset' => ['set' => 1],
+                '$set' => ['readerNum' => $readerNum],
+            ];
+
+            $modelDaoScript->update(['_id' => new MongoId($id)], $doc);
+        }
+    }
+
+
     public function actionFake0()
     {
         $modelDaoScriptType = new ModelDaoScriptType();
