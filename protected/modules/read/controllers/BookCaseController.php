@@ -60,4 +60,15 @@ class BookCaseController extends Controller
 
         ResponseHelper::outputJsonApp([], 'ok', 200);
     }
+
+    public function actionDelFolder()
+    {
+        $userId = ParameterValidatorHelper::validateMongoIdAsString($_REQUEST, 'userId');
+        $folderId = ParameterValidatorHelper::validateMongoIdAsString($_REQUEST, 'folderId');
+
+        $modelLogicDelFolder = new ModelLogicDelFolder();
+        $modelLogicDelFolder->execute($userId, $folderId);
+
+        ResponseHelper::outputJsonApp([], 'ok', 200);
+    }
 }

@@ -82,9 +82,11 @@ class ModelDaoPartPkg extends ModelDataMongoCollection
         return DbWrapper::transform($ret);
     }
 
-    public function delPkg($pkgId)
+    public function delPkg($pkgId, $userId)
     {
         $query[self::_ID] = $pkgId instanceof MongoId ? $pkgId : new MongoId($pkgId);
+        $query[self::USER_ID] = $userId instanceof MongoId ? $userId : new MongoId($userId);
+
         $doc[self::STATUS] = 0;
 
         return $this->modify($query, $doc);

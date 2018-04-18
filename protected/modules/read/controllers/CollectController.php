@@ -70,4 +70,15 @@ class CollectController extends Controller
 
         ResponseHelper::outputJsonApp($ret, 'ok', 200);
     }
+
+    public function actionDelPkg()
+    {
+        $userId = ParameterValidatorHelper::validateMongoIdAsString($_REQUEST, 'userId');
+        $pkgId = ParameterValidatorHelper::validateMongoIdAsString($_REQUEST, 'pkgId');
+
+        $modelLogicDelPkg = new ModelLogicDelPkg();
+        $modelLogicDelPkg->execute($userId, $pkgId);
+
+        ResponseHelper::outputJsonApp([], 'ok', 200);
+    }
 }

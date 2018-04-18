@@ -92,7 +92,7 @@ class ModelDaoScript extends ModelDataMongoCollection
         $query = [];
         if ($skip !== 0)
             $query[self::CREATE_TIME] = ['$lt' => $skip];
-        
+
         $sort = [self::CREATE_TIME => -1];
 
         $ret = $this->query($query, [], $sort, $limit);

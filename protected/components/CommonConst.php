@@ -9,7 +9,7 @@ class CommonConst
 
     const STORE_BANNER_NUM = 3;
 
-    const STORE_HOT_SCRIPT_NUM = 3;
+    const STORE_HOT_SCRIPT_NUM = 6;
 
     const STORE_NEW_SCRIPT_NUM = 6;
 

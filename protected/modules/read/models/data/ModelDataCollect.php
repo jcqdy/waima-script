@@ -74,9 +74,9 @@ class ModelDataCollect
         return $this->modelDaoPartPkg->queryByUserId($userId, $status);
     }
 
-    public function delPkg($pkgId)
+    public function delPkg($pkgId, $userId)
     {
-        return $this->modelDaoPartPkg->delPkg($pkgId);
+        return $this->modelDaoPartPkg->delPkg($pkgId, $userId);
     }
 
     public function updateNotePkgId($noteId, $pkgId, $status = 1)
@@ -92,5 +92,15 @@ class ModelDataCollect
     public function getNoteMark($noteId, $status = 1)
     {
         return $this->modelDaoNoteMark->getNoteMark($noteId, $status);
+    }
+
+    public function updatePkgIdBatch(array $noteIds, $userId, $pkgId, $status = 1)
+    {
+        return $this->modelDaoNoteMark->updatePkgIdBatch($noteIds, $userId, $pkgId, $status);
+    }
+
+    public function queryAllByPkgId($pkgId, $userId, $status = 1)
+    {
+        return $this->modelDaoNoteMark->queryAllByPkgId($pkgId, $userId, $status);
     }
 }

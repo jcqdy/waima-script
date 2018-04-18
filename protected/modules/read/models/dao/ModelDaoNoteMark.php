@@ -131,10 +131,31 @@ class ModelDaoNoteMark extends ModelDataMongoCollection
         $query[self::_ID] = $noteId instanceof MongoId ? $noteId : new MongoId($noteId);
         $query[self::STATUS] = $status;
 
-        if (empty($pkgId))
+        if (empty($pkgId)) {
             $doc[self::PKG_ID] = $pkgId;
-        else
+        } else {
             $doc[self::PKG_ID] = $pkgId instanceof MongoId ? $pkgId : new MongoId($pkgId);
+        }
+
+        return $this->modify($query, $doc);
+    }
+
+    public function updatePkgIdBatch(array $noteIds, $userId, $pkgId, $status = 1)
+    {
+        $ids = [];
+        foreach ($noteIds as $id) {
+            $ids[] = $id instanceof MongoId ? $id : new MongoId($id);
+        }
+
+        $query[self::_ID] = ['$in' => $ids];
+        $query[self::USER_ID] = $userId instanceof MongoId ? $userId : new MongoId($userId);
+        $query[self::STATUS] = $status;
+
+        if (empty($pkgId)) {
+            $doc[self::PKG_ID] = $pkgId;
+        } else {
+            $doc[self::PKG_ID] = $pkgId instanceof MongoId ? $pkgId : new MongoId($pkgId);
+        }
 
         return $this->modify($query, $doc);
     }
@@ -149,6 +170,17 @@ class ModelDaoNoteMark extends ModelDataMongoCollection
         $sort[self::UPDATE_TIME] = -1;
 
         $ret = $this->query($query, [], $sort, $num);
+
+        return DbWrapper::transform($ret);
+    }
+
+    public function queryAllByPkgId($pkgId, $userId, $status = 1)
+    {
+        $query[self::PKG_ID] = $pkgId instanceof MongoId ? $pkgId : new MongoId($pkgId);
+        $query[self::USER_ID] = $userId instanceof MongoId ? $userId : new MongoId($userId);
+        $query[self::STATUS] = $status;
+
+        $ret = $this->query($query);
 
         return DbWrapper::transform($ret);
     }

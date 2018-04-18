@@ -112,6 +112,37 @@ class DataCommand extends ConsoleCommand
             $modelDaoScript->modify(['_id' => $data['_id']], ['fileUrl' => $etag]);
             LogHelper::error($data['name'] . ' 成功');
         }
+    }
 
+    public function actionFormat()
+    {
+        $modelDaoScript = new ModelDaoScript();
+        $cur = $modelDaoScript->find();
+        $urlPrefix = Yii::app()->params['qiniu_prefix'];
+
+        while ($cur->hasNext()) {
+            $data = $cur->getNext();
+            $fileUrl = $urlPrefix.$data['fileUrl'];
+            $script = file_get_contents($fileUrl);
+            $newArr = ['data' => []];
+            $scriptArr = explode('<br>', $script);
+            foreach ($scriptArr as $key => $val) {
+                $item = [];
+                if (strpos($val, '<span class="text">') !== false) {
+                    $val = str_replace('<span class="text">', '', $val);
+                }
+                if (strpos($val, '</span>') !== false) {
+                    $val = str_replace('</span>', '', $val);
+                }
+                if (strpos($val, '<span class="subtitle">') !== false) {
+                    $item['title'] = 1;
+                    $val = str_replace('<span class="subtitle">', '', $val);
+                }
+                $item['text'] = $val;
+                $newArr['data'][] = $item;
+            }
+
+            LogHelper::error(var_export($newArr, true));exit();
+        }
     }
 }
