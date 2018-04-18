@@ -125,6 +125,16 @@ class DataCommand extends ConsoleCommand
             $data = $cur->getNext();
             $fileUrl = $urlPrefix.$data['fileUrl'];
             $script = file_get_contents($fileUrl);
+            if (empty($script)) {
+                LogHelper::error($data['name'] . ' is empty');
+                continue;
+            }
+
+            if (is_array(json_decode($script, true))) {
+                LogHelper::error($data['name'] . ' is json');
+                continue;
+            }
+
             $newArr = ['data' => []];
             $scriptArr = explode('<br>', $script);
             foreach ($scriptArr as $key => $val) {
