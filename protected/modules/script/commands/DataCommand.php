@@ -116,6 +116,7 @@ class DataCommand extends ConsoleCommand
 
     public function actionFormat()
     {
+        $dir = '/home/worker/data/修改剧本2/';
         $modelDaoScript = new ModelDaoScript();
         $cur = $modelDaoScript->find();
         $urlPrefix = Yii::app()->params['qiniu_prefix'];
@@ -142,7 +143,16 @@ class DataCommand extends ConsoleCommand
                 $newArr['data'][] = $item;
             }
 
-            LogHelper::error(var_export($newArr, true));exit();
+            file_put_contents($dir . $data['name'], json_encode($newArr, JSON_UNESCAPED_UNICODE));
+
+            $etag = QiniuHelper::uploadFile($dir . $data['name']);
+            if ($etag == false) {
+                LogHelper::error('剧本上传失败: ' . $data['name']);
+                continue;
+            }
+
+            $modelDaoScript->modify(['_id' => $data['_id']], ['fileUrl' => $etag]);
+            LogHelper::error($data['name'] . ' success');
         }
     }
 }
