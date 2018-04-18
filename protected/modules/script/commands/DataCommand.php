@@ -149,10 +149,10 @@ class DataCommand extends ConsoleCommand
                     $item['title'] = 1;
                     $val = str_replace('<span class="subtitle">', '', $val);
                 }
-                $item['text'] = $val;
+                $item['text'] = mb_convert_encoding($val, "UTF-8");
                 $newArr['data'][] = $item;
             }
-
+            
             file_put_contents($dir . $data['name'], json_encode($newArr, JSON_UNESCAPED_UNICODE));
 
             $etag = QiniuHelper::uploadFile($dir . $data['name']);
