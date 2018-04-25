@@ -19,7 +19,7 @@ class ModelLogicDelFolder
 
         foreach ($oldBookCase as $key => $val) {
             if (is_array($val) && $val['folderId'] == $folderId) {
-                $scriptIds = $oldBookCase['scriptIds'];
+                $scriptIds = $val['scriptIds'];
                 unset($bookCase[$key]);
                 foreach ($scriptIds as $id) {
                     $bookCase[] = $id;
