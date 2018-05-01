@@ -18,10 +18,11 @@ class NoteMarkController extends Controller
     public function actionDel()
     {
         $noteId = ParameterValidatorHelper::validateMongoIdAsString($_REQUEST, 'noteId');
+        $userId = ParameterValidatorHelper::validateMongoIdAsString($_REQUEST, 'userId');
 //        $markId = ParameterValidatorHelper::validateMongoIdAsString($_REQUEST, 'markId', '');
 
         $modelLogicDelNoteMark = new ModelLogicDelNoteMark();
-        $modelLogicDelNoteMark->execute($noteId);
+        $modelLogicDelNoteMark->execute($noteId, $userId);
 
         ResponseHelper::outputJsonApp([], 'ok', 200);
     }

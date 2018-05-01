@@ -8,7 +8,7 @@ class ModelLogicDelNoteMark
         $this->modelDataNoteMark = new ModelDataNoteMark();
     }
 
-    public function execute($noteId)
+    public function execute($noteId, $userId)
     {
         $note = $this->modelDataNoteMark->findNoteMark($noteId);
         if (empty($note))
@@ -29,7 +29,7 @@ class ModelLogicDelNoteMark
 
         $pkg = $this->modelDataNoteMark->getPkgByPid($note['pkgId']);
         if ($pkg['partNum'] <= 0) {
-            $ret = $this->modelDataNoteMark->delPkg($note['pkgId']);
+            $ret = $this->modelDataNoteMark->delPkg($note['pkgId'], $userId);
             if ($ret === false)
                 LogHelper::error('delete part package failed, pkgId : ' . $note['pkgId'], Errno::FATAL);
 

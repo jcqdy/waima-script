@@ -60,9 +60,9 @@ class ModelDataNoteMark
         return $this->modelDaoPartPkg->findByPkgId($pkgId, $status);
     }
 
-    public function delPkg($pkgId)
+    public function delPkg($pkgId, $userId)
     {
-        return $this->modelDaoPartPkg->delPkg($pkgId);
+        return $this->modelDaoPartPkg->delPkg($pkgId, $userId);
     }
 
     public function queryNoteScriptIds($userId, $status = 1)
