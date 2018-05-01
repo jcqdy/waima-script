@@ -9,7 +9,7 @@ class ModelLogicAddUser
         $this->modelDataUser = new ModelDataUser();
     }
 
-    public function execute($userId, $nickName, $avatarUrl, $gender, $city, $province, $country, $language)
+    public function execute($userId, $nickName, $avatarUrl, $gender, $city, $province, $country, $language, $phoneNum)
     {
         $doc = [];
         if ($nickName !== '')
@@ -26,6 +26,8 @@ class ModelLogicAddUser
             $doc['country'] = $country;
         if ($language !== '')
             $doc['language'] = $language;
+        if ($phoneNum !== '')
+            $doc['phoneNum'] = $phoneNum;
 
         if (empty($doc))
             return [];

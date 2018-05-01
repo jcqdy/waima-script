@@ -12,9 +12,10 @@ class UserController extends Controller
         $province = ParameterValidatorHelper::validateString($_REQUEST, 'province', null, null, '');
         $country = ParameterValidatorHelper::validateString($_REQUEST, 'country', null, null, '');
         $language = ParameterValidatorHelper::validateString($_REQUEST, 'language', null, null, '');
+        $phoneNum = ParameterValidatorHelper::validateString($_REQUEST, 'phoneNum', null, null, '');
 
         $modelLogicAddUser = new ModelLogicAddUser();
-        $ret = $modelLogicAddUser->execute($userId, $nickName, $avatarUrl, $gender, $city, $province, $country, $language);
+        $ret = $modelLogicAddUser->execute($userId, $nickName, $avatarUrl, $gender, $city, $province, $country, $language, $phoneNum);
 
         ResponseHelper::outputJsonApp($ret, 'ok', 200);
     }
