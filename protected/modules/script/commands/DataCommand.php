@@ -112,19 +112,15 @@ class DataCommand extends ConsoleCommand
     {
         $modelDaoScriptType = new ModelDaoScriptType();
         $modelDaoScript = new ModelDaoScript();
-        $scFileDir = '/home/worker/data/剧本';
-        $sf = '/home/worker/data/修改剧本2/';
+        $scFileDir = '/home/worker/data/剧本新';
+        $sf = '/home/worker/data/剧本新';
         $qrdir = '/home/worker/data/qrcode/';
         $fileNames = scandir($scFileDir);
         unset($fileNames[0], $fileNames[1], $fileNames[2]);
         $urlPrefix = Yii::app()->params['qiniu_prefix'];
 
         foreach ($fileNames as $name) {
-            if (! in_array($name, $this->arr)) {
-                continue;
-            }
-            $dbData = ['name' => $name, 'createTime' => time() - rand(99, 999999)];
-            $id = array_search($name, $this->arr);
+            $dbData = ['name' => $name, 'readerNum' => rand(1200, 1900), 'createTime' => time() - rand(99, 9999)];
             LogHelper::error($name . ' start');
 
             $cons = scandir($scFileDir.'/'.$name);
@@ -139,7 +135,7 @@ class DataCommand extends ConsoleCommand
                     continue;
                 }
                 if (strpos($n, $name) !== false) {
-                    $etag = QiniuHelper::uploadFile($sf.$name);
+                    $etag = QiniuHelper::uploadFile($scFileDir.'/'.$name.'/'.$n);
                     if ($etag === false)
                         continue;
                     $dbData['fileUrl'] = $etag;
@@ -170,12 +166,12 @@ class DataCommand extends ConsoleCommand
                 }
             }
 
-            $qretag = QiniuHelper::uploadFile($qrdir.$name);
-            if ($qretag === false)
-                LogHelper::error($name . ' upload qrcode failed');
-
-            $dbData['qrcodeUrl'] = $qretag;
-            $modelDaoScript->modify(['_id' => new MongoId($id)], $dbData);
+//            $qretag = QiniuHelper::uploadFile($qrdir.$name);
+//            if ($qretag === false)
+//                LogHelper::error($name . ' upload qrcode failed');
+//
+//            $dbData['qrcodeUrl'] = $qretag;
+            $modelDaoScript->add($dbData);
         }
 
     }

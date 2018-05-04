@@ -17,6 +17,8 @@ class ModelDaoScript extends ModelDataMongoCollection
 
     const CREATE_TIME = 'createTime';
 
+    const QRCODE_URL = 'qrcodeUrl';
+
     public function __construct()
     {
         parent::__construct('dbwaima-script', 'waima-script', 'script');
