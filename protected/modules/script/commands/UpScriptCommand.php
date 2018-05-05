@@ -126,16 +126,19 @@ class UpScriptCommand extends CConsoleCommand
             foreach ($fileName as $file) {
                 $dbData = [];
                 // 处理剧本封面
-                if (in_array(
-                    strtolower(end(explode(".", $file))),
-                    ['png', 'jpg', 'jpeg']
-                ) && $item == 'cover') {
-                    $etag = QiniuHelper::uploadFile($fileDir . '/' . $name . '/' . $file);
-                    if ($etag === false)
+                if ($item == 'cover') {
+                    $arr = explode(".", $file);
+                    if (in_array(
+                        strtolower(end($arr)),
+                        ['png', 'jpg', 'jpeg']
+                    )) {
+                        $etag = QiniuHelper::uploadFile($fileDir . '/' . $name . '/' . $file);
+                        if ($etag === false)
+                            continue;
+                        $dbData['coverUrl'] = $etag;
+                        LogHelper::error($name . " cover upload success ; coverUrl : " . $dbData['coverUrl'] . "\n");
                         continue;
-                    $dbData['coverUrl'] = $etag;
-                    LogHelper::error($name . " cover upload success ; coverUrl : " . $dbData['coverUrl'] . "\n");
-                    continue;
+                    }
                 }
 
                 // 处理剧本文件
