@@ -45,9 +45,27 @@ class Controller extends CController
     public function filters()
     {
         return array(
-            'verifySign',
+            'checkCommonParameters',
+//            'verifySign',
             'accessControl',
         );
+    }
+
+    /**
+     * 检验公共参数.
+     *
+     * @param mixed $filterChain
+     * @access public
+     * @return void
+     */
+    public function filterCheckCommonParameters($filterChain)
+    {
+        $aryCommParams = ControllerParameterValidator::validateCommonParamters($_REQUEST);
+        
+        $this->appVersion = $aryCommParams['appVersion'];
+        $this->platform = $aryCommParams['platform'];
+
+        $filterChain->run();
     }
 
     public function filterAccessControl($filterChain)
@@ -86,10 +104,10 @@ class Controller extends CController
             }
         }
 
-        $appConfig = Yii::app()->params['photoTask'][$this->platform];
+
         // 验证sig
         $sig = ParameterValidatorHelper::validateString($_POST, 'sig');
-        $secretKey = $appConfig['appSecret'];
+        $secretKey = Yii::app()->params['appSecret'];
 
         $allParams = array_merge($_POST, $_GET);
         unset($allParams['sig']);
@@ -195,7 +213,8 @@ class Controller extends CController
         return array(
             array(
                 'allow',
-                'users' => array('@')
+//                'users' => array('@')
+                'users' => array('*')
             ),
             array('deny')
         );
@@ -207,77 +226,23 @@ class Controller extends CController
             parent::run($actionID);
         } catch (ParameterValidationException $e) {
             LogHelper::warning($e->getMessage() . ' with code ' . Errno::PARAMETER_VALIDATION_FAILED);
-            ResponseHelper::outputJsonV2(array(), $e->getMessage(), Errno::PARAMETER_VALIDATION_FAILED);
+            ResponseHelper::outputJsonApp(array(), $e->getMessage(), Errno::PARAMETER_VALIDATION_FAILED);
         } catch (PrivilegeException $e) {
             LogHelper::warning($e->getMessage() . ' with code ' . Errno::PRIVILEGE_NOT_PASS);
-            ResponseHelper::outputJsonV2(array(), $e->getMessage(), Errno::PRIVILEGE_NOT_PASS);
+            ResponseHelper::outputJsonApp(array(), $e->getMessage(), Errno::PRIVILEGE_NOT_PASS);
         } catch (MongoException $e) {
             LogHelper::error($e->getMessage() . ' with code ' . $e->getCode());
-            ResponseHelper::outputJsonV2(array(), '网络不给力', Errno::FATAL);
+            ResponseHelper::outputJsonApp(array(), '网络不给力', Errno::FATAL);
         } catch (Exception $e) {
-            if ($e->getCode() == Errno::PIC_NOT_EXIST) {
-                //作品不存在只记录warning
-                LogHelper::warning($e->getMessage() . ' with code ' . $e->getCode());
-            } elseif ($e->getCode() != Errno::SIG_ERROR && $e->getCode() != Errno::ANTI_SPAM_UNPASS) {
-                // 签名错误，鉴黄不通过，情况下不写错误日志
-                LogHelper::error($e->getMessage() . ' with code ' . $e->getCode());
-            }
-            ResponseHelper::outputJsonV2(array(), $e->getMessage(), $e->getCode());
+            ResponseHelper::outputJsonApp(array(), $e->getMessage(), $e->getCode());
         }
     }
 
     protected function beforeAction($action)
     {
         LogHelper::pushLog('nickname', Yii::app()->user->getName());
-        // 公共参数验证完同步cid信息
-        $this->syncDevice();
 
         return true;
-    }
-
-    /**
-     * 指定的接口进行更新用户cid信息
-     */
-    protected function syncDevice()
-    {
-        $uri = strtolower(Yii::app()->request->hostInfo . Yii::app()->request->getRequestUri());
-        // 需要触发更新的接口.
-        $urlList = array(
-            '/task/tasklist',
-            '/pic/workfeed',
-            '/pic/uploadpic'
-        );
-        $falg = false;
-        foreach ($urlList as $url) {
-            if (strpos($uri, $url) !== false) {
-                $falg = true;
-                break;
-            }
-        }
-        if (!$falg) {
-            return true;
-        }
-
-        $userId = ParameterValidatorHelper::validateMongoIdAsString($_REQUEST, "userId", '');
-        if (!$userId) {
-            return true;
-        }
-
-        $params = array(
-            'userId' => $userId,
-            'cid' => $this->cid, // cid可能为空 -> ''
-            'deviceId' => $this->deviceId,
-            'platform' => $this->platform,
-            'locale' => $this->locale,
-            'channel' => $this->channel,
-            'timeZone' => $this->timeZone,
-            'appversion' => $this->appVersion,
-            'systemVersion' => $this->systemVersion,
-            'updateTime' => UtilHelper::time(),
-        );
-
-        $deviceModel = Factory::create('ModelLogicUserDeviceUpdate');
-        $deviceModel->deviceUpdate($params);
     }
 
     /**

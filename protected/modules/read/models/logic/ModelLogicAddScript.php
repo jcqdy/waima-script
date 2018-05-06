@@ -11,8 +11,10 @@ class ModelLogicAddScript
     public function execute($userId, $scriptId)
     {
         $bookCase = $this->modelDataBookCase->getBookCase($userId);
-        if (empty($bookCase))
+        if (empty($bookCase)) {
+            $this->modelDataBookCase->addScript($userId, [$scriptId]);
             return [];
+        }
 
         $bookCase = $bookCase['scriptIds'];
 
@@ -25,9 +27,9 @@ class ModelLogicAddScript
         }
 
         array_unshift($bookCase, $scriptId);
-
         $ret = $this->modelDataBookCase->modifyScriptIds($userId, $bookCase);
-        if ($ret == false)
+
+        if ($ret === false)
             throw new Exception('add script failed', Errno::FATAL);
     }
 }

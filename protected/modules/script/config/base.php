@@ -9,6 +9,10 @@ return array(
         'application.modules.script.models.logic.*',
         'application.modules.script.helpers.*',
         'application.modules.script.components.*',
+        'application.modules.operation.models.dao.*',
+        'application.modules.wechat.models.dao.*',
+        'application.modules.wechat.models.data.*',
+        'application.modules.wechat.models.logic.*',
     ),
     'params' => array(),
 );

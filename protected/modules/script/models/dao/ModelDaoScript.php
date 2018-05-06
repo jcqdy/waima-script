@@ -17,6 +17,8 @@ class ModelDaoScript extends ModelDataMongoCollection
 
     const CREATE_TIME = 'createTime';
 
+    const QRCODE_URL = 'qrcodeUrl';
+
     public function __construct()
     {
         parent::__construct('dbwaima-script', 'waima-script', 'script');
@@ -72,10 +74,8 @@ class ModelDaoScript extends ModelDataMongoCollection
 
     public function queryByTypeId($typeId, $skip, $limit)
     {
-        $typeId = $typeId instanceof MongoId ? $typeId : new MongoId($typeId);
-
-        $query = [self::TYPE_IDS => ['$in' => $typeId],];
-        $sort = [self::CREATE_TIME => -1];
+        $query = [self::TYPE_IDS => ['$in' => [(string)$typeId]],];
+        $sort = [self::READER_NUM => -1];
 
         $ret = $this->query($query, [], $sort, $limit, $skip);
         return DbWrapper::transform($ret);
@@ -91,21 +91,26 @@ class ModelDaoScript extends ModelDataMongoCollection
 
     public function querySortByCreatTime($skip, $limit)
     {
-        $query[self::CREATE_TIME] = ['$gt' => $skip];
+        $query = [];
+        if ($skip !== 0)
+            $query[self::CREATE_TIME] = ['$lt' => $skip];
+
         $sort = [self::CREATE_TIME => -1];
 
-        $ret = $this->query([], [], $sort, $limit);
+        $ret = $this->query($query, [], $sort, $limit);
         return DbWrapper::transform($ret);
     }
 
-    public function search($keywords)
+    public function search($keywords, $skip, $limit)
     {
         $query['$or'] = [];
         foreach ($keywords as $word) {
-            $query['$or'][] = [self::NAME => new MongoRegex('/' . $word . '/')];
+            $query['$or'][] = [
+                self::NAME => new MongoRegex("/$word/i")
+            ];
         }
 
-        $ret = $this->query($query);
+        $ret = $this->query($query, [], [], $limit, $skip);
         return DbWrapper::transform($ret);
     }
 }

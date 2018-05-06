@@ -343,68 +343,16 @@ class ControllerParameterValidator
         if (! $appVersion) {
             $appVersion = ControllerParameterValidator::validateString($aryData, 'appversion', 1, 50);
         }
-        // android低版本未传systemVersion.
-        $systemVersion = ControllerParameterValidator::validateString($aryData, 'systemVersion', 1, 50, '');
 
-        $platform = ControllerParameterValidator::validateEnumString($aryData, 'platform', array('ios', 'android', 'iphone', 'wp', 'other', 'h5'));
+        $platform = ControllerParameterValidator::validateString($aryData, 'platform');
         if ($platform == 'iphone') {
             $platform = 'ios';
-        }
-        $device = ControllerParameterValidator::validateString($aryData, 'device', 0, 100, '');
-        $locale = ControllerParameterValidator::validateString($aryData, 'locale');
-        $timeZone = ControllerParameterValidator::validateString($aryData, 'timeZone', 0, 100, '');
-        $channel = ControllerParameterValidator::validateString($aryData, 'channel', 0, 100, '');
-        $channel = urldecode($channel);
-        // cid可能为空.
-        $cid = ControllerParameterValidator::validateString($aryData, 'cid', 1, 200, '');
-        // 优先deviceId取eid，如果没有则取deviceId
-        $deviceId = ControllerParameterValidator::validateString($aryData, 'eid', 1, 200, '');
-        if (! $deviceId) {
-            // 没有deviceId则取$cid.
-            $deviceId = ControllerParameterValidator::validateString($aryData, 'deviceId', 1, 200, $cid);
-        }
-        $mnc = ControllerParameterValidator::validateString($aryData, 'mnc', 1, 30, ''); // 移动网络代码
-        $mcc = ControllerParameterValidator::validateString($aryData, 'mcc', 1, 30, ''); // 移动国家代码
-
-        $latitude = $longitude = null;
-        if (isset($_REQUEST['latitude']) && isset($_REQUEST['longitude'])) {
-            if (stripos($_REQUEST['latitude'], 'e') === false && stripos($_REQUEST['longitude'], 'e') === false) {
-                if ($_REQUEST['latitude'] === '' || $_REQUEST['longitude'] === '') {
-                    $latitude = $longitude = null;
-                } elseif ($platform == 'android' && $appVersion == '7.1beta') { // bugfix: android 7.1beta gps传反问题
-                    $latitude = ControllerParameterValidator::validateFloat($aryData, 'longitude', - 90, 90);
-                    $longitude = ControllerParameterValidator::validateFloat($aryData, 'latitude', - 180, 180);
-                } else {
-                    if ($_REQUEST['latitude'] == - 360 || $_REQUEST['longitude'] == - 360) { // 兼容ios
-                        $latitude = $longitude = null;
-                    } else {
-                        $latitude = ControllerParameterValidator::validateFloat($aryData, 'latitude', - 90, 90);
-                        $longitude = ControllerParameterValidator::validateFloat($aryData, 'longitude', - 180, 180);
-                    }
-                }
-            } else { // 科学计数法传过来的.
-                $latitude = floatval(sprintf("%0.4f", $_REQUEST['latitude']));
-                $longitude = floatval(sprintf("%0.4f", $_REQUEST['longitude']));
-                $latitude = ControllerParameterValidator::validateFloat($latitude, 'latitude', - 90, 90);
-                $longitude = ControllerParameterValidator::validateFloat($longitude, 'longitude', - 180, 180);
-            }
         }
 
         return array(
             'appName' => $appName,
             'appVersion' => $appVersion,
-            'systemVersion' => $systemVersion,
             'platform' => $platform,
-            'device' => $device,
-            'deviceId' => $deviceId,
-            'channel' => $channel,
-            'locale' => $locale,
-            'timeZone' => $timeZone,
-            'cid' => $cid,
-            'latitude' => $latitude,
-            'longitude' => $longitude,
-            'mnc' => $mnc,
-            'mcc' => $mcc
         );
     }
 }

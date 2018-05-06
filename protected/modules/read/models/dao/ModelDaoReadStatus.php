@@ -9,10 +9,6 @@ class ModelDaoReadStatus extends ModelDataMongoCollection
 
     const READ_POS = 'readPos';
 
-    const FONT_SIZE = 'fontSize';
-
-    const BACK_COLOR = 'backColor';
-
     const UPDATE_TIME = 'updateTime';
 
     public function __construct()
@@ -51,27 +47,23 @@ class ModelDaoReadStatus extends ModelDataMongoCollection
         return DbWrapper::transform($ret);
     }
 
-    public function addReadStatus($userId, $scriptId, $readPos, $fontSize, $backColor, $updateTime)
+    public function addReadStatus($userId, $scriptId, $readPos, $updateTime)
     {
         $doc[self::_ID] = new MongoId();
         $doc[self::USER_ID] = $userId instanceof MongoId ? $userId : new MongoId($userId);
         $doc[self::SCRIPT_ID] = $scriptId instanceof MongoId ? $scriptId : new MongoId($scriptId);
         $doc[self::READ_POS] = $readPos;
-        $doc[self::FONT_SIZE] = $fontSize;
-        $doc[self::BACK_COLOR] = $backColor;
         $doc[self::UPDATE_TIME] = $updateTime;
 
         return $this->add($doc);
     }
 
-    public function modifyReadStatus($userId, $scriptId, $readPos, $fontSize, $backColor, $updateTime)
+    public function modifyReadStatus($userId, $scriptId, $readPos, $updateTime)
     {
         $query[self::USER_ID] = $userId instanceof MongoId ? $userId : new MongoId($userId);
         $query[self::SCRIPT_ID] = $scriptId instanceof MongoId ? $scriptId : new MongoId($scriptId);
 
         $doc[self::READ_POS] = $readPos;
-        $doc[self::FONT_SIZE] = $fontSize;
-        $doc[self::BACK_COLOR] = $backColor;
         $doc[self::UPDATE_TIME] = $updateTime;
 
         return $this->modify($query, $doc);

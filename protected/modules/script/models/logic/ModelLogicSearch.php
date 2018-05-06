@@ -9,18 +9,18 @@ class ModelLogicSearch
         $this->modelDataSearch = new ModelDataSearch();
     }
 
-    public function execute($keyword)
+    public function execute($keyword, $sp, $num)
     {
         if (count($keyword) > 4)
             $keyword = array_slice($keyword, 0, 4);
 
-        $res = $this->modelDataSearch->search($keyword);
+        $res = $this->modelDataSearch->search($keyword, $sp, $num);
         if (empty($res))
-            return [];
+            return ['items' => [], 'sp' => -1];
 
-        $ret = [];
-        foreach ($ret as $value) {
-            $ret[] = new ScriptEntity($value);
+        $ret = ['items' => [], 'sp' => $sp + count($res)];
+        foreach ($res as $value) {
+            $ret['items'][] = new ScriptEntity($value);
         }
 
         return $ret;

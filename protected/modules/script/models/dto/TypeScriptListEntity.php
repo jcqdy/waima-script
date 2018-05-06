@@ -4,22 +4,14 @@ class TypeScriptListEntity
 {
     public $scriptType = [];
 
-    public $currType;
-
     public $scriptList = [];
 
-    public function __construct($types, $currType, $scripts, $isTypeList)
+    public function __construct($type, $scripts)
     {
-        if ($isTypeList === 1) {
-            foreach ($types as $type) {
-                $this->scriptType[] = [
-                    'typeId' => isset($type['_id']) ? $type['_id'] : '',
-                    'typeName' => isset($type['name']) ? $type['name'] : '',
-                ];
-            }
-        }
-
-        $this->currType = $currType;
+        $this->scriptType[] = [
+            'typeId' => isset($type['_id']) ? (string)$type['_id'] : '',
+            'typeName' => isset($type['name']) ? $type['name'] : '',
+        ];
 
         foreach ($scripts as $script) {
             $this->scriptList[] = new ScriptEntity($script);

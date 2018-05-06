@@ -13,41 +13,49 @@ class ModelLogicBatchFetch
 
     public function execute($userId, $scriptIds)
     {
+        $scripts = $this->modelDataBookCase->queryScripts($scriptIds);
         $status = $this->modelDataRead->queryReadStatus($userId, $scriptIds);
-
-        // 如果查询不到剧本的阅读状态,则返回默认值
-        if (empty($status))
-            return [];
-
         $noteMarks = $this->modelDataRead->getNoteMark($userId, $scriptIds);
         $bookCase = $this->modelDataBookCase->getBookCase($userId);
+        $readStatus = $this->modelDataRead->getUserReadStatus($userId);
 
-        $ret = [];
-        foreach ($status as $key => $val) {
-            $noteMarkList = [];
-            foreach ($noteMarks as $v) {
-                if ($v['scriptId'] !== $val['scriptId'])
-                    continue;
+        $scriptItems = [];
 
-                $noteMarkList[] = $v;
-                break;
-            }
-
+        foreach ($scriptIds as $id) {
+            $noteList = $statList = [];
             $inBookCase = 0;
-            foreach ($bookCase as $k => $value) {
-                if (is_string($value) && $value === $val['scriptId']) {
-                    $inBookCase = 1;
-                    break;
-                }
-                if (is_array($value) && in_array($val['scriptId'], $value['scriptIds'])) {
-                    $inBookCase = 1;
+            if (! isset($scripts[$id])) {
+                continue;
+            }
+
+            foreach ($noteMarks as $note) {
+                if ($note['scriptId'] === $id) {
+                    $noteList[] = $note;
                     break;
                 }
             }
+            foreach ($status as $stat) {
+                if ($stat['scriptId'] === $id) {
+                    $statList = $stat;
+                    break;
+                }
+            }
+            if (isset($bookCase['scriptIds'])) {
+                foreach ($bookCase['scriptIds'] as $value) {
+                    if (is_string($value) && $value === $id) {
+                        $inBookCase = 1;
+                        break;
+                    }
+                    if (is_array($value) && in_array($id, $value['scriptIds'])) {
+                        $inBookCase = 1;
+                        break;
+                    }
+                }
+            }
 
-            $ret[] = new ReadStatusEntity($status, $noteMarkList, $inBookCase);
+            $scriptItems[] = new ScriptStatusEntity($id, $noteList, $inBookCase, $statList, $scripts[$id]);
         }
-
-        return $ret;
+        
+        return new ReadStatusEntity($readStatus, $scriptItems);
     }
 }

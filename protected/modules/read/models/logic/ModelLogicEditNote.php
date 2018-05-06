@@ -15,7 +15,7 @@ class ModelLogicEditNote
         if (empty($oldNote))
             throw new Exception('note is not exist', Errno::PARAMETER_VALIDATION_FAILED);
 
-        if ($oldNote['userId'] !== $userId)
+        if ($oldNote['userId'] != $userId)
             throw new Exception('userId is wrong', Errno::PARAMETER_VALIDATION_FAILED);
 
         $updateTime = time();

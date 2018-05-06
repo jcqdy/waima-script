@@ -20,19 +20,24 @@ class ModelLogicDelCollect
         if ($ret === false)
             throw new Exception('update note pkgId failed', Errno::FATAL);
 
-        $ret = $this->modelDataCollect->incPartNum($pkgId, -1, $updateTime);
-        if ($ret === false)
-            LogHelper::error('inc partNum failed, pkgId : ' . $pkgId, 'read');
-
-
         $pkg = $this->modelDataCollect->getPkgByPid($pkgId);
-        if ($pkg['partNum'] <= 0) {
-            $ret = $this->modelDataCollect->delPkg($pkgId);
-            if ($ret === false)
-                LogHelper::error('delete part package failed, pkgId : ' . $pkgId, Errno::FATAL);
-
+        if (empty($pkg))
             return;
+
+        if ($pkg['partNum'] > 0) {
+            $ret = $this->modelDataCollect->incPartNum($pkgId, -1, $updateTime);
+            if ($ret === false)
+                LogHelper::error('inc partNum failed, pkgId : ' . $pkgId, 'read');
         }
+        
+//        $pkg = $this->modelDataCollect->getPkgByPid($pkgId);
+//        if ($pkg['partNum'] <= 0) {
+//            $ret = $this->modelDataCollect->delPkg($pkgId);
+//            if ($ret === false)
+//                LogHelper::error('delete part package failed, pkgId : ' . $pkgId, Errno::FATAL);
+//
+//            return;
+//        }
 
     }
 }

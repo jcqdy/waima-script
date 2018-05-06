@@ -21,9 +21,9 @@ return array(
         'application.components.*',
         'application.components.filters.*',
         'application.components.dto.*',
+        'application.lib.helpers.*',
         'application.lib.*',
         'yii-ext.helpers.*',
-        'application.lib.helpers.*',
         'yii-ext.vendors.*',
         'yii-ext.components.*',
         'yii-ext.components.cache.*',
@@ -36,6 +36,8 @@ return array(
         'read' => array(), // module setting
         'script' => array(),
         'user' => array(),
+        'operation' => array(),
+        'wechat' => array(),
     ),
     // application components
     'components' => array(
@@ -50,11 +52,7 @@ return array(
         // uncomment the following to enable URLs in path-format
         'urlManager' => array(
             'urlFormat' => 'path',
-            'rules' => array(
-                //pic模块合并到task模块
-                'pic/<action:\w+>' => 'task/<action>',
-                'pic/inner/<action:\w+>' => 'task/inner/<action>',
-            ),
+            'rules' => array(),
         ),
         'errorHandler'=>array(
             'errorAction'=>'site/error',
@@ -93,5 +91,16 @@ return array(
             ),
         ),
     ),
-    'params' => array(),
+    'params' => array(
+        'appSecret' => '4afdb06fcdc550e97fdc254ce3fe3c20',
+        'appId' => 'wx7e537298ff00ddda',
+        'wechat_sessionKeyApi' => 'https://api.weixin.qq.com/sns/jscode2session?',
+        'wechat_accTokenApi' => 'https://api.weixin.qq.com/cgi-bin/token?',
+        'wechat_qrcodeApi' => 'https://api.weixin.qq.com/cgi-bin/wxaapp/createwxaqrcode?',
+        'goto_h5_qrcode' => 'operationWeb/operationWeb?link=',
+        'goto_list_qrcode' => 'bookList/bookList?type=operation&opId=',
+        'goto_script_qrcode' => 'pages/article/article?scene=',
+        'qiniu_prefix' => 'https://scriptfile.ekaogo.com/',
+        'tempImage' => RUNTIME_DIR . DIRECTORY_SEPARATOR . 'temp_image' . DIRECTORY_SEPARATOR,
+    ),
 );

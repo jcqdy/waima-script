@@ -13,16 +13,12 @@ class ModelDataStore
         $this->modelDaoScriptType = new ModelDaoScriptType();
         $this->modelDaoScript = new ModelDaoScript();
         $this->modelDaoOperation = new ModelDaoOperation();
+        $this->modelDaoActive = new ModelDaoActive();
     }
 
     public function getBanner()
     {
         return $this->modelDaoOperation->queryBanner();
-    }
-
-    public function queryType()
-    {
-        return $this->modelDaoScriptType->queryLimit(CommonConst::STORE_BANNER_NUM);
     }
 
     public function getHotScripts($limit)
@@ -35,4 +31,18 @@ class ModelDataStore
         return $this->modelDaoScript->querySortByCreatTime(0, $limit);
     }
 
+    public function queryAll()
+    {
+        return $this->modelDaoScriptType->queryAll();
+    }
+
+    public function queryByOpIds($opIds, $status)
+    {
+        return $this->modelDaoActive->queryByOpId($opIds, $status);
+    }
+
+    public function findScript($scriptId)
+    {
+        return $this->modelDaoScript->findOneScript($scriptId);
+    }
 }

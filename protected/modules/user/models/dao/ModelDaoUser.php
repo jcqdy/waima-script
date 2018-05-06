@@ -26,15 +26,21 @@ class ModelDaoUser extends ModelDataMongoCollection
 
     const KEEP_READ_DAYS = 'keepReadDays';
 
-    const LATS_READ_TIME = 'lastReadTime';
+    const LAST_READ_TIME = 'lastReadTime';
 
     const READ_NUM_RATIO = 'readNumRatio';
 
     const READ_DAY_RATIO = 'readDayRatio';
 
+    const FONT_SIZE = 'fontSize';
+
+    const BACK_COLOR = 'backColor';
+
     const CREATE_TIME = 'createTime';
 
     const UPDATE_TIME = 'updateTime';
+
+    const OPEN_ID = 'openId';
 
     public function __construct()
     {
@@ -51,7 +57,44 @@ class ModelDaoUser extends ModelDataMongoCollection
         $doc[self::PROVINCE] = $province;
         $doc[self::COUNTRY] = $country;
         $doc[self::LANGUAGE] = $language;
-        $doc[self::CREATE_TIME] = $createTime;
+        $doc[self::PHONE_NUM] = '';
+        $doc[self::READ_NUM] = 0;
+        $doc[self::READ_DAYS] = 0;
+        $doc[self::KEEP_READ_DAYS] = 0;
+        $doc[self::LAST_READ_TIME] = 0;
+        $doc[self::READ_NUM_RATIO] = 0;
+        $doc[self::READ_DAY_RATIO] = 0;
+        $doc[self::FONT_SIZE] = CommonConst::DEFAULT_FONT_SIZE;
+        $doc[self::BACK_COLOR] = CommonConst::DEFAULT_BACK_COLOR;
+        $doc[self::CREATE_TIME] = $doc[self::UPDATE_TIME] = $createTime;
+
+        $ret = $this->add($doc);
+        if ($ret === false)
+            return false;
+
+        return DbWrapper::transform($doc);
+    }
+
+    public function addUserId($openId, $createTime)
+    {
+        $doc[self::_ID] = new MongoId();
+        $doc[self::OPEN_ID] = $openId;
+        $doc[self::NICK_NAME] = '';
+        $doc[self::AVATAR_URL] = '';
+        $doc[self::GENDER] = '';
+        $doc[self::CITY] = '';
+        $doc[self::PROVINCE] = '';
+        $doc[self::COUNTRY] = '';
+        $doc[self::LANGUAGE] = '';
+        $doc[self::READ_NUM] = 0;
+        $doc[self::READ_DAYS] = 0;
+        $doc[self::KEEP_READ_DAYS] = 0;
+        $doc[self::LAST_READ_TIME] = 0;
+        $doc[self::READ_NUM_RATIO] = 0;
+        $doc[self::READ_DAY_RATIO] = 0;
+        $doc[self::FONT_SIZE] = CommonConst::DEFAULT_FONT_SIZE;
+        $doc[self::BACK_COLOR] = CommonConst::DEFAULT_BACK_COLOR;
+        $doc[self::CREATE_TIME] = $doc[self::UPDATE_TIME] = $createTime;
 
         $ret = $this->add($doc);
         if ($ret === false)
@@ -74,7 +117,7 @@ class ModelDaoUser extends ModelDataMongoCollection
         $doc[self::READ_NUM] = $readNum;
         $doc[self::READ_DAYS] = $readDays;
         $doc[self::KEEP_READ_DAYS] = $keepReadDays;
-        $doc[self::LATS_READ_TIME] = $lastReadTime;
+        $doc[self::LAST_READ_TIME] = $lastReadTime;
         $doc[self::UPDATE_TIME] = $updateTime;
 
         return $this->modify($query, $doc);
@@ -89,10 +132,44 @@ class ModelDaoUser extends ModelDataMongoCollection
         return $this->modify($query, $doc);
     }
 
-    public function updatePhoneNum($userId, $phoneNum)
+    public function updatePhoneNum($userId, $phoneNum, $avatarUrl, $nickName)
     {
         $query[self::_ID] = $userId instanceof MongoId ? $userId : new MongoId($userId);
-        $doc[self::PHONE_NUM] = $phoneNum;
+        $doc = [];
+        if (! empty($phoneNum))
+            $doc[self::PHONE_NUM] = $phoneNum;
+        if (! empty($phoneNum))
+            $doc[self::AVATAR_URL] = $avatarUrl;
+        if (! empty($nickName))
+            $doc[self::NICK_NAME] = $nickName;
+
+        if (empty($doc))
+            return true;
+
+        return $this->modify($query, $doc);
+    }
+
+    public function updateReadStatus($userId, $fontSize, $backColor, $updateTime)
+    {
+        $query[self::_ID] = $userId instanceof MongoId ? $userId : new MongoId($userId);
+        $doc[self::FONT_SIZE] = $fontSize;
+        $doc[self::BACK_COLOR] = $backColor;
+        $doc[self::UPDATE_TIME] = $updateTime;
+
+        return $this->modify($query, $doc);
+    }
+
+    public function findByOpenId($openId)
+    {
+        $query[self::OPEN_ID] = $openId;
+
+        $ret = $this->findOne($query);
+        return DbWrapper::transform($ret);
+    }
+
+    public function updateUserInfo($userId, $doc)
+    {
+        $query[self::_ID] = $userId instanceof MongoId ? $userId : new MongoId($userId);
 
         return $this->modify($query, $doc);
     }

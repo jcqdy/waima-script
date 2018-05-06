@@ -5,21 +5,23 @@ class NoteMarkEntity
 
     public $scriptId;
 
-    public $markId;
-
     public $userId;
 
     public $type;
 
-    public $markPos;
+//    public $markPos;
 
     public $mark;
+
+    public $markId;
 
     public $note;
 
     public $pkgId;
 
     public $createTime;
+
+    public $updateTime;
 
     public $year;
 
@@ -32,12 +34,14 @@ class NoteMarkEntity
         $this->noteId = isset($noteMark['_id']) ? (string)$noteMark['_id'] : '';
         $this->userId = isset($noteMark['userId']) ? (string)$noteMark['userId'] : '';
         $this->scriptId = isset($noteMark['scriptId']) ? (string)$noteMark['scriptId'] : '';
-        $this->markPos = isset($noteMark['markPos']) ? $noteMark['markPos'] : [];
-        $this->mark = isset($noteMark['mark']) ? (string)$noteMark['mark'] : '';
+//        $this->markPos = isset($noteMark['markPos']) ? $noteMark['markPos'] : [];
+        $this->mark = isset($noteMark['mark']) ? $noteMark['mark'] : [];
+        $this->markId = isset($noteMark['markId']) ? $noteMark['markId'] : [];
         $this->note = isset($noteMark['note']) ? (string)$noteMark['note'] : '';
         $this->pkgId = isset($noteMark['pkgId']) ? (string)$noteMark['pkgId'] : '';
         $this->createTime = isset($noteMark['createTime']) ? $noteMark['createTime'] : 0;
-        $date = isset($noteMark['createTime']) ? explode(':', date('Y:m:d', $noteMark)) : explode(':', date('Y:m:d', time()));
+        $this->updateTime = isset($noteMark['updateTime']) ? $noteMark['updateTime'] : 0;
+        $date = isset($noteMark['createTime']) ? explode(':', date('Y:m:d', $noteMark['createTime'])) : explode(':', date('Y:m:d', time()));
         $this->year = $date[0];
         $this->mon = $date[1];
         $this->day = $date[2];

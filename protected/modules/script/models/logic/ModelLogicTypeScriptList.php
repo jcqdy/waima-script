@@ -8,20 +8,23 @@ class ModelLogicTypeScriptList
         $this->modelDataType = new ModelDataType();
     }
 
-    public function execute($typeId, $isTypeList, $sp, $num)
+    public function execute($typeId, $sp, $num)
     {
-        if ($isTypeList === 1) {
-            $types = $this->modelDataType->queryTypes();
-            if (empty($types))
-                throw new Exception('get type list failed', Errno::FATAL);
-        } else {
-            $types = $this->modelDataType->getType($typeId);
-        }
+        $ret = ['items' => [], 'sp' => -1];
+
+        $type = $this->modelDataType->getType($typeId);
+        if (empty($type))
+            throw new Exception('type is not exist', Errno::INVALID_PARAMETER);
 
         $scripts = $this->modelDataType->queryScriptByTypeId($typeId, $sp, $num);
+        if (empty($scripts)) {
+            $ret['items'] = new TypeScriptListEntity($type, $scripts);
+            return $ret;
+        }
 
-        $currType = isset($types[$typeId]) ? $types[$typeId] : [];
-        
-        return new TypeScriptListEntity($types, $currType, $scripts, $isTypeList);
+        $ret['items'] = new TypeScriptListEntity($type, $scripts);
+        $ret['sp'] = $sp + count($scripts);
+
+        return $ret;
     }
 }

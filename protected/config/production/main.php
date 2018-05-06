@@ -7,16 +7,13 @@ return CMap::mergeArray(
     array(
         'params'=>array(),
         'components' => array(
-            //读从库
-            'dbPhotoTask' => array(
+            'dbwaima-script' => array(
                 'class' => 'MongoConnection',
-                'server' => 'mongodb://10.100.17.248:28110,10.100.17.249:28111,10.100.17.37:28112',
+                'server' => 'mongodb://127.0.0.1:28111',
                 'options' => array(
                     'connect' => false,
-                    'readPreference' => MongoClient::RP_NEAREST,//,RP_NEAREST,MongoClient::RP_PRIMARY,//
-                    //'connectTimeoutMS' => 1000,
-                    'connectTimeoutMS' => 3000, // 切主后，跨机房写时时间要设长.
-                    'replicaSet'  => 'phototask_rs1',
+                    'readPreference' => MongoClient::RP_PRIMARY,//MongoClient::RP_SECONDARY_PREFERRED,//,RP_NEAREST
+                    'connectTimeoutMS' => 1000,
                 ),
             ),
             'log' => array(

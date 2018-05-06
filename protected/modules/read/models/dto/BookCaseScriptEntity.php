@@ -7,7 +7,7 @@ class BookCaseScriptEntity
 
     public $folderId;
 
-    public $data;
+    public $data = [];
 
     public function __construct($isFolder, $scripts, $folderName = '', $folderId = '')
     {

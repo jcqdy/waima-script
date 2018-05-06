@@ -9,7 +9,9 @@ class ModelDaoNoteMark extends ModelDataMongoCollection
 
     const USER_ID = 'userId';
 
-    const MARK_POS = 'markPos';
+//    const MARK_POS = 'markPos';
+
+    const MARK_ID = 'markId';
 
     const MARK = 'mark';
 
@@ -30,7 +32,7 @@ class ModelDaoNoteMark extends ModelDataMongoCollection
         parent::__construct('dbwaima-script', 'waima-script', 'noteMark');
     }
 
-    public function queryByUidSid($userId, $scriptIds, $status = 1)
+    public function queryByUidSids($userId, $scriptIds, $status = 1)
     {
         $query[self::USER_ID] = $userId instanceof MongoId ? $userId : new MongoId($userId);
         foreach ($scriptIds as $k => $id) {
@@ -41,6 +43,17 @@ class ModelDaoNoteMark extends ModelDataMongoCollection
 
         $ret = $this->query($query);
         
+        return DbWrapper::transform($ret);
+    }
+
+    public function queryByUidSid($userId, $scriptId, $status = 1)
+    {
+        $query[self::USER_ID] = $userId instanceof MongoId ? $userId : new MongoId($userId);
+        $query[self::SCRIPT_ID] = $scriptId instanceof MongoId ? $scriptId : new MongoId($scriptId);
+        $query[self::STATUS] = $status;
+
+        $ret = $this->query($query);
+
         return DbWrapper::transform($ret);
     }
 
@@ -72,16 +85,17 @@ class ModelDaoNoteMark extends ModelDataMongoCollection
         return $this->modify($query, $doc);
     }
 
-    public function addNote($scriptId, $userId, $markPos, $mark, $note, $createTime)
+    public function addNote($scriptId, $userId, $mark, $markId, $note, $createTime)
     {
         $doc[self::_ID] = new MongoId();
         $doc[self::TYPE] = 1;
         $doc[self::SCRIPT_ID] = $scriptId instanceof MongoId ? $scriptId : new MongoId($scriptId);
         $doc[self::USER_ID] = $userId instanceof MongoId ? $userId : new MongoId($userId);
-        $doc[self::MARK_POS] = $markPos;
+        $doc[self::MARK_ID] = $markId;
+//        $doc[self::MARK_POS] = $markPos;
         $doc[self::MARK] = $mark;
         $doc[self::NOTE] = $note;
-        $doc[self::CREATE_TIME] = $doc[self::CREATE_TIME] = $createTime;
+        $doc[self::CREATE_TIME] = $doc[self::UPDATE_TIME] = $createTime;
         $doc[self::PKG_ID] = '';
         $doc[self::STATUS] = 1;
 
@@ -98,7 +112,7 @@ class ModelDaoNoteMark extends ModelDataMongoCollection
         $doc[self::TYPE] = 2;
         $doc[self::SCRIPT_ID] = $scriptId instanceof MongoId ? $scriptId : new MongoId($scriptId);
         $doc[self::USER_ID] = $userId instanceof MongoId ? $userId : new MongoId($userId);
-        $doc[self::MARK_POS] = $markPos;
+//        $doc[self::MARK_POS] = $markPos;
         $doc[self::MARK] = $mark;
         $doc[self::NOTE] = '';
         $doc[self::CREATE_TIME] = $doc[self::CREATE_TIME] = $createTime;
@@ -117,17 +131,81 @@ class ModelDaoNoteMark extends ModelDataMongoCollection
         $query[self::_ID] = $noteId instanceof MongoId ? $noteId : new MongoId($noteId);
         $query[self::STATUS] = $status;
 
-        $doc[self::PKG_ID] = $pkgId instanceof MongoId ? $pkgId : new MongoId($pkgId);
+        if (empty($pkgId)) {
+            $doc[self::PKG_ID] = $pkgId;
+        } else {
+            $doc[self::PKG_ID] = $pkgId instanceof MongoId ? $pkgId : new MongoId($pkgId);
+        }
 
         return $this->modify($query, $doc);
     }
 
-    public function queryByPkgId($pkgId, $status = 1)
+    public function updatePkgIdBatch(array $noteIds, $userId, $pkgId, $status = 1)
+    {
+        $ids = [];
+        foreach ($noteIds as $id) {
+            $ids[] = $id instanceof MongoId ? $id : new MongoId($id);
+        }
+
+        $query[self::_ID] = ['$in' => $ids];
+        $query[self::USER_ID] = $userId instanceof MongoId ? $userId : new MongoId($userId);
+        $query[self::STATUS] = $status;
+
+        if (empty($pkgId)) {
+            $doc[self::PKG_ID] = $pkgId;
+        } else {
+            $doc[self::PKG_ID] = $pkgId instanceof MongoId ? $pkgId : new MongoId($pkgId);
+        }
+
+        return $this->modify($query, $doc);
+    }
+
+    public function queryByPkgId($pkgId, $sp, $num, $status = 1)
     {
         $query[self::PKG_ID] = $pkgId instanceof MongoId ? $pkgId : new MongoId($pkgId);
         $query[self::STATUS] = $status;
+        if ($sp != 0)
+            $query[self::UPDATE_TIME] = ['$lt' => $sp];
+
+        $sort[self::UPDATE_TIME] = -1;
+
+        $ret = $this->query($query, [], $sort, $num);
+
+        return DbWrapper::transform($ret);
+    }
+
+    public function queryAllByPkgId($pkgId, $userId, $status = 1)
+    {
+        $query[self::PKG_ID] = $pkgId instanceof MongoId ? $pkgId : new MongoId($pkgId);
+        $query[self::USER_ID] = $userId instanceof MongoId ? $userId : new MongoId($userId);
+        $query[self::STATUS] = $status;
 
         $ret = $this->query($query);
+
+        return DbWrapper::transform($ret);
+    }
+
+    public function queryByUidSidSortUpTime($userId, $scriptId, $sp, $num, $status = 1)
+    {
+        $query[self::USER_ID] = $userId instanceof MongoId ? $userId : new MongoId($userId);
+        $query[self::SCRIPT_ID] = $scriptId instanceof MongoId ? $scriptId : new MongoId($scriptId);
+        $query[self::STATUS] = $status;
+        if ($sp != 0)
+            $query[self::UPDATE_TIME] = ['$lt' => $sp];
+
+        $sort[self::UPDATE_TIME] = -1;
+
+        $ret = $this->query($query, [], $sort, $num);
+
+        return DbWrapper::transform($ret);
+    }
+
+    public function queryByUidDistSid($userId, $status = 1)
+    {
+        $query[self::USER_ID] = $userId instanceof MongoId ? $userId : new MongoId($userId);
+        $query[self::STATUS] = $status;
+
+        $ret = $this->distinct(self::SCRIPT_ID, $query);
 
         return DbWrapper::transform($ret);
     }

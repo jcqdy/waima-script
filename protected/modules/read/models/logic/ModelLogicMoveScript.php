@@ -8,13 +8,13 @@ class ModelLogicMoveScript
         $this->modelDataBookCase = new ModelDataBookCase();
     }
 
-    public function execute($userId, $scriptId, $newFolderId, $folderName, $makeFolder)
+    public function execute($userId, $scriptIds, $newFolderId, $folderName, $makeFolder)
     {
         $bookCase = $this->modelDataBookCase->getBookCase($userId);
         if (empty($bookCase))
             return [];
 
-        $bookCase = $bookCase['scriptIds'];
+        $bookCase = $oldBookCase = $bookCase['scriptIds'];
 
         // 如果要创建新的文件夹
         if ($makeFolder == 1) {
@@ -24,36 +24,69 @@ class ModelLogicMoveScript
             $newFolder = [
                 'folderName' => $folderName,
                 'folderId' => (string) new MongoId(),
-                'scriptIds' => [$scriptId],
+                'scriptIds' => $scriptIds,
             ];
 
-            foreach ($bookCase as $key => $val) {
-                if (is_string($val) && $val == $scriptId) {
-                    $bookCase[$key] = $newFolder;
-                    break;
+            foreach ($oldBookCase as $key => $val) {
+                if (is_string($val) && in_array($val, $scriptIds)) {
+                    unset($bookCase[$key]);
                 }
 
-                if (is_array($val) && in_array($scriptId, $val['scriptIds'])) {
-                    $k = array_search($scriptId, $val['scriptIds']);
-                    unset($bookCase[$key]['scriptIds'][$k]);
-                    $bookCase[] = $newFolder;
-                    break;
+                if (is_array($val)) {
+                    $inIds = array_intersect($val['scriptIds'], $scriptIds);
+                    if (! empty($inIds)) {
+                        $inIdskey = array_keys($inIds);
+                        foreach ($inIdskey as $k) {
+                            unset($bookCase[$key]['scriptIds'][$k]);
+                        }
+                        if (empty($bookCase[$key]['scriptIds']))
+                            unset($bookCase[$key]);
+                    }
                 }
             }
+            array_unshift($bookCase, $newFolder);
         } else {
-            foreach ($bookCase as $key => $val) {
-                if (is_string($val) && $val == $scriptId) {
+            foreach ($oldBookCase as $key => $val) {
+                // 如果是文件夹外的剧本,且没有指定移动到某个文件夹,跳过
+                if (is_string($val) && in_array($val, $scriptIds) && empty($newFolderId))
+                    break;
+
+                // 是文件夹外的剧本,且指定移动到某个文件夹
+                if (is_string($val) && in_array($val, $scriptIds)) {
                     unset($bookCase[$key]);
-                    break;
+                    continue;
                 }
-                if (is_array($val) && in_array($scriptId, $val['scriptIds'])) {
-                    $k = array_search($scriptId, $val['scriptIds']);
-                    unset($bookCase[$key]['scriptIds'][$k]);
-                    break;
+
+                // 文件夹中的剧本,要进行移动
+                if (is_array($val) && $val['folderId'] != $newFolderId) {
+                    $inIds = array_intersect($val['scriptIds'], $scriptIds);
+                    if (empty($inIds))
+                        continue;
+
+                    $inIdskey = array_keys($inIds);
+                    foreach ($inIdskey as $k) {
+                        unset($bookCase[$key]['scriptIds'][$k]);
+                    }
+//                    if (empty($bookCase[$key]['scriptIds']))
+//                        unset($bookCase[$key]);
+
+                    // 如果没有指定移动到其他文件夹,就移动到文件夹外面
+                    if (empty($newFolderId)) {
+                        foreach ($scriptIds as $id) {
+                            $bookCase[] = $id;
+                        }
+                        break;
+                    }
                 }
-                if (is_array($val) && $val['folderId'] == $newFolderId && ! in_array($scriptId, $val['scriptIds'])) {
-                    $bookCase[$key]['scriptIds'][] = $scriptId;
-                    break;
+
+                // 把剧本移动到目标文件夹中
+                if (is_array($val) && $val['folderId'] == $newFolderId) {
+                    $diffIds = array_diff($scriptIds, $val['scriptIds']);
+                    if (! empty($diffIds)) {
+                        foreach ($diffIds as $id) {
+                            $bookCase[$key]['scriptIds'][] = $id;
+                        }
+                    }
                 }
             }
         }
