@@ -46,7 +46,7 @@ class Controller extends CController
     {
         return array(
             'checkCommonParameters',
-            'verifySign',
+//            'verifySign',
             'accessControl',
         );
     }
