@@ -43,4 +43,21 @@ class ModelDaoActive extends ModelDataMongoCollection
         return DbWrapper::transform($ret);
     }
 
+    public function addActive($type, $data, $opId, $createTime, $status = 1)
+    {
+        $doc[self::_ID] = new MongoId();
+        $doc[self::TYPE] = $type;
+        $doc[self::DATA] = $data;
+        $doc[self::OP_ID] = $opId instanceof MongoId ? $opId : new MongoId($opId);
+        $doc[self::CREATE_TIME] = $createTime;
+        $doc[self::STATUS] = $status;
+
+        $ret = $this->add($doc);
+        if ($ret == false) {
+            return false;
+        }
+
+        return DbWrapper::transform($doc);
+    }
+
 }

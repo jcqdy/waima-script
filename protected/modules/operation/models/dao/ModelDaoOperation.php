@@ -30,4 +30,22 @@ class ModelDaoOperation extends ModelDataMongoCollection
         $ret = $this->query($query, [], $sort);
         return DbWrapper::transform($ret);
     }
+
+    public function addOp($type, $gotoType, $resourceUrl, $sort, $createTime, $status = 1)
+    {
+        $doc[self::_ID] = new MongoId();
+        $doc[self::TYPE] = $type;
+        $doc[self::GOTO_TYPE] = $gotoType;
+        $doc[self::RESOURCE_URL] = $resourceUrl;
+        $doc[self::SORT] = $sort;
+        $doc[self::CREATE_TIME] = $createTime;
+        $doc[self::STATUS] = $status;
+
+        $ret = $this->add($doc);
+        if ($ret == false) {
+            return false;
+        }
+
+        return DbWrapper::transform($doc);
+    }
 }
