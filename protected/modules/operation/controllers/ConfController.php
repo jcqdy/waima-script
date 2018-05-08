@@ -10,7 +10,8 @@ class ConfController extends Controller
         $gotoType = ParameterValidatorHelper::validateInteger($_POST, 'gotoType', 0, PHP_INT_MAX);
 
         $modelLogicConfBanner = new ModelLogicConfBanner();
-        $modelLogicConfBanner->execute($type, $data, $gotoType, $resourceUrl, $sort);
-        
+        $modelLogicConfBanner->execute($type, $data, $gotoType, $sort);
+
+        ResponseHelper::outputJsonApp([], 'ok', 200);
     }
 }
