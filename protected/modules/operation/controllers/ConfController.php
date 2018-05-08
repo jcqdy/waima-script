@@ -1,6 +1,6 @@
 <?php
 
-class ConfController extends Controller
+class ConfController extends H5Controller
 {
     public function actionBanner()
     {
