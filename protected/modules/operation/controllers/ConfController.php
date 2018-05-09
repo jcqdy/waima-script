@@ -14,4 +14,12 @@ class ConfController extends H5Controller
 
         ResponseHelper::outputJsonApp([], 'ok', 200);
     }
+
+    public function actionUpPic()
+    {
+        $modelLogicUpPic = new ModelLogicUpPic();
+        $ret = $modelLogicUpPic->execute();
+
+        ResponseHelper::outputJsonApp($ret, 'ok', 200);
+    }
 }

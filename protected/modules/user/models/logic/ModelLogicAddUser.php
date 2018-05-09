@@ -14,11 +14,11 @@ class ModelLogicAddUser
         $doc = [];
         if ($nickName !== '')
             $doc['nickName'] = $nickName;
-        if ($avatarUrl  !== '')
+        if ($avatarUrl !== '')
             $doc['avatarUrl'] = $avatarUrl;
-        if ($gender  !== 3)
+        if ($gender !== 3)
             $doc['gender'] = $gender;
-        if ($city  !== '')
+        if ($city !== '')
             $doc['city'] = $city;
         if ($province !== '')
             $doc['province'] = $province;
