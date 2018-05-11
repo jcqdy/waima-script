@@ -16,7 +16,7 @@ class ScriptController extends Controller
     {
         $userId = ParameterValidatorHelper::validateMongoIdAsString($_REQUEST, 'userId');
         $scriptId = ParameterValidatorHelper::validateMongoIdAsString($_REQUEST, 'scriptId');
-        $readPos = ParameterValidatorHelper::validateInteger($_REQUEST, 'readPos');
+        $readPos = ParameterValidatorHelper::validateFloat($_REQUEST, 'readPos');
         $fontSize = ParameterValidatorHelper::validateEnumInteger($_REQUEST, 'fontSize', [12,14,16,18,20]);
         $backColor = ParameterValidatorHelper::validateEnumInteger($_REQUEST, 'backColor', [1,2,3,4]);
 
