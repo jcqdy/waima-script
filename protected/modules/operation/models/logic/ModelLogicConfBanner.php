@@ -18,6 +18,8 @@ class ModelLogicConfBanner
 
         $etag = QiniuHelper::uploadFile($tmpDir . $_FILES['pic']['name']);
 
+        unlink($tmpDir . $_FILES['pic']['name']);
+
         $createTime = time();
         $op = $this->modelDataConf->addOp($type, $gotoType, $etag, $sort, $createTime, 1);
         if ($op == false)

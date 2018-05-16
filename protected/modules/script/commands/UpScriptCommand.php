@@ -29,9 +29,10 @@ class UpScriptCommand extends CConsoleCommand
             // 遍历某个剧本文件下的内容
             foreach ($fileName as $file) {
 
+                $arr = explode(".", $file);
                 // 处理剧本封面
                 if (in_array(
-                    strtolower(end(explode(".", $file))),
+                    strtolower(end($arr)),
                     ['png', 'jpg', 'jpeg']
                 )) {
                     $etag = QiniuHelper::uploadFile($fileDir . '/' . $name . '/' . $file);
