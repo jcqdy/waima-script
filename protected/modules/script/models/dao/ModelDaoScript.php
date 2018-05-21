@@ -84,7 +84,7 @@ class ModelDaoScript extends ModelDataMongoCollection
     public function querySortByReadNum($skip, $limit)
     {
         $sort = [self::READER_NUM => -1];
-        $query = ['soldout' => ['$exists' => true]];
+        $query = ['soldout' => ['$exists' => false]];
 
         $ret = $this->query($query, [], $sort, $limit, $skip);
         return DbWrapper::transform($ret);
@@ -92,7 +92,7 @@ class ModelDaoScript extends ModelDataMongoCollection
 
     public function querySortByCreatTime($skip, $limit)
     {
-        $query = ['soldout' => ['$exists' => true]];
+        $query = ['soldout' => ['$exists' => false]];
 
         if ($skip !== 0)
             $query[self::CREATE_TIME] = ['$lt' => $skip];
