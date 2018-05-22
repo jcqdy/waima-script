@@ -106,6 +106,7 @@ class ModelDaoScript extends ModelDataMongoCollection
 
     public function search($keywords, $skip, $limit)
     {
+        $query['soldout'] = ['$exists' => false];
         $query['$or'] = [];
         foreach ($keywords as $word) {
             $query['$or'][] = [
