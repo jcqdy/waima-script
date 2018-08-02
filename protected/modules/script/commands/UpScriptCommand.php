@@ -206,7 +206,7 @@ class UpScriptCommand extends CConsoleCommand
      *
      * @param $script
      */
-    protected function formatScript($script)
+    public function actionFormatScript($script)
     {
         $script = file_get_contents($script);
         $newArr = ['data' => []];
