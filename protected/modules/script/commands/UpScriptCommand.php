@@ -261,4 +261,83 @@ class UpScriptCommand extends CConsoleCommand
 
         return $etag;
     }
+
+    public function listQrcode($opId)
+    {
+        $modelLogicAccToken = new ModelLogicAccToken();
+        $accToken = $modelLogicAccToken->accToken();
+        $params['path'] = Yii::app()->params['goto_list_qrcode'] . $opId;
+        $qrcodeApi = Yii::app()->params['wechat_qrcodeApi'] . 'access_token=' . $accToken;
+
+        $header = ['content-type:application/json'];
+        $qrcode = HttpHelper::request($qrcodeApi, $params, 10, 'POST', [], $header);
+        if ($qrcode === false) {
+            LogHelper::error(' get list qrcode failed, errmsg : ' . $qrcode);
+            exit();
+        }
+        $qrcodeArr = @json_decode($qrcode, true);
+        if (is_array($qrcodeArr)) {
+            LogHelper::error(' get list qrcode failed, errmsg : ' . $qrcode['errmsg']);
+            exit();
+        }
+
+        $qrcodeDir = '/home/worker/data/www/runtime/waima-script/temp_image/'.$opId;
+        file_put_contents($qrcodeDir, $qrcode);
+        $etag = QiniuHelper::uploadFile($qrcodeDir);
+        if ($etag === false) {
+            LogHelper::error(' upload list qrcode failed');
+            return false;
+        }
+
+        return $etag;
+    }
+
+    public function actionSetOp($type, $sort, $gotoType, $scriptIds = '', $bannerFile = '')
+    {
+        if (! empty($scriptIds)) {
+            $scriptIds = explode(',', $scriptIds);
+        } else {
+            $scriptIds = [];
+        }
+        if (! empty($bannerFile)) {
+            if (is_file($bannerFile)) {
+                $etag = QiniuHelper::uploadFile($bannerFile);
+                if ($etag === false) {
+                    LogHelper::error(' upload bannerFile failed');
+                    return false;
+                }
+                $resourceUrl = $etag;
+            } else {
+                $resourceUrl = $bannerFile;
+            }
+        } else {
+            $resourceUrl = '';
+        }
+
+        $opDoc = [
+            '_id' => new \MongoId(),
+            'type' => $type,
+            'resourceUrl' => $resourceUrl,
+            'sort' => $sort,
+            'status' => 1,
+            'gotoType' => $gotoType,
+            'createTime' => time(),
+        ];
+        $modelDaoOperation = new ModelDaoOperation();
+        $modelDaoOperation->add($opDoc);
+
+        $gotoQrCode = $this->listQrcode((string)$opDoc['_id']);
+
+        $actDoc = [
+            '_id' => new \MongoId(),
+            'type' => $gotoType,
+            'data' => $scriptIds,
+            'op' => $opDoc['_id'],
+            'createTime' => time(),
+            'gotoQrCode' => $gotoQrCode,
+            'status' => 1,
+        ];
+        $modelDaoActive = new ModelDaoActive();
+        $modelDaoActive->add($actDoc);
+    }
 }
