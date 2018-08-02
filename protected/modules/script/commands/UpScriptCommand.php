@@ -296,8 +296,12 @@ class UpScriptCommand extends CConsoleCommand
     {
         if (! empty($scriptIds)) {
             $scriptIds = explode(',', $scriptIds);
+            $data = [
+                'title' => '',
+                'script' => $scriptIds,
+            ];
         } else {
-            $scriptIds = [];
+            $data = [];
         }
         if (! empty($bannerFile)) {
             if (is_file($bannerFile)) {
