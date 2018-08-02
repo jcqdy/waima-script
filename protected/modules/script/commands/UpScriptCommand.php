@@ -206,9 +206,9 @@ class UpScriptCommand extends CConsoleCommand
      *
      * @param $script
      */
-    public function actionFormatScript($script)
+    public function actionFormatScript($dir)
     {
-        $script = file_get_contents($script);
+        $script = file_get_contents($dir);
         $newArr = ['data' => []];
         $scriptArr = explode("\n", $script);
 
@@ -225,7 +225,7 @@ class UpScriptCommand extends CConsoleCommand
             }
         }
 
-        file_put_contents($script, json_encode($newArr, JSON_UNESCAPED_UNICODE));
+        file_put_contents($dir, json_encode($newArr, JSON_UNESCAPED_UNICODE));
     }
 
     protected function qrcode($scriptId, $name, $fileDir)
