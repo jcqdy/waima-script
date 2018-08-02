@@ -335,7 +335,7 @@ class UpScriptCommand extends CConsoleCommand
         $actDoc = [
             '_id' => new \MongoId(),
             'type' => $gotoType,
-            'data' => $scriptIds,
+            'data' => $data,
             'op' => $opDoc['_id'],
             'createTime' => time(),
             'gotoQrCode' => $gotoQrCode,
