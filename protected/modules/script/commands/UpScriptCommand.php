@@ -320,11 +320,11 @@ class UpScriptCommand extends CConsoleCommand
 
         $opDoc = [
             '_id' => new \MongoId(),
-            'type' => $type,
+            'type' => (int)$type,
             'resourceUrl' => $resourceUrl,
             'sort' => $sort,
             'status' => 1,
-            'gotoType' => $gotoType,
+            'gotoType' => (int)$gotoType,
             'createTime' => time(),
         ];
         $modelDaoOperation = new ModelDaoOperation();
@@ -334,9 +334,9 @@ class UpScriptCommand extends CConsoleCommand
 
         $actDoc = [
             '_id' => new \MongoId(),
-            'type' => $gotoType,
+            'type' => (int)$gotoType,
             'data' => $data,
-            'op' => $opDoc['_id'],
+            'opId' => $opDoc['_id'],
             'createTime' => time(),
             'gotoQrCode' => $gotoQrCode,
             'status' => 1,
