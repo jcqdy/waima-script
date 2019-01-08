@@ -17,7 +17,7 @@ return CMap::mergeArray(
             //读从库
             'dbOp' => array(
                 'class' => 'MongoConnection',
-                'server' => 'mongodb://127.0.0.1:28110',
+                'server' => 'mongodb://127.0.0.1:28112',
                 'options' => array(
                     'connect' => false,
                     'readPreference' => MongoClient::RP_PRIMARY,//,RP_NEAREST,MongoClient::RP_PRIMARY,//
@@ -28,7 +28,7 @@ return CMap::mergeArray(
             ),
             'dbwaima-script' => array(
                 'class' => 'MongoConnection',
-                'server' => 'mongodb://127.0.0.1:28111',
+                'server' => 'mongodb://127.0.0.1:28112',
                 'options' => array(
                     'connect' => false,
                     'readPreference' => MongoClient::RP_PRIMARY,//MongoClient::RP_SECONDARY_PREFERRED,//,RP_NEAREST

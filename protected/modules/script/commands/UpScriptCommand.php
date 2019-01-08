@@ -262,11 +262,26 @@ class UpScriptCommand extends CConsoleCommand
         return $etag;
     }
 
+    public function actionMakeCode($opId)
+    {
+        $modelLogicAccToken = new ModelLogicAccToken();
+        $accToken = $modelLogicAccToken->accToken();
+        $params['path'] = 'bookList/bookList?type=operation&opId=' . $opId;
+        $qrcodeApi = Yii::app()->params['wechat_qrcodeApi'] . 'access_token=' . $accToken;
+
+        $header = ['content-type:application/json'];
+        $qrcode = HttpHelper::request($qrcodeApi, $params, 10, 'POST', [], $header);
+        if ($qrcode === false) {
+            LogHelper::error(' get list qrcode failed, errmsg : ' . $qrcode);
+            exit();
+        }
+    }
+
     public function listQrcode($opId)
     {
         $modelLogicAccToken = new ModelLogicAccToken();
         $accToken = $modelLogicAccToken->accToken();
-        $params['path'] = Yii::app()->params['goto_list_qrcode'] . $opId;
+        $params['path'] = 'bookList/bookList?type=operation&opId=' . $opId;
         $qrcodeApi = Yii::app()->params['wechat_qrcodeApi'] . 'access_token=' . $accToken;
 
         $header = ['content-type:application/json'];
@@ -292,6 +307,14 @@ class UpScriptCommand extends CConsoleCommand
         return $etag;
     }
 
+    /**
+     * @param int $type 运营类型,banner:1
+     * @param int $sort 排序
+     * @param $gotoType
+     * @param string $scriptIds
+     * @param string $bannerFile
+     * @return bool
+     */
     public function actionSetOp($type, $sort, $gotoType, $scriptIds = '', $bannerFile = '')
     {
         if (! empty($scriptIds)) {
